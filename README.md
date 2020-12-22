@@ -1,1 +1,1 @@
-# Leightweight Graphical Interface for Robotics Project
+# Leightweight Graphical Interface for Robotics
