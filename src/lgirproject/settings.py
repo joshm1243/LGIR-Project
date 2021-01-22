@@ -29,6 +29,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
+# pip install django 
+# pip instlal .whl Twisted file
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -68,6 +71,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'lgirproject.wsgi.application'
+ASGI_APPLICATION = 'lgirproject.asgi.application'
 
 
 # Database
