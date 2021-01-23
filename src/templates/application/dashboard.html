@@ -1,0 +1,30 @@
+<h1>Dashboard Page</h1>
+
+<div id="divArea"></div>
+
+<script>
+
+    var wsStart = "ws://"
+    if (window.location.protocol == 'https:') {
+        wsStart = "wss://"
+    }
+
+    var endpoint = wsStart + window.location.host + window.location.pathname
+    var socket = new WebSocket(endpoint)
+
+    var divArea = document.getElementById("divArea")
+    divArea.onclick = function(event) {
+        socket.send("Hello")
+        console.log("Sending")
+    }
+
+    //var socket = new WebSocket('ws://127.0.0.1:8000/dashboard/')
+
+    socket.onmessage = function(event) {
+        console.log("Revied data")
+        var data = JSON.parse(event.data);
+        console.log(data)
+        divArea.innerText = data.connection
+    }
+
+</script>
