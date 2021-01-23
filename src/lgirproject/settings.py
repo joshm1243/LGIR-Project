@@ -26,7 +26,7 @@ SECRET_KEY = 'k6lnun*f7sg6(6f1qxha+1@5x=j0&$2_l3%t*bp)&3$1i4_1p*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 # pip install django 
@@ -73,6 +73,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'lgirproject.wsgi.application'
 ASGI_APPLICATION = 'lgirproject.asgi.application'
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
