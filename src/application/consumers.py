@@ -32,7 +32,7 @@ class ApplicationConsumer(WebsocketConsumer):
             self.room_group_name,
             {
                 "type" : "chat_message",
-                "message" : "THIS MESSAGE IS CONSTANT"
+                "message" : message
             }
         )
     

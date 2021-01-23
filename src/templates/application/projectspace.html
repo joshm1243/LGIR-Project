@@ -87,13 +87,12 @@ socket.onmessage = function(event) {
 
   function mirrorEvent(primaryEvent) {
     if (primaryEvent instanceof Blockly.Events.Ui) {
-      return;  // Don't mirror UI events.
+        return;  // Don't mirror UI events.
     }
-    // Convert event to JSON.  This could then be transmitted across the net.
-    var blocklyJson = primaryEvent.toJson();
-    console.log(JSON.stringify(blocklyJson))
+      // Convert event to JSON.  This could then be transmitted across the net.
+    var json = primaryEvent.toJson();
     socket.send(JSON.stringify({
-      'message': "message",
+      "message" : json
     }))
   }
 </script>
