@@ -12,9 +12,9 @@ class ApplicationConsumer(WebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
-
+        
         # self.send(json.dumps({"message" : "hello", "connection" : "hello"}))
-
+        
         self.accept()
 
     def disconnecct(self, close_code):
