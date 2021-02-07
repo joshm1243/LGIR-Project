@@ -9,7 +9,7 @@
 {% endblock includes %}
 </h1>
 
-<div id="divArea">THIS</div>
+<div id="divArea"></div>
 
 <script>
 
@@ -29,13 +29,10 @@ divArea.onclick = function(event) {
     console.log("Sending")
 }
 
-//var socket = new WebSocket('ws://127.0.0.1:8000/dashboard/')
-
 socket.onmessage = function(event) {
-    console.log("Revied data")
     var data = JSON.parse(event.data);
-    console.log(data)
-    divArea.innerText = data.connection
+    var blocklyEvent = Blockly.Events.fromJson(data.message, workspace);
+    
 }
 
 </script>
@@ -79,20 +76,23 @@ socket.onmessage = function(event) {
     window.addEventListener('resize', onresize, false);
     onresize();
     Blockly.svgResize(workspace);
-</script>
 
 
-<script>
+
+  //EVENTS
   workspace.addChangeListener(mirrorEvent);
 
   function mirrorEvent(primaryEvent) {
     if (primaryEvent instanceof Blockly.Events.Ui) {
         return;  // Don't mirror UI events.
     }
-      // Convert event to JSON.  This could then be transmitted across the net.
+      // Convert event to JSON.
     var json = primaryEvent.toJson();
     socket.send(JSON.stringify({
       "message" : json
     }))
+
+    console.log(json)
+
   }
 </script>

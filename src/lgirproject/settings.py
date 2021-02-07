@@ -131,9 +131,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static", "root")
+STATIC_ROOT = str(BASE_DIR) + "static" + "root"
 
-#If you're changing
+#If you're changing static files make sure to use:
 #python manage.py collectstatic
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static", "main"),

@@ -12,9 +12,7 @@ class ApplicationConsumer(WebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
-        
-        # self.send(json.dumps({"message" : "hello", "connection" : "hello"}))
-        
+
         self.accept()
 
     def disconnecct(self, close_code):
@@ -32,13 +30,17 @@ class ApplicationConsumer(WebsocketConsumer):
             self.room_group_name,
             {
                 "type" : "chat_message",
-                "message" : message
+                "message" : message,
+                "sender_channel_name" : self.channel_name
             }
         )
     
     def chat_message(self, event):
         message = event["message"]
 
-        self.send(text_data=json.dumps({
-            "message" : message
-        }))
+        if self.channel_name != event["sender_channel_name"]:
+            self.send(text_data = json.dumps({"message" : message}))
+
+        # self.send(text_data=json.dumps({
+        #     "message" : message
+        # }))
