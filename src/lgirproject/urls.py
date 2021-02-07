@@ -17,6 +17,7 @@ from django.urls import path
 from django.contrib import admin
 from django.conf.urls.static import static
 from application.views import project_space_view, monitor_view, settings_view, dashboard_view
+from account.views import login_view
 from django.conf import settings
 
 urlpatterns = [
@@ -28,10 +29,10 @@ urlpatterns = [
     path('application/<str:appcode>/workspace/', project_space_view, name="project_space"),
     path('application/<str:appcode>/monitor/', monitor_view, name="monitor"),
     path('application/<str:appcode>/settings/', settings_view, name="settings"),
-    path('dashboard/', dashboard_view, name="settings")
+    path('dashboard/', dashboard_view, name="settings"),
 
     #
-
+    path('login/',login_view, name="login")
 
     #path('application/settings/', settings_view, name="settings"),
     #path('application/projectspace/', project_space_view, name="project_space"),
