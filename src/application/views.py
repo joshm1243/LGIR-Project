@@ -22,6 +22,3 @@ def settings_view(request, appcode, *args, **kwargs):
 def dashboard_view(request, *args, **kwargs):
     if request.method == "GET":
         return render(request, "application/dashboard.html")
-
-
-#

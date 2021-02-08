@@ -1,33 +1,67 @@
 {% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
 <script src="{% static 'application/blockly/google-blockly-edd475f/blockly_compressed.js' %}"></script>
 <script src="{% static 'application/blockly/google-blockly-edd475f/blocks_compressed.js' %}"></script>
 <script src="{% static 'application/blockly/google-blockly-edd475f/msg/js/en.js' %}"></script>
 
-<h1>Workspace for: 
-{% block includes %}
-{{ appcode }}
-{% endblock includes %}
-</h1>
-<style>
-      
+<script>
 
-
-  * {
-     font-family: myFirstFont;
+  var wsStart = "ws://"
+  if (window.location.protocol == 'https:') {
+    wsStart = "wss://"
   }
-          body {
-              margin: 0px;
-          }
   
-          body {
-              font-family: 'Biryani', sans-serif;
-          }
+  var endpoint = wsStart + window.location.host +  window.location.pathname
+  var socket = new WebSocket(endpoint)
+  
+  socket.onmessage = function(event) {
+    console.log("HHH")
+  }
+
+  
+</script>
+  
+
+<style>
+
+body {
+  margin: 0px;
+  height: 100%;
+  width: 100%;
+  font-family: 'Biryani', sans-serif;
+}
+
+#mobile-top-nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #555555;
+}
+
+#mobile-top-nav li {
+  float: left;
+}
+
+#mobile-top-nav li a {
+  text-decoration: none;
+  color: #FFFFFF;
+  text-align: center;
+  padding: 15px;
+  display: block;
+  cursor: pointer;
+}
+
 #top_nav {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #444444;
+  background-color: #555555;
 }
 
 #top_nav li {
@@ -40,53 +74,187 @@
   text-align: center;
   padding: 15px;
   display: block;
+  cursor: pointer;
 }
 
-#side_nav {
-  position: absolute;
+#project_nav {
   list-style-type: none;
+  width: 100%;
   margin: 0;
   padding: 0;
-  width: 200px;
-  top: 58px;
-  color: #FFFFFF;
-  bottom: 0px;
-  background-color: #2b2b2b;
+  max-height: 44px;
+  overflow: auto;
+  white-space: nowrap;
+  background-color: #444444;
 }
 
-#side_nav li {
+#project_nav li {
+  float: left;
+}
+
+#project_nav li a {
+  text-decoration: none;
+  color: #FFFFFF;
+  text-align: center;
+  padding: 8px 15px;
+  display: block;
+  cursor: pointer;
+}
+
+input:focus{
+  outline: none;
+}
+
+#main {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  min-height: 100%;
+}
+
+#chat-container {
+  width: 350px;
+}
+
+#chat-container {
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  color: #FFFFFF;
+}
+
+#chat-container div {
+  width: 100%;
+}
+
+#chat-header {
   padding: 10px;
-  padding-left: 5px;
+  background-color: #333333;
+  font-weight: bold;
+}
+
+#chat-display-container {
+  background-color: #333333;
+}
+
+#chat-input-container {
+  height: 45px;
+  background-color: #444444;
+}
+
+#chat-input {
+  border: none;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #222222;
+  color: #FFFFFF;
+  font-family: 'Biryani', sans-serif; 
+  font-size: 15px;
 }
 
 </style>
-<div id="divArea"></div>
+
+</head>
+
+<ul id="top_nav">
+  <li><a>LGIR</a></li>
+  <li><a>Dashboard</a></li>
+  <li><a>Account Settings</a></li>
+  <li style="float:right"><a>Logout</a></li>
+</ul>
+
+<ul id="mobile-top-nav">
+  <li><a>&#9776</a></li>
+  <li><a>LGIR</a></li>
+</ul>
+
+<ul id="project_nav">
+  <li><a>
+    {% block includes %}
+    {{ appcode }}
+    {% endblock includes %}
+  </a></li>
+  <li><a>Workspace</a></li>
+  <li><a>Monitor</a></li>
+  <li><a>Run</a></li>
+  <li><a id="toggle-chat">Chat</a></li>
+  <li><a>Project Settings</a></li>
+</ul>
+
+<div id="main">
+  <div id="blockly-container" style="flex: 1;">
+  </div>
+  <div id="chat-container">
+    <div id="chat-header">Project Chat</div>
+    <div id="chat-display-container">Chat Messages Go Here</div>
+    <div id="chat-input-container"><input id="chat-input"></div>
+  </div>
+</div>
+
+<div id="blocklyDiv" style="position: absolute;"></div>
+
+
+
 
 <script>
 
-var wsStart = "ws://"
-if (window.location.protocol == 'https:') {
-    wsStart = "wss://"
-}
+  /*Resize Functions*/
+  ResizeChat()
+  CheckForMobile()
+  ResizeBlockly()
 
-var endpoint = wsStart + window.location.host +  window.location.pathname
-var socket = new WebSocket(endpoint)
+  window.addEventListener("resize", function(){
+    ResizeChat()
+    CheckForMobile()
+    ResizeBlockly()
+  })  
 
-var divArea = document.getElementById("divArea")
-divArea.onclick = function(event) {
-    socket.send(JSON.stringify({
-      'message': "message"
-    }))
-    console.log("Sending")
-}
+  function ResizeBlockly() {
+    var blockly = document.getElementById("blockly-container")
+    blockly.style.height = (window.innerHeight - 102) + "px";
+  }
 
-socket.onmessage = function(event) {
-    var data = JSON.parse(event.data);
-    var blocklyEvent = Blockly.Events.fromJson(data.message, workspace);
-    
-}
+  function ResizeChat() {
+    var chat = document.getElementById("chat-display-container")
+    chat.style.height = (window.innerHeight - 195) + "px";
+  }
+
+  function CheckForMobile() {
+    if (window.innerWidth < 550) {
+      document.getElementById("top_nav").style.display = "none";
+      document.getElementById("project_nav").style.display = "none";
+      document.getElementById("blockly-container").style.display = "none";
+      document.getElementById("mobile-top-nav").style.display = "";
+    }
+    else
+    {
+      document.getElementById("top_nav").style.display = "";
+      document.getElementById("project_nav").style.display = "";
+      document.getElementById("blockly-container").style.display = "";
+      document.getElementById("mobile-top-nav").style.display = "none";
+    }
+  }
+
+  var chatOpen = false;
+  document.getElementById("chat-container").style.display = "none";
+  document.getElementById("toggle-chat").addEventListener("click", function(){
+    if (chatOpen) {
+      document.getElementById("chat-container").style.display = "none";
+      chatOpen = false;
+    }
+    else {
+      document.getElementById("chat-container").style.display = "";
+      chatOpen = true;
+    }
+    onresize();
+  });
 
 </script>
+
+
 
 <xml id="toolbox" style="display: none">
     <block type="controls_if"></block>
@@ -98,12 +266,13 @@ socket.onmessage = function(event) {
     <block type="text_print"></block>
 </xml>
 
-<div id="blocklyArea" style="width: 100%; height: 100%"></div>
-
-<div id="blocklyDiv" style="position: absolute"></div>
-
 <script>
-    var blocklyArea = document.getElementById('blocklyArea');
+
+    socket.onmessage = function(event) {
+    var data = JSON.parse(event.data);
+    var blocklyEvent = Blockly.Events.fromJson(data.message, workspace);
+  }
+    var blocklyArea = document.getElementById('blockly-container');
     var blocklyDiv = document.getElementById('blocklyDiv');
     var workspace = Blockly.inject(blocklyDiv,
         {toolbox: document.getElementById('toolbox')});
@@ -128,22 +297,40 @@ socket.onmessage = function(event) {
     onresize();
     Blockly.svgResize(workspace);
 
-
-
   //EVENTS
-  workspace.addChangeListener(mirrorEvent);
+  // workspace.addChangeListener(mirrorEvent);
 
-  function mirrorEvent(primaryEvent) {
-    if (primaryEvent instanceof Blockly.Events.Ui) {
-        return;  // Don't mirror UI events.
-    }
-      // Convert event to JSON.
-    var json = primaryEvent.toJson();
-    socket.send(JSON.stringify({
-      "message" : json
-    }))
+  // function mirrorEvent(primaryEvent) {
+  //   if (primaryEvent instanceof Blockly.Events.Ui) {
+  //       return;  // Don't mirror UI events.
+  //   }
+  //     // Convert event to JSON.
+  //   var json = primaryEvent.toJson();
+  //   socket.send(JSON.stringify({
+  //     "message" : json
+  //   }))
 
-    console.log(json)
+  //   console.log(json)
 
-  }
+  // }
 </script>
+
+
+
+
+<script>
+
+function ChatReceive () {
+  //Make new chat message
+}
+
+function ChatSend () {
+  socket.send(JSON.stringify({
+    type : "chat",
+    data : "" //The message to send
+  }))
+}
+
+</script>
+
+</html>

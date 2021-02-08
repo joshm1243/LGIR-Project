@@ -17,7 +17,7 @@ from django.urls import path
 from django.contrib import admin
 from django.conf.urls.static import static
 from application.views import project_space_view, monitor_view, settings_view, dashboard_view
-from account.views import login_view
+from account.views import login_view, top_nav_view
 from django.conf import settings
 
 urlpatterns = [
@@ -32,11 +32,9 @@ urlpatterns = [
     path('dashboard/', dashboard_view, name="settings"),
 
     #
-    path('login/',login_view, name="login")
+    path('login/',login_view, name="login"),
 
-    #path('application/settings/', settings_view, name="settings"),
-    #path('application/projectspace/', project_space_view, name="project_space"),
-    #path('',login_view, name='login'),
+    path('public/generics/inward/top-nav/', top_nav_view, name="top_nav")
 ]
 
 if settings.DEBUG:
