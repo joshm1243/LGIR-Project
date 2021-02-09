@@ -26,6 +26,8 @@ class ApplicationConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
 
+        print(message)
+
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
@@ -40,7 +42,3 @@ class ApplicationConsumer(WebsocketConsumer):
 
         if self.channel_name != event["sender_channel_name"]:
             self.send(text_data = json.dumps({"message" : message}))
-
-        # self.send(text_data=json.dumps({
-        #     "message" : message
-        # }))

@@ -6,6 +6,7 @@
 
 <script src="{% static 'application/blockly/google-blockly-edd475f/blockly_compressed.js' %}"></script>
 <script src="{% static 'application/blockly/google-blockly-edd475f/blocks_compressed.js' %}"></script>
+<script src="{% static 'application/blockly/google-blockly-edd475f/javascript_compressed.js' %}"></script>
 <script src="{% static 'application/blockly/google-blockly-edd475f/msg/js/en.js' %}"></script>
 
 <script>
@@ -18,9 +19,6 @@
   var endpoint = wsStart + window.location.host +  window.location.pathname
   var socket = new WebSocket(endpoint)
   
-  socket.onmessage = function(event) {
-    console.log("HHH")
-  }
 
   
 </script>
@@ -109,7 +107,6 @@ input:focus{
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
-  min-height: 100%;
 }
 
 #chat-container {
@@ -155,6 +152,10 @@ input:focus{
   font-size: 15px;
 }
 
+#workspace-area {
+  width: 100%;
+}
+
 </style>
 
 </head>
@@ -178,14 +179,16 @@ input:focus{
     {% endblock includes %}
   </a></li>
   <li><a>Workspace</a></li>
-  <li><a>Monitor</a></li>
-  <li><a>Run</a></li>
+  <li><a id="toggle-monitor">Monitor</a></li>
+  <li><a id="run-code">Run</a></li>
   <li><a id="toggle-chat">Chat</a></li>
   <li><a>Project Settings</a></li>
 </ul>
 
 <div id="main">
-  <div id="blockly-container" style="flex: 1;">
+  <div id="workspace-area">
+    <div id="blockly-container" style="flex: 1;"></div>
+    <div id="monitor-container" style="flex: 1;"></div>
   </div>
   <div id="chat-container">
     <div id="chat-header">Project Chat</div>
@@ -195,9 +198,6 @@ input:focus{
 </div>
 
 <div id="blocklyDiv" style="position: absolute;"></div>
-
-
-
 
 <script>
 
@@ -244,6 +244,11 @@ input:focus{
     if (chatOpen) {
       document.getElementById("chat-container").style.display = "none";
       chatOpen = false;
+      
+      // var blocks = Blockly.getMainWorkspace().getTopBlocks()
+
+      // console.log(blocks[0])
+      
     }
     else {
       document.getElementById("chat-container").style.display = "";
@@ -252,9 +257,26 @@ input:focus{
     onresize();
   });
 
+
+  var showMonitor = false;
+  document.getElementById("monitor-container").style.display = "none";
+  document.getElementById("toggle-monitor").addEventListener("click", function(){
+    if(showMonitor) {
+      document.getElementById("blockly-container").style.display = "";
+      document.getElementById("blocklyDiv").style.display = "";
+      document.getElementById("monitor-container").style.display = "none";
+      showMonitor = false;
+    }
+    else {
+      document.getElementById("blockly-container").style.display = "none";
+      document.getElementById("blocklyDiv").style.display = "none";
+      document.getElementById("monitor-container").style.display = "";
+      showMonitor = true;
+    }
+    onresize();
+  })
+
 </script>
-
-
 
 <xml id="toolbox" style="display: none">
     <block type="controls_if"></block>
@@ -268,10 +290,10 @@ input:focus{
 
 <script>
 
-    socket.onmessage = function(event) {
-    var data = JSON.parse(event.data);
-    var blocklyEvent = Blockly.Events.fromJson(data.message, workspace);
-  }
+  // socket.onmessage = function(event) {
+  //   var data = JSON.parse(event.data);
+  //   var blocklyEvent = Blockly.Events.fromJson(data.message, workspace);
+  // }
     var blocklyArea = document.getElementById('blockly-container');
     var blocklyDiv = document.getElementById('blocklyDiv');
     var workspace = Blockly.inject(blocklyDiv,
@@ -298,6 +320,50 @@ input:focus{
     Blockly.svgResize(workspace);
 
   //EVENTS
+
+  XMLParser = new DOMParser();
+
+  workspace.addChangeListener(copyBlocklyWorkspace);
+
+  function copyBlocklyWorkspace(primaryEvent) {
+
+    if (primaryEvent instanceof Blockly.Events.BlockCreate ||
+    primaryEvent instanceof Blockly.Events.Move) {
+    
+      var xmlText = new XMLSerializer().serializeToString(
+        Blockly.Xml.blockToDomWithXY(workspace.blockDB_[primaryEvent.blockId])
+      );
+      
+      console.log(xmlText)
+
+      if(chatOpen)
+      {
+        socket.send(JSON.stringify({
+        "message" : xmlText
+        }))
+      }
+
+
+
+
+
+      
+    }
+  }
+
+  socket.onmessage = function(event) {
+
+    var data = JSON.parse(
+      event.data
+    )
+
+    var block = Blockly.Xml.textToDom(data.message)
+
+    console.log(block)
+
+    Blockly.Xml.domToBlock(block,workspace)
+  }
+
   // workspace.addChangeListener(mirrorEvent);
 
   // function mirrorEvent(primaryEvent) {
@@ -313,9 +379,16 @@ input:focus{
   //   console.log(json)
 
   // }
+
+
+  document.getElementById("run-code").addEventListener("click",function(){
+    console.log(Blockly)
+    Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+    var code = Blockly.JavaScript.workspaceToCode(workspace);
+    alert(code);
+  })
+
 </script>
-
-
 
 
 <script>
