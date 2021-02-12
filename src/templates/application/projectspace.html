@@ -25,6 +25,14 @@
   
 
 <style>
+.chatMessage{
+font-family: Arial, Helvetica, sans-serif;
+color:blue;
+background-color: white;
+position: left;
+
+}
+
 
 body {
   margin: 0px;
@@ -393,17 +401,31 @@ input:focus{
 
 <script>
 
-function ChatReceive () {
+function ChatReceive (chatJSON) {
   //Make new chat message
+  let recieveChat;
+  let newChat = document.createElement("div")
+  let displayChat = document.getElementById('chat-display-container') 
+
+  newChat.innerText= chatJSON
+  newChat.classList.add('chatMessage')
+  displayChat.appendChild(newChat)
+  
 }
 
-function ChatSend () {
+let chatInput = document.getElementById('chat-input')
+chatInput.addEventListener('keypress', function(e){
+  if(e.which == 13){
+    ChatReceive(chatInput.value)
+  }
+  
+})
+function ChatSend (texttosend) {
   socket.send(JSON.stringify({
     type : "chat",
-    data : "" //The message to send
+    data : texttosend //The message to send
   }))
 }
-
 </script>
 
 </html>
