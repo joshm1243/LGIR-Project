@@ -407,7 +407,7 @@ function ChatReceive (chatJSON) {
   let newChat = document.createElement("div")
   let displayChat = document.getElementById('chat-display-container') 
 
-  newChat.innerText= chatJSON
+  newChat.innerText= chatJSON.message
   newChat.classList.add('chatMessage')
   displayChat.appendChild(newChat)
   
@@ -416,7 +416,10 @@ function ChatReceive (chatJSON) {
 let chatInput = document.getElementById('chat-input')
 chatInput.addEventListener('keypress', function(e){
   if(e.which == 13){
-    ChatReceive(chatInput.value)
+    ChatReceive({
+      "user": "tempuser",       
+      "message" : chatInput.value
+    })
   }
   
 })
