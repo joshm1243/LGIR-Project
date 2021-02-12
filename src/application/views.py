@@ -11,7 +11,7 @@ def monitor_view(request, appcode, *args, **kwargs):
     if request.method == "GET":
         args = {}
         args["appcode"] = appcode
-        return render(request, "application/monitor.html", args)
+        return render(request, "application/monitor.js", args)
 
 def settings_view(request, appcode, *args, **kwargs):
     if request.method == "GET":
@@ -22,6 +22,3 @@ def settings_view(request, appcode, *args, **kwargs):
 def dashboard_view(request, *args, **kwargs):
     if request.method == "GET":
         return render(request, "application/dashboard.html")
-
-
-#
