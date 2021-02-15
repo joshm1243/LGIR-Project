@@ -96,3 +96,17 @@ socket.onmessage = function(event) {
     }))
   }
 </script>
+
+
+<script>
+Blockly.Blocks['Pin Value'] = {
+  innit: function() {
+    this.appendValueInput('VALUE')
+        .setCheck('String')
+        .appendField('value is ');
+    this.setOutput(true, 'PIN 0 AT 1');
+    this.setColor(160);
+    this.setNextStatement(true); // false implies no connector at the bottom
+  }
+}
+</script>
