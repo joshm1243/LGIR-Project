@@ -18,20 +18,44 @@
   
   var endpoint = wsStart + window.location.host +  window.location.pathname
   var socket = new WebSocket(endpoint)
+
+  socket.onopen = function() {
+
+    socket.send(JSON.stringify({
+      "type" : "blockly_edit_check",
+    }))
+
+    socket.onmessage = function(event) {
+
+
+      let data = JSON.parse(event.data)
+
+
+      if (data.type == "blockly_edit_check")
+      {
+        if (data.edit) {
+          console.log("Edit the application!")
+        }
+        else {
+          console.log("You cannot edit the application")
+        }
+      }
+    }
+  }
+
+
   
+
+
+ 
+
 
   
 </script>
   
 
 <style>
-.chatMessage{
-font-family: Arial, Helvetica, sans-serif;
-color:blue;
-background-color: white;
-position: left;
 
-}
 
 
 body {
@@ -164,6 +188,14 @@ input:focus{
   width: 100%;
 }
 
+.chatMessage{
+font-family: Arial, Helvetica, sans-serif;
+color:blue;
+background-color: white;
+position: left;
+
+}
+
 </style>
 
 </head>
@@ -186,8 +218,8 @@ input:focus{
     {{ appcode }}
     {% endblock includes %}
   </a></li>
-  <li><a>Workspace</a></li>
   <li><a id="toggle-monitor">Monitor</a></li>
+  <li><a id="request-edit-permissions">Edit</a>
   <li><a id="run-code">Run</a></li>
   <li><a id="toggle-chat">Chat</a></li>
   <li><a>Project Settings</a></li>
@@ -199,8 +231,11 @@ input:focus{
     <div id="monitor-container" style="flex: 1;"></div>
   </div>
   <div id="chat-container">
-    <div id="chat-header">Project Chat</div>
-    <div id="chat-display-container">Chat Messages Go Here</div>
+    <div id="chat-header">    
+      {{ appcode }} chat</div>
+    <div id="chat-display-container">
+      Chat messages go here
+    </div>
     <div id="chat-input-container"><input id="chat-input"></div>
   </div>
 </div>
@@ -298,12 +333,12 @@ input:focus{
 
 <script>
 
-  // socket.onmessage = function(event) {
-  //   var data = JSON.parse(event.data);
-  //   var blocklyEvent = Blockly.Events.fromJson(data.message, workspace);
-  // }
+  var blocklyMaster = false;
+
+
     var blocklyArea = document.getElementById('blockly-container');
     var blocklyDiv = document.getElementById('blocklyDiv');
+    var ws = new Blockly.WorkspaceSvg(new Blockly.Options({}))
     var workspace = Blockly.inject(blocklyDiv,
         {toolbox: document.getElementById('toolbox')});
     var onresize = function(e) {
@@ -327,50 +362,37 @@ input:focus{
     onresize();
     Blockly.svgResize(workspace);
 
-  //EVENTS
-
-  XMLParser = new DOMParser();
 
   workspace.addChangeListener(copyBlocklyWorkspace);
-
   function copyBlocklyWorkspace(primaryEvent) {
 
-    if (primaryEvent instanceof Blockly.Events.BlockCreate ||
-    primaryEvent instanceof Blockly.Events.Move) {
-    
-      var xmlText = new XMLSerializer().serializeToString(
-        Blockly.Xml.blockToDomWithXY(workspace.blockDB_[primaryEvent.blockId])
-      );
-      
-      console.log(xmlText)
 
-      if(chatOpen)
-      {
-        socket.send(JSON.stringify({
-        "message" : xmlText
-        }))
-      }
-
-
-
-
-
-      
+    if (primaryEvent instanceof Blockly.Events.Ui) {
+        return;  // Don't mirror UI events.
     }
+    
+
+
+
+
+    
+
+
+
   }
 
-  socket.onmessage = function(event) {
+  // socket.onmessage = function(event) {
 
-    var data = JSON.parse(
-      event.data
-    )
+  //   // // var data = JSON.parse(
+  //   // //   event.data
+  //   // // )
 
-    var block = Blockly.Xml.textToDom(data.message)
+  //   // var block = Blockly.Xml.textToDom(data.message)
 
-    console.log(block)
+  //   // console.log(block)
 
-    Blockly.Xml.domToBlock(block,workspace)
-  }
+  //   // Blockly.Xml.domToBlock(block,workspace)
+  // }
 
   // workspace.addChangeListener(mirrorEvent);
 
@@ -408,7 +430,7 @@ function ChatReceive (chatJSON) {
   let displayChat = document.getElementById('chat-display-container') 
 
   newChat.innerText= chatJSON.message
-  newChat.classList.add('chatMessage')
+  newChat.classList.add('left')
   displayChat.appendChild(newChat)
   
 }
