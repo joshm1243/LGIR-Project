@@ -8,50 +8,6 @@
 <script src="{% static 'application/blockly/google-blockly-edd475f/blocks_compressed.js' %}"></script>
 <script src="{% static 'application/blockly/google-blockly-edd475f/javascript_compressed.js' %}"></script>
 <script src="{% static 'application/blockly/google-blockly-edd475f/msg/js/en.js' %}"></script>
-
-<script>
-
-  var wsStart = "ws://"
-  if (window.location.protocol == 'https:') {
-    wsStart = "wss://"
-  }
-  
-  var endpoint = wsStart + window.location.host +  window.location.pathname
-  var socket = new WebSocket(endpoint)
-
-  socket.onopen = function() {
-
-    socket.send(JSON.stringify({
-      "type" : "blockly_edit_check",
-    }))
-
-    socket.onmessage = function(event) {
-
-
-      let data = JSON.parse(event.data)
-
-
-      if (data.type == "blockly_edit_check")
-      {
-        if (data.edit) {
-          console.log("Edit the application!")
-        }
-        else {
-          console.log("You cannot edit the application")
-        }
-      }
-    }
-  }
-
-
-  
-
-
- 
-
-
-  
-</script>
   
 
 <style>
@@ -292,11 +248,6 @@ input:focus{
     if (chatOpen) {
       document.getElementById("chat-container").style.display = "none";
       chatOpen = false;
-      
-      // var blocks = Blockly.getMainWorkspace().getTopBlocks()
-
-      // console.log(blocks[0])
-      
     }
     else {
       document.getElementById("chat-container").style.display = "";
@@ -336,10 +287,49 @@ input:focus{
     <block type="text_print"></block>
 </xml>
 
-<script>
 
-  var blocklyMaster = false;
 
+<script> //Web-socket routing
+
+  //Checking if the user is using a secure web-socket protocol
+  var wsStart = "ws://"
+  if (window.location.protocol == 'https:') {
+    wsStart = "wss://"
+  }
+  
+  //Creating the HTML5 websocket
+  var endpoint = wsStart + window.location.host +  window.location.pathname
+  var socket = new WebSocket(endpoint)
+
+  //Waiting until the web-socket is open, and then listening to any activity on the web-socket
+  socket.onopen = function() {
+
+    socket.send(JSON.stringify({
+      "type" : "blockly_edit_check",
+    }))
+
+    socket.onmessage = function(event) {
+
+      let data = JSON.parse(event.data) //Taking the JSON string and parsing into a JSON object
+
+      
+      //A blockly edit check reply has been received across the web-socket
+      if (data.type == "blockly_edit_check")
+      {
+        console.log("Received a blockly_edit_check reply")
+      }
+
+      //A chat message has been received across the web-socket
+      else if (data.type == "chat_message") {
+
+        ChatMessageReceive(data) //Calls the ChatMessageReceive function which deals with the event of a new chat message
+      }
+    }
+  }
+
+</script>
+
+<script> //Blockly DOM injection
 
     var blocklyArea = document.getElementById('blockly-container');
     var blocklyDiv = document.getElementById('blocklyDiv');
@@ -368,55 +358,7 @@ input:focus{
     Blockly.svgResize(workspace);
 
 
-  workspace.addChangeListener(copyBlocklyWorkspace);
-  function copyBlocklyWorkspace(primaryEvent) {
-
-
-    if (primaryEvent instanceof Blockly.Events.Ui) {
-        return;  // Don't mirror UI events.
-    }
-    
-
-
-
-
-    
-
-
-
-  }
-
-  // socket.onmessage = function(event) {
-
-  //   // // var data = JSON.parse(
-  //   // //   event.data
-  //   // // )
-
-  //   // var block = Blockly.Xml.textToDom(data.message)
-
-  //   // console.log(block)
-
-  //   // Blockly.Xml.domToBlock(block,workspace)
-  // }
-
-  // workspace.addChangeListener(mirrorEvent);
-
-  // function mirrorEvent(primaryEvent) {
-  //   if (primaryEvent instanceof Blockly.Events.Ui) {
-  //       return;  // Don't mirror UI events.
-  //   }
-  //     // Convert event to JSON.
-  //   var json = primaryEvent.toJson();
-  //   socket.send(JSON.stringify({
-  //     "message" : json
-  //   }))
-
-  //   console.log(json)
-
-  // }
-
-
-  document.getElementById("run-code").addEventListener("click",function(){
+    document.getElementById("run-code").addEventListener("click",function(){
     console.log(Blockly)
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
     var code = Blockly.JavaScript.workspaceToCode(workspace);
@@ -425,50 +367,54 @@ input:focus{
 
 </script>
 
+<script> //Sending and recieving chat messages
 
-<script>
+//Defining a standard form for chat messages
+class ChatMessage {
 
-function ChatReceive (chatJSON) {
-  //Make new chat message
-  let recieveChat;
-  let newChat = document.createElement("div")
-  let displayChat = document.getElementById('chat-display-container') 
-  newChat.innerText= chatJSON.message
-  newChat.classList.add('right')
-  //if (chatJSON.User == userAccount){
-    //newChat.classList.add('right')
-  //}
-  //else{
-    //newChat.classList.add('left')
-  //}  
-  displayChat.appendChild(newChat)
-
+  //The currentUser variable stores whether the message was sent by the currently logged in user
+  constructor(message, currentUser=false) {
+    this.el = document.createElement("div")
+    this.el.innerText = message
+    if (currentUser) {
+      this.el.classList.add("right") //The current user has sent the message, display on the right
+    }
+    else {  
+      this.el.classList.add("left") //Another user has sent the message, display on the left
+    }
+  }
 }
 
+//The web-socket has received a new chat_message
+function ChatMessageReceive (chatJSON) {
+  let chatDisplayContainer = document.getElementById("chat-display-container") //The container used to display chat messages
+  let newChatMessage = new ChatMessage(chatJSON.message) //Creating a new ChatMessage object
+  chatDisplayContainer.appendChild(newChatMessage.el) //Append the new chat message to the DOM
+}
+
+//Listening to the chat input box to see if the user has entered a character
 let chatInput = document.getElementById('chat-input')
 chatInput.addEventListener('keypress', function(e){
+
+  //Checking if the user has pressed the enter key
   if(e.which == 13){
-    ChatReceive({
-      "user": "tempuser",       
-      "message" : chatInput.value
-      
-    })
+
+    //Send a new chat message down the web-socket
+    socket.send(JSON.stringify({
+      "type" : "chat_message", //The type of 'chat_message' is used to tell the web-socket handler to broadcast to all devices
+      "message" : chatInput.value //Setting the message as the current value within the input box
+    }))
+
+    //Creating a new ChatMessage and appending it to the DOM
+    let chatDisplayContainer = document.getElementById("chat-display-container")
+    let newChatMessage = new ChatMessage(chatInput.value,true)
+    chatDisplayContainer.appendChild(newChatMessage.el)
+
+    chatInput.value = "" //Setting the chat input box back to an empty string
+
   }
-  
 })
-function ChatMessageSend (texttosend) {
-  socket.send(JSON.stringify({
-    type : "chatMessage",
-    data : texttosend, //The message to send
-    data : username
-  }))
-  function ChatMessageview (texttorecieve) {
-  socket.send(JSON.stringify({
-    type : "chatview",
-    data : texttorecieve, //the message to recieve
-    data : username
-  }))
-  }
-}
+
 </script>
+
 </html>

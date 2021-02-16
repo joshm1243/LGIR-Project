@@ -2,7 +2,6 @@ import json
 import redis
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-from blog.models import Profile
 
 r = redis.Redis(host="127.0.0.1", port="6379", db=0)
 
@@ -27,34 +26,40 @@ class ApplicationConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         self.data = json.loads(text_data)
 
-
         if text_data_json["type"] == "blockly_edit_check":
 
-            blocklyGroupMaster = r.get(self.room_group_name + "_master").decode("utf-8")
+            self.data = json.loads('{"type" : "blockly_edit_check", "edit" : false}')
+
+            async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name,
+                {
+                    "type" : "unicast",
+                    "sender_channel_name" : self.channel_name,
+                    "data" : json.loads('{"type" : "blockly_edit_check", "edit" : "fdsafd"}')
+                }
+            )
             
-            if blocklyGroupMaster is None or blocklyGroupMaster == "user1":
+        else:
 
-                #Assign the current user as the master
-                r.set(blocklyGroupMaster,"user1")
-                print(blocklyGroupMaster)
-                
-                self.data = json.loads('{"type" : "blockly_edit_check", "edit" : true}')
-            else:
-                self.data = json.loads('{"type" : "blockly_edit_check", "edit" : false}')
+        #     blocklyGroupMaster = r.get(self.room_group_name + "_master").decode("utf-8")
+        #     if blocklyGroupMaster is None or blocklyGroupMaster == "user1":
+        #         r.set(blocklyGroupMaster,"user1")
+      
+     
         
-
-        async_to_sync(self.channel_layer.group_send)(
-        self.room_group_name,
-            {
-                "type" : "unicast",
-                "sender_channel_name" : self.channel_name
-            }
-        )
+            async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name,
+                {
+                    "type" : "broadcast",
+                    "sender_channel_name" : self.channel_name,
+                    "data" : text_data_json
+                }
+            )
 
     def broadcast(self, event):
         if self.channel_name != event["sender_channel_name"]:
-            self.send(text_data = json.dumps(self.data))
+            self.send(text_data = json.dumps(event["data"]))
 
     def unicast(self, event):
         if self.channel_name == event["sender_channel_name"]:
-            self.send(text_data = json.dumps(self.data))
+            self.send(text_data = json.dumps(event["data"]))
