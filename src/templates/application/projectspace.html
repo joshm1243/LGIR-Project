@@ -152,18 +152,19 @@ input:focus{
   color: #FFFFFF;
 }
 
-#chat-container div {
+ #chat-container div {
   width: 100%;
-}
+} 
 
 #chat-header {
-  padding: 10px;
-  background-color: #333333;
-  font-weight: bold;
+  padding:10px;
+  background-color:#333333;
+  font-weight:bold;
 }
 
 #chat-display-container {
   background-color: #333333;
+  overflow-y: auto;
 }
 
 #chat-input-container {
@@ -188,14 +189,21 @@ input:focus{
   width: 100%;
 }
 
-.chatMessage{
-font-family: Arial, Helvetica, sans-serif;
-color:blue;
-background-color: white;
-position: left;
-
+#chat-display-container div {
+  width: 80%;
 }
 
+#chat-display-container div.left{
+  text-align: left;
+  float: left;
+  padding-left: 5px;
+}
+
+#chat-display-container div.right{
+  text-align: right;
+  float: right;
+  padding-right: 5px;
+}
 </style>
 
 </head>
@@ -231,11 +239,8 @@ position: left;
     <div id="monitor-container" style="flex: 1;"></div>
   </div>
   <div id="chat-container">
-    <div id="chat-header">    
-      {{ appcode }} chat</div>
-    <div id="chat-display-container">
-      Chat messages go here
-    </div>
+    <div id="chat-header">{{ appcode }} chat</div>
+    <div id="chat-display-container"></div>
     <div id="chat-input-container"><input id="chat-input"></div>
   </div>
 </div>
@@ -428,11 +433,16 @@ function ChatReceive (chatJSON) {
   let recieveChat;
   let newChat = document.createElement("div")
   let displayChat = document.getElementById('chat-display-container') 
-
   newChat.innerText= chatJSON.message
-  newChat.classList.add('left')
+  newChat.classList.add('right')
+  //if (chatJSON.User == userAccount){
+    //newChat.classList.add('right')
+  //}
+  //else{
+    //newChat.classList.add('left')
+  //}  
   displayChat.appendChild(newChat)
-  
+
 }
 
 let chatInput = document.getElementById('chat-input')
@@ -441,16 +451,24 @@ chatInput.addEventListener('keypress', function(e){
     ChatReceive({
       "user": "tempuser",       
       "message" : chatInput.value
+      
     })
   }
   
 })
-function ChatSend (texttosend) {
+function ChatMessageSend (texttosend) {
   socket.send(JSON.stringify({
-    type : "chat",
-    data : texttosend //The message to send
+    type : "chatMessage",
+    data : texttosend, //The message to send
+    data : username
   }))
+  function ChatMessageview (texttorecieve) {
+  socket.send(JSON.stringify({
+    type : "chatview",
+    data : texttorecieve, //the message to recieve
+    data : username
+  }))
+  }
 }
 </script>
-
 </html>
