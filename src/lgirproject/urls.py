@@ -17,7 +17,7 @@ from django.urls import path
 from django.contrib import admin
 from django.conf.urls.static import static
 from application.views import project_space_view, monitor_view, settings_view, dashboard_view
-from account.views import login_view, top_nav_view
+from account.views import login_view, top_nav_view, front_view
 from django.conf import settings
 
 urlpatterns = [
@@ -33,6 +33,7 @@ urlpatterns = [
 
     #
     path('login/',login_view, name="login"),
+    path('',front_view, name="front_view"),
 
     path('public/generics/inward/top-nav/', top_nav_view, name="top_nav")
 ]
