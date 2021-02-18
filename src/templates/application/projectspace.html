@@ -4,166 +4,23 @@
 <html>
 <head>
 
+<title>LGIR: Project Space</title>
+
+<!-- Including the blockly application from the static files directory -->
 <script src="{% static 'application/blockly/google-blockly-edd475f/blockly_compressed.js' %}"></script>
 <script src="{% static 'application/blockly/google-blockly-edd475f/blocks_compressed.js' %}"></script>
 <script src="{% static 'application/blockly/google-blockly-edd475f/javascript_compressed.js' %}"></script>
 <script src="{% static 'application/blockly/google-blockly-edd475f/msg/js/en.js' %}"></script>
-  
 
-<style>
-
-
-
-body {
-  margin: 0px;
-  height: 100%;
-  width: 100%;
-  font-family: 'Biryani', sans-serif;
-}
-
-#mobile-top-nav {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #555555;
-}
-
-#mobile-top-nav li {
-  float: left;
-}
-
-#mobile-top-nav li a {
-  text-decoration: none;
-  color: #FFFFFF;
-  text-align: center;
-  padding: 15px;
-  display: block;
-  cursor: pointer;
-}
-
-#top_nav {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #555555;
-}
-
-#top_nav li {
-  float: left;
-}
-
-#top_nav li a {
-  text-decoration: none;
-  color: #FFFFFF;
-  text-align: center;
-  padding: 15px;
-  display: block;
-  cursor: pointer;
-}
-
-#project_nav {
-  list-style-type: none;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  max-height: 44px;
-  overflow: auto;
-  white-space: nowrap;
-  background-color: #444444;
-}
-
-#project_nav li {
-  float: left;
-}
-
-#project_nav li a {
-  text-decoration: none;
-  color: #FFFFFF;
-  text-align: center;
-  padding: 8px 15px;
-  display: block;
-  cursor: pointer;
-}
-
-input:focus{
-  outline: none;
-}
-
-#main {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-}
-
-#chat-container {
-  width: 350px;
-}
-
-#chat-container {
-  text-align: center;
-  display: flex;
-  flex-wrap: wrap;
-  color: #FFFFFF;
-}
-
- #chat-container div {
-  width: 100%;
-} 
-
-#chat-header {
-  padding:10px;
-  background-color:#333333;
-  font-weight:bold;
-}
-
-#chat-display-container {
-  background-color: #333333;
-  overflow-y: auto;
-}
-
-#chat-input-container {
-  height: 45px;
-  background-color: #444444;
-}
-
-#chat-input {
-  border: none;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  padding-left: 10px;
-  padding-right: 10px;
-  background-color: #222222;
-  color: #FFFFFF;
-  font-family: 'Biryani', sans-serif; 
-  font-size: 15px;
-}
-
-#workspace-area {
-  width: 100%;
-}
-
-#chat-display-container div {
-  width: 80%;
-}
-
-#chat-display-container div.left{
-  text-align: left;
-  float: left;
-  padding-left: 5px;
-}
-
-#chat-display-container div.right{
-  text-align: right;
-  float: right;
-  padding-right: 5px;
-}
-</style>
+<!-- Loading Static CSS -->
+<link rel="stylesheet" href="{% static 'css/generics/main.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'css/application/chat.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'css/application/navigation.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'css/application/workspace.css' %}" type="text/css">
 
 </head>
 
+<!--  -->
 <ul id="top_nav">
   <li><a>LGIR</a></li>
   <li><a>Dashboard</a></li>
@@ -287,8 +144,6 @@ input:focus{
     <block type="text_print"></block>
 </xml>
 
-
-
 <script> //Web-socket routing
 
   //Checking if the user is using a secure web-socket protocol
@@ -321,7 +176,6 @@ input:focus{
 
       //A chat message has been received across the web-socket
       else if (data.type == "chat_message") {
-
         ChatMessageReceive(data) //Calls the ChatMessageReceive function which deals with the event of a new chat message
       }
     }
