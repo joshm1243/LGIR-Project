@@ -99,18 +99,27 @@ socket.onmessage = function(event) {
 
 
 <script>
+  // Definition Block
 var pin = 0;
 var pos = 1;
-Blockly.Blocks['Pin Value'] = {
+Blockly.Blocks['Pin_Value'] = {
   innit: function() {
     this.appendValueInput('VALUE')
         .setCheck('Number')
         .appendField('value is ');
     this.setOutput(true, 'PIN: ', pin, 'AT', pos);
     this.setColour(160);
-    this.setPreviousStatement(true) // false implies no connector at the top
+    this.setPreviousStatement(true); // false implies no connector at the top
     this.setNextStatement(true); // false implies no connector at the bottom
   }
-}
+};
 // Block input types - value, statement or dummy.
+</script>
+
+<script>
+  // Generator Stub
+Blockly.Javascript['Pin_Value'] = function(block){
+  var code = '...;\n';
+  return code;
+}
 </script>
