@@ -1,0 +1,24 @@
+
+#project_nav {
+    list-style-type: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    max-height: 44px;
+    overflow: auto;
+    white-space: nowrap;
+    background-color: #444444;
+}
+  
+#project_nav li {
+    float: left;
+}
+  
+#project_nav li a {
+    text-decoration: none;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 8px 15px;
+    display: block;
+    cursor: pointer;
+}
