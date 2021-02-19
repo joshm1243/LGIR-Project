@@ -36,6 +36,9 @@ urlpatterns = [
     #path('application/settings/', settings_view, name="settings"),
     #path('application/projectspace/', project_space_view, name="project_space"),
     #path('',login_view, name='login'),
+
+    patterns('lgirproject.views',
+    (r'^$','DEF_FUNCTION'),
 ]
 
 if settings.DEBUG:
