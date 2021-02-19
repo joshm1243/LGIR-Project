@@ -1688,13 +1688,13 @@ Blockly.WorkspaceSvg.prototype.onMouseWheel_ = function(e) {
  */
 Blockly.WorkspaceSvg.prototype.getBlocksBoundingBox = function() {
   var topElements = this.getTopBoundedElements();
-  // There are no blocks, return empty rectangle.
+  //There are no blocks, return empty rectangle.
   if (!topElements.length) {
     return new Blockly.utils.Rect(0, 0, 0, 0);
   }
 
   // Initialize boundary using the first block.
-  var boundary = topElements[0].getBoundingRectangle();
+  //var boundary = topElements[0].getBoundingRectangle();
 
   // Start at 1 since the 0th block was used for initialization.
   for (var i = 1; i < topElements.length; i++) {

@@ -1,0 +1,57 @@
+/* Defining standard LGIR colours */
+:root {
+    --grey: #555555;
+    --dark-grey: #444444;
+}
+
+body {
+    margin: 0px;
+    font-family: 'Biryani', sans-serif;
+}
+  
+#top_nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #555555;
+}
+
+#top_nav li {
+    float: left;
+}
+
+#top_nav li a {
+    text-decoration: none;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 15px;
+    display: block;
+    cursor: pointer;
+}
+
+#mobile-top-nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #555555;
+}
+
+#mobile-top-nav li {
+    float: left;
+}
+
+#mobile-top-nav li a {
+    text-decoration: none;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 15px;
+    display: block;
+    cursor: pointer;
+}
+
+input:focus{
+    outline: none;
+}
+  

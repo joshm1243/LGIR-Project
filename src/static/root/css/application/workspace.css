@@ -1,0 +1,9 @@
+#main {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+  
+#workspace-area {
+    width: 100%;
+}
