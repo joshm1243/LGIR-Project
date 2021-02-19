@@ -13,6 +13,7 @@ class User(AbstractUser):
 
 # Storing the model for projects here as the two are linked.
 
+
 class Project(models.Model):
     name = models.CharField(max_length=30)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='projects')
