@@ -2,7 +2,7 @@ import sys #Allows parameters to be provided
 import os #Allows the specrunner.html file to be specified
 
 #Specifying the specrunner file
-jasmineFile = "test_services/specrunner.html"
+jasmineFile = "testservices/specrunner.html"
 
 #Returns a list showing the available parameters
 def IncorrectParameter():
