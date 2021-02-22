@@ -1,16 +1,21 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 import secrets
-from application.workspace_handlers import AddSocketConnection
+from application.ws_handlers import AddSocketConnection
 
 def project_space_view(request, appcode, *args, **kwargs):
     if request.method == "GET":
         args = {}
+
+        #Collecting the project appcode from the URL
         args["appcode"] = appcode
+
+        #Creating a secure websocket key
         webSocketKey = secrets.token_hex(nbytes=16)
-        AddSocketConnection(webSocketKey,"a")
+        AddSocketConnection(webSocketKey,"username")
         args["websocket_key"] = webSocketKey
-        return render(request, "application/projectspace.html", args)
+
+        return render(request, "application/workspace.html", args)
 
 def monitor_view(request, appcode, *args, **kwargs):
     if request.method == "GET":

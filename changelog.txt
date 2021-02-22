@@ -1,3 +1,0 @@
------------------------------ LGIR CHANGE LOG ---------------------------
-## 23.01.21 ##
-Fixed issue with GitIgnore file that prevented many of the files from going to GitHub

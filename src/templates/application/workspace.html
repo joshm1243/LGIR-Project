@@ -4,7 +4,7 @@
 <html>
 <head>
 
-<title>LGIR: Project Space</title>
+<title>LGIR: {% block includes %}{{ appcode }}{% endblock includes %} Workspace</title>
 
 <!-- Including the blockly application from the static files directory -->
 <script src="{% static 'application/blockly/google-blockly-edd475f/blockly_compressed.js' %}"></script>
@@ -35,9 +35,7 @@
 
 <ul id="project_nav">
   <li><a>
-    {% block includes %}
     {{ appcode }}
-    {% endblock includes %}
   </a></li>
   <li><a id="toggle-monitor">Monitor</a></li>
   <li><a id="request-edit-permissions">Edit</a>

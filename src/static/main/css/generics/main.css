@@ -21,6 +21,10 @@ body {
     float: left;
 }
 
+#top_nav li:hover {
+    background-color: #222222;
+}
+
 #top_nav li a {
     text-decoration: none;
     color: #FFFFFF;

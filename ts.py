@@ -9,7 +9,7 @@ def IncorrectParameter():
     return """Avaiable parameters are:
 +-----------------+-----------------------------------+
 |ts.py runserver  | Starts the test server            |
-|ts.py help       | Gets help using the test server   |
+|ts.py help       | Get help using the test server    |
 +-----------------+-----------------------------------+
 """
 
