@@ -62,7 +62,7 @@
 
 <div id="main">
   <div id="workspace-area">
-    <div id="blockly-wrapper" style="flex: 1;"><h1>This</h1></div>   <!--this blocks the blockly workspace -->
+    <div id="blockly-wrapper" style="flex: 1;"><h1>Wrapper</h1></div>   <!--this blocks the blockly workspace -->
     <div id="blockly-container" style="flex: 1;"></div>
     <div id="monitor-container" style="flex: 1;"></div>
   </div>
@@ -89,7 +89,6 @@
   })  
 
   function ResizeBlockly() {
-    var wrapper = document.getElementById("blockly-wrapper")
     var blockly = document.getElementById("blockly-container")
     blockly.style.height = (window.innerHeight - 102) + "px";
   }
@@ -116,6 +115,7 @@
   }
 
   var chatOpen = false;
+  document.getElementById("blockly-wrapper").style.width = (window.width -289)+ "px";
   document.getElementById("chat-container").style.display = "none";
   document.getElementById("toggle-chat").addEventListener("click", function(){
     if (chatOpen) {
