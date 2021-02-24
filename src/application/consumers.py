@@ -45,6 +45,19 @@ class ApplicationConsumer(WebsocketConsumer):
                     "data" : json.loads('{"type" : "blockly_edit_check", "edit" : "fdsafd"}')
                 }
             )
+
+        elif text_data_json["type"] == "blockly_serial_send":
+
+            self.data = json.loads('{"type" : "blockly_serial_send_reply", "msg" : "connecting"}')
+
+            async_to_sync(self.channel_layer.group_send)(
+                self.room_group_name, {
+                                        "type" : "unicast",
+                    "sender_channel_name" : self.channel_name,
+                    "data" : json.loads('{"type" : "blockly_edit_check", "edit" : "fdsafd"}')
+                }
+            )
+
             
         else:
 
