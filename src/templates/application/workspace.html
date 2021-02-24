@@ -89,6 +89,8 @@
   })  
 
   function ResizeBlockly() {
+    var blockly =document.getElementById("blockly-wrapper")
+    blockly.style.height = (window.innerHeight - 102 ) + "px";
     var blockly = document.getElementById("blockly-container")
     blockly.style.height = (window.innerHeight - 102) + "px";
   }
@@ -126,6 +128,7 @@
     else {
       document.getElementById("blockly-wrapper").style.width = (window.innerWidth - 289) + "px";
       document.getElementById("chat-container").style.display = "";
+      console.log(document.getElementById("chat-container").style.width)
       chatOpen = true;
     }
     onresize();
