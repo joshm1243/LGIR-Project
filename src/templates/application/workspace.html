@@ -4,6 +4,20 @@
 <html>
 <head>
 
+<style>
+
+#blockly-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: #000000;
+  top: 0;
+  left: 0;
+  z-index: 30;
+}
+
+</style>
+
 <title>LGIR: {% block includes %}{{ appcode }}{% endblock includes %} Workspace</title>
 
 <!-- Including the blockly application from the static files directory -->
@@ -21,13 +35,7 @@
 <link rel="stylesheet" href="{% static 'css/application/workspace.css' %}" type="text/css">
 
 </head>
-  #blockly-wrapper {​​​​​
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }​​​​​ 
+
 <!--  -->
 <ul id="top_nav">
   <li><a>LGIR</a></li>
@@ -54,11 +62,8 @@
 
 <div id="main">
   <div id="workspace-area">
-   
-    
-    <div id="blockly-wrapper" style="flex: 1;">   <!--this blocks the blockly workspace -->
-      <div id="blockly-container" style="flex: 1;"></div>
-    </div>
+    <div id="blockly-wrapper" style="flex: 1;"></div>   <!--this blocks the blockly workspace -->
+    <div id="blockly-container" style="flex: 1;"></div>
     <div id="monitor-container" style="flex: 1;"></div>
   </div>
   <div id="chat-container">
