@@ -134,8 +134,6 @@
 
 
 <script>
-
-
   
 var blocklySetComponentBlock = {
   "type": "set_component",
@@ -180,20 +178,19 @@ Blockly.JavaScript['set_component'] = function(block) {
   return code;
 };
 
-var blocklySetComponent = {
-  "type": "set_component",
-  "message0": "set %1 to %2",
+
+
+
+
+var blocklyGetComponentBlock = {
+  "type": "get_component",
+  "message0": "get value from %1",
   "args0": [
     {
       "type": "input_value",
       "name": "COMPONENT",
       "check": "component"
     },
-    {
-      "type": "input_value",
-      "name": "VALUE",
-      "check": "component_value"
-    }
   ],
   "inputsInline": true,
   "previousStatement": null,
@@ -203,9 +200,9 @@ var blocklySetComponent = {
   "helpUrl": ""
 }
 
-Blockly.Blocks['set_component'] = {
+Blockly.Blocks['get_component'] = {
   init: function() {
-    this.jsonInit(blocklySetComponentBlock);
+    this.jsonInit(blocklyGetComponentBlock);
     var thisBlock = this;
     this.setTooltip(function() {
       return 'Add a number to variable "%1".'.replace('%1',
@@ -217,7 +214,14 @@ Blockly.Blocks['set_component'] = {
 
 
 
-blocklyComponentBlock = {
+
+
+
+
+
+
+
+var blocklyComponentBlock = {
   "type": "component",
   "message0": "%1 %2",
   "args0": [
@@ -289,6 +293,101 @@ Blockly.JavaScript['component'] = function(block) {
 
 
 
+
+
+
+
+
+
+
+///////////////////////////////// SET INPUT BLOCK /////////////////////////
+
+
+var blSetComponentValue = {
+  "type": "input_component",
+  "message0": "%1 %2",
+  "args0": [
+    {
+      "type": "field_dropdown",
+      "name": "COMPONENT_TYPE_SELECT",
+      "options": [
+        [
+          "pin",
+          "COMPONENT_PIN"
+        ],
+        [
+          "led",
+          "COMPONENT_LED"
+        ],
+        [
+          "lcd",
+          "COMPONENT_LCD"
+        ],
+        [
+          "buzzer",
+          "COMPONENT_BUZZER"
+        ],
+        [
+          "laser",
+          "COMPONENT_LASER"
+        ],
+        [
+          "relay",
+          "COMPONENT_RELAY"
+        ]
+      ]
+    },
+    {
+      "type": "field_number",
+      "name": "COMPONENT_INSTANCE_SELECT",
+      "value": 1,
+      "min": 1,
+      "max": 512
+    }
+  ],
+  "inputsInline": true,
+  "output": "component",
+  "colour": 195,
+  "tooltip": "",
+  "helpUrl": ""
+}
+
+Blockly.Blocks['input_component'] = {
+  init: function() {
+    this.jsonInit(blocklyInputComponentBlock);
+    var thisBlock = this;
+    this.setTooltip(function() {
+      return 'Add a number to variable "%1".'.replace('%1',
+          thisBlock.getFieldValue('VAR'));
+    });
+  }
+};
+
+Blockly.JavaScript['input_component'] = function(block) {
+  var dropdown_component_type_select = block.getFieldValue('COMPONENT_TYPE_SELECT');
+  var number_component_instance_select = block.getFieldValue('COMPONENT_INSTANCE_SELECT');
+  // TODO: Assemble JavaScript into code variable.
+  var code = '...';
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 
 <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
@@ -297,10 +396,13 @@ Blockly.JavaScript['component'] = function(block) {
 
   </category>
   <category name="Robotics Input" colour="#5b80a5">
-    <block type="component"></block>
-    <block type="set_component"></block>
+    <block type="input_component"></block>
+    <block type="get_component_value"></block>
+
   </category>
   <category name="Robotics Output" colour="#5b67a5">
+    <block type="component"></block>
+    <block type="set_component_value"></block>
 
   </category>
 </xml>
