@@ -3,9 +3,7 @@ import redis
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
-
 r = redis.Redis(host="127.0.0.1", port="6379", db=0)
-
 
 class ApplicationConsumer(WebsocketConsumer):
     def connect(self):
