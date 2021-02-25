@@ -132,14 +132,177 @@
 
 </script>
 
-<xml id="toolbox" style="display: none">
-    <block type="controls_if"></block>
-    <block type="controls_repeat_ext"></block>
-    <block type="logic_compare"></block>
-    <block type="math_number"></block>
-    <block type="math_arithmetic"></block>
-    <block type="text"></block>
-    <block type="text_print"></block>
+
+<script>
+
+
+  
+var blocklySetComponentBlock = {
+  "type": "set_component",
+  "message0": "set %1 to %2",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "COMPONENT",
+      "check": "component"
+    },
+    {
+      "type": "input_value",
+      "name": "VALUE",
+      "check": "component_value"
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+}
+
+Blockly.Blocks['set_component'] = {
+  init: function() {
+    this.jsonInit(blocklySetComponentBlock);
+    var thisBlock = this;
+    this.setTooltip(function() {
+      return 'Add a number to variable "%1".'.replace('%1',
+          thisBlock.getFieldValue('VAR'));
+    });
+  }
+};
+
+
+Blockly.JavaScript['set_component'] = function(block) {
+  var value_component = Blockly.JavaScript.valueToCode(block, 'COMPONENT', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = '...;\n';
+  return code;
+};
+
+var blocklySetComponent = {
+  "type": "set_component",
+  "message0": "set %1 to %2",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "COMPONENT",
+      "check": "component"
+    },
+    {
+      "type": "input_value",
+      "name": "VALUE",
+      "check": "component_value"
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+}
+
+Blockly.Blocks['set_component'] = {
+  init: function() {
+    this.jsonInit(blocklySetComponentBlock);
+    var thisBlock = this;
+    this.setTooltip(function() {
+      return 'Add a number to variable "%1".'.replace('%1',
+          thisBlock.getFieldValue('VAR'));
+    });
+  }
+};
+
+
+
+
+blocklyComponentBlock = {
+  "type": "component",
+  "message0": "%1 %2",
+  "args0": [
+    {
+      "type": "field_dropdown",
+      "name": "COMPONENT_TYPE_SELECT",
+      "options": [
+        [
+          "pin",
+          "COMPONENT_PIN"
+        ],
+        [
+          "led",
+          "COMPONENT_LED"
+        ],
+        [
+          "lcd",
+          "COMPONENT_LCD"
+        ],
+        [
+          "buzzer",
+          "COMPONENT_BUZZER"
+        ],
+        [
+          "laser",
+          "COMPONENT_LASER"
+        ],
+        [
+          "relay",
+          "COMPONENT_RELAY"
+        ]
+      ]
+    },
+    {
+      "type": "field_number",
+      "name": "COMPONENT_INSTANCE_SELECT",
+      "value": 1,
+      "min": 1,
+      "max": 512
+    }
+  ],
+  "inputsInline": true,
+  "output": "component",
+  "colour": 195,
+  "tooltip": "",
+  "helpUrl": ""
+}
+
+
+Blockly.Blocks['component'] = {
+  init: function() {
+    this.jsonInit(blocklyComponentBlock);
+    var thisBlock = this;
+    this.setTooltip(function() {
+      return 'Add a number to variable "%1".'.replace('%1',
+          thisBlock.getFieldValue('VAR'));
+    });
+  }
+};
+
+Blockly.JavaScript['component'] = function(block) {
+  var dropdown_component_type_select = block.getFieldValue('COMPONENT_TYPE_SELECT');
+  var number_component_instance_select = block.getFieldValue('COMPONENT_INSTANCE_SELECT');
+  // TODO: Assemble JavaScript into code variable.
+  var code = '...';
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+
+
+</script>
+
+<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+  <sep></sep>
+  <category name="Logic" colour="#111111">
+
+  </category>
+  <category name="Robotics Input" colour="#5b80a5">
+    <block type="component"></block>
+    <block type="set_component"></block>
+  </category>
+  <category name="Robotics Output" colour="#5b67a5">
+
+  </category>
 </xml>
 
 <script> //Web-socket routing
@@ -187,7 +350,31 @@
     var blocklyDiv = document.getElementById('blocklyDiv');
     var ws = new Blockly.WorkspaceSvg(new Blockly.Options({}))
     var workspace = Blockly.inject(blocklyDiv,
-        {toolbox: document.getElementById('toolbox')});
+        {
+          toolbox: document.getElementById('toolbox'),
+          collapse : true, 
+          comments : true, 
+          disable : true, 
+          maxBlocks : Infinity, 
+          trashcan : true, 
+          horizontalLayout : false, 
+          toolboxPosition : 'start', 
+          css : true, 
+          media : 'https://blockly-demo.appspot.com/static/media/', 
+          rtl : false, 
+          scrollbars : true, 
+          sounds : false, 
+          oneBasedIndex : true, 
+          zoom : {
+            controls : true, 
+            wheel : true, 
+            startScale : 1, 
+            maxScale : 3, 
+            minScale : 0.3, 
+            scaleSpeed : 1.2
+          }
+        }
+    )
     var onresize = function(e) {
       // Compute the absolute coordinates and dimensions of blocklyArea.
       var element = blocklyArea;
@@ -210,7 +397,7 @@
     Blockly.svgResize(workspace);
 
 
-    document.getElementById("run-code").addEventListener("click",function(){
+  document.getElementById("run-code").addEventListener("click",function(){
     console.log(Blockly)
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
     var code = Blockly.JavaScript.workspaceToCode(workspace);
@@ -272,27 +459,27 @@ chatInput.addEventListener('keypress', function(e){
 
 
 <script>
-  // Definition Block
-var pin = 0;
-var pos = 1;
-Blockly.Blocks['Pin_Value'] = {
-  innit: function() {
-    this.appendValueInput('VALUE')
-        .setCheck('Number')
-        .appendField('value is ');
-    this.setOutput(true, 'PIN: ', pin, 'AT', pos);
-    this.setColour(160);
-    this.setPreviousStatement(true); 
-    this.setNextStatement(true); 
-  }
-};
-// Block input types - value, statement or dummy.
+//   // Definition Block
+// var pin = 0;
+// var pos = 1;
+// Blockly.Blocks['Pin_Value'] = {
+//   innit: function() {
+//     this.appendValueInput('VALUE')
+//         .setCheck('Number')
+//         .appendField('value is ');
+//     this.setOutput(true, 'PIN: ', pin, 'AT', pos);
+//     this.setColour(160);
+//     this.setPreviousStatement(true); 
+//     this.setNextStatement(true); 
+//   }
+// };
+// // Block input types - value, statement or dummy.
 
-  // Generator Stub
-Blockly.Javascript['Pin_Value'] = function(block){
-  var code = '...;\n';
-  return code;
-}
+//   // Generator Stub
+// Blockly.Javascript['Pin_Value'] = function(block){
+//   var code = '...;\n';
+//   return code;
+// }
 </script>
 
 </html>
