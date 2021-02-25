@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+AUTH_USER_MODEL = 'account.User'
+
 # Application definition
 # pip install django 
 # pip instlal .whl Twisted file
