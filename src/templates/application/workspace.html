@@ -16,6 +16,10 @@
   z-index: 30;
 }
 
+#chat-container {
+  z-index: 35;
+}
+
 </style>
 
 <title>LGIR: {% block includes %}{{ appcode }}{% endblock includes %} Workspace</title>
@@ -93,6 +97,8 @@
     blockly.style.height = (window.innerHeight - 102 ) + "px";
     var blockly = document.getElementById("blockly-container")
     blockly.style.height = (window.innerHeight - 102) + "px";
+    
+    document.getElementById("blockly-wrapper").style.width = (window.innerWidth - document.getElementById("chat-container").offsetWidth) + "px"
   }
 
   function ResizeChat() {
@@ -119,16 +125,18 @@
   var chatOpen = false;
   document.getElementById("blockly-wrapper").style.width = window.innerWidth + "px";
   document.getElementById("chat-container").style.display = "none";
+  let chatContainer = document.getElementById("chat-container")
+  let blocklyWrapper = document.getElementById("blockly-wrapper")
   document.getElementById("toggle-chat").addEventListener("click", function(){
     if (chatOpen) {
-      document.getElementById("blockly-wrapper").style.width = window.innerWidth + "px";
+      blocklyWrapper.style.width = window.innerWidth + "px";
       document.getElementById("chat-container").style.display = "none";
       chatOpen = false;
     }
     else {
-      document.getElementById("blockly-wrapper").style.width = (window.innerWidth - 289) + "px";
-      document.getElementById("chat-container").style.display = "";
-      console.log(document.getElementById("chat-container").style.width)
+      document.getElementById("blockly-wrapper").style.width = "100px" // (window.innerWidth - document.getElementById("chat-container").offsetWidth) + "px";
+      chatContainer.style.display = "";
+      blocklyWrapper.style.width = (window.innerWidth - chatContainer.offsetWidth) + "px"; 
       chatOpen = true;
     }
     onresize();
@@ -196,6 +204,7 @@
         if(data.edit == "false"){
         
         }
+
         console.log("Received a blockly_edit_check reply")
 
       }
