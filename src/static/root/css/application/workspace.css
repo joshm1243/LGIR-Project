@@ -13,10 +13,7 @@
   background-color: #02020281;
   z-index: 30;
   color: white;
-  
-}
-
-#blockly-wrapper h1 {
+  display: none;
   text-align: center;
 }
 

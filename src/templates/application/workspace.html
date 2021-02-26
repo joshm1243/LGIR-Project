@@ -57,9 +57,10 @@
 
 <div id="main">
   <div id="workspace-area">
-    <div id="blockly-wrapper"><h1>someone is editing the workspace right now. please press the request access button to continue.
-      
-    </h1> </div>   <!--this blocks the blockly workspace -->  
+    <div id="blockly-wrapper">
+      <h1>Someone is editing the workspace right now.</h1>
+      <h2>Please press the request access button to continue.</h2> 
+    </div>   <!--this blocks the blockly workspace -->  
     <div id="blockly-container" style="flex: 1;"></div>
     <div id="monitor-container" style="flex: 1;"></div>
   </div>
@@ -85,15 +86,18 @@
     ResizeBlockly()
   })  
 
+  document.getElementById("blockly-wrapper").style.right = "0px";
+
+
   function ResizeBlockly() {
-    // var blockly =document.getElementById("blockly-wrapper")
-    // blockly.style.height = (window.innerHeight - 102 ) + "px";
     var blockly = document.getElementById("blockly-container")
     blockly.style.height = (window.innerHeight - 102) + "px";
   }
 
   function ResizeChat() {
     var chat = document.getElementById("chat-display-container")
+    var blocklyWrapper = document.getElementById("blockly-wrapper")
+    blocklyWrapper.style.right = chat.offsetWidth + "px"
     chat.style.height = (window.innerHeight - 195) + "px";
     chat.style.right = chat.offsetWidth;
   }
@@ -113,8 +117,6 @@
       document.getElementById("mobile-top-nav").style.display = "none";
     }
   }
-  var editOpen = false;
-  document.getElementByid("Edit")
 
   var chatOpen = false;
   document.getElementById("chat-container").style.display = "none";
@@ -195,15 +197,13 @@
       {
 
         if (data.edit == "true") {
-          console.log("Removing the wrapper")
-         document.getElement("blockly-wrapper").style.display = "none";
+         document.getElementById("blockly-wrapper").style.display = "none";
 
           //Remove the wrapper
         }
         else {
-          console.log("Adding the wrapper")
           //Add the wrapper
-          document.getElement("blockly-wrapper").style.display = "";
+          document.getElementById("blockly-wrapper").style.display = "block";
         }
       }
      

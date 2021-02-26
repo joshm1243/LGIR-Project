@@ -17,7 +17,7 @@
   background-color: #444444;
 }
 #chat-header {
-  padding:10px;
+  padding:8px 0px;
   background-color: var(--dark-grey);
   font-weight:bold;
 }
