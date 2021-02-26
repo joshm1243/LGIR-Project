@@ -13,7 +13,14 @@
 #chat-container div {
   width: 100%;
 } 
+#chat-header {
+  padding: 8px 0px;
+}
 
+#chat-input-container {
+  height: 49px;
+  background-color: #444444;
+}
 #chat-header {
   padding:10px;
   background-color: var(--dark-grey);

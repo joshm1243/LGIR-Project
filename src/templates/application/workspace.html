@@ -24,36 +24,7 @@
 
 
 
-<style>
 
-  #blockly-wrapper {
-    position: absolute;
-    top: 102px;
-    bottom:0px;
-    left: 0px;
-    right: 0px;
-    background-color: #02020281;
-    z-index: 30;
-    color: white;
-    display: none;
-  }
-
-  #blockly-wrapper h1 {
-    text-align: center;
-  }
-
-  #chat-header {
-    padding: 8px 0px;
-  }
-
-  #chat-input-container {
-    height: 49px;
-    background-color: #444444;
-  }
-  
-  
-  
-</style>
 
 
 </head>
@@ -93,7 +64,7 @@
   <div id="chat-container">
     <div id="chat-header">{{appcode}} chat</div>
     <div id="chat-display-container"></div>
-    <div id="chat-input-container"><input id="chat-input"></div>
+    <div id="chat-input-container"><input id="chat-input"> <input type="text" placeholder="Please input your text here"></div>
   </div>
 </div>
 
@@ -222,11 +193,14 @@
 
         if (data.edit == "true") {
           console.log("Removing the wrapper")
+         document.getElement("blockly-wrapper").style.display = "none";
+
           //Remove the wrapper
         }
         else {
           console.log("Adding the wrapper")
           //Add the wrapper
+          document.getElement("blockly-wrapper").style.display = "";
         }
       }
      
@@ -302,6 +276,7 @@ function ChatMessageReceive (chatJSON) {
 
 //Listening to the chat input box to see if the user has entered a character
 let chatInput = document.getElementById('chat-input')
+
 chatInput.addEventListener('keypress', function(e){
 
   //Checking if the user has pressed the enter key
