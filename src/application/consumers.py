@@ -53,7 +53,7 @@ class ApplicationConsumer(WebsocketConsumer):
                 }
             )
 
-            
+
         else:
 
         #     blocklyGroupMaster = r.get(self.room_group_name + "_master").decode("utf-8")
