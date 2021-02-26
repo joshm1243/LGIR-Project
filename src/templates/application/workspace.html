@@ -4,23 +4,7 @@
 <html>
 <head>
 
-<style>
 
-#blockly-wrapper {
-  position: absolute;
-  background-color: #02020281;
-  top: 102px;
-  left: 0px;
-  bottom: 0px;
-  right: 0px;
-  z-index: 30;
-}
-
-#chat-container {
-  z-index: 35;
-}
-
-</style>
 
 <title>LGIR: {% block includes %}{{ appcode }}{% endblock includes %} Workspace</title>
 
@@ -38,7 +22,43 @@
 <link rel="stylesheet" href="{% static 'css/application/navigation.css' %}" type="text/css">
 <link rel="stylesheet" href="{% static 'css/application/workspace.css' %}" type="text/css">
 
+
+
+<style>
+
+  #blockly-wrapper {
+    position: absolute;
+    top: 102px;
+    bottom:0px;
+    left: 0px;
+    right: 0px;
+    background-color: #02020281;
+    z-index: 30;
+    color: white;
+    display: none;
+  }
+
+  #blockly-wrapper h1 {
+    text-align: center;
+  }
+
+  #chat-header {
+    padding: 8px 0px;
+  }
+
+  #chat-input-container {
+    height: 49px;
+    background-color: #444444;
+  }
+  
+  
+  
+</style>
+
+
 </head>
+
+
 
 <!--  -->
 <ul id="top_nav">
@@ -66,12 +86,12 @@
 
 <div id="main">
   <div id="workspace-area">
-    <div id="blockly-wrapper" style="flex: 1;"><h1>Wrapper</h1></div>   <!--this blocks the blockly workspace -->
+    <div id="blockly-wrapper"><h1>Wrapper</h1></div> <!-- this blocks the blockly workspace -->
     <div id="blockly-container" style="flex: 1;"></div>
     <div id="monitor-container" style="flex: 1;"></div>
   </div>
   <div id="chat-container">
-    <div id="chat-header">{{ appcode }} chat</div>
+    <div id="chat-header">{{appcode}} chat</div>
     <div id="chat-display-container"></div>
     <div id="chat-input-container"><input id="chat-input"></div>
   </div>
@@ -93,12 +113,10 @@
   })  
 
   function ResizeBlockly() {
-    var blockly =document.getElementById("blockly-wrapper")
-    blockly.style.height = (window.innerHeight - 102 ) + "px";
+    // var blockly =document.getElementById("blockly-wrapper")
+    // blockly.style.height = (window.innerHeight - 102 ) + "px";
     var blockly = document.getElementById("blockly-container")
     blockly.style.height = (window.innerHeight - 102) + "px";
-    
-    document.getElementById("blockly-wrapper").style.width = (window.innerWidth - document.getElementById("chat-container").offsetWidth) + "px"
   }
 
   function ResizeChat() {
@@ -123,20 +141,18 @@
   }
 
   var chatOpen = false;
-  document.getElementById("blockly-wrapper").style.width = window.innerWidth + "px";
   document.getElementById("chat-container").style.display = "none";
   let chatContainer = document.getElementById("chat-container")
   let blocklyWrapper = document.getElementById("blockly-wrapper")
   document.getElementById("toggle-chat").addEventListener("click", function(){
     if (chatOpen) {
-      blocklyWrapper.style.width = window.innerWidth + "px";
+      blocklyWrapper.style.right = "0px";
       document.getElementById("chat-container").style.display = "none";
       chatOpen = false;
     }
     else {
-      document.getElementById("blockly-wrapper").style.width = "100px" // (window.innerWidth - document.getElementById("chat-container").offsetWidth) + "px";
       chatContainer.style.display = "";
-      blocklyWrapper.style.width = (window.innerWidth - chatContainer.offsetWidth) + "px"; 
+      blocklyWrapper.style.right = chatContainer.offsetWidth + "px";
       chatOpen = true;
     }
     onresize();
@@ -201,15 +217,17 @@
       //A blockly edit check reply has been received across the web-socket
       if (data.type == "blockly_edit_check")
       {
-        if(data.edit == "false"){
-        
+
+        if (data.edit == "true") {
+          console.log("Removing the wrapper")
+          //Remove the wrapper
         }
-
-        console.log("Received a blockly_edit_check reply")
-
+        else {
+          console.log("Adding the wrapper")
+          //Add the wrapper
+        }
       }
      
-
       //A chat message has been received across the web-socket
       else if (data.type == "chat_message") {
         ChatMessageReceive(data) //Calls the ChatMessageReceive function which deals with the event of a new chat message
