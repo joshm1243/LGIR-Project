@@ -4,6 +4,8 @@
 <html>
 <head>
 
+
+
 <title>LGIR: {% block includes %}{{ appcode }}{% endblock includes %} Workspace</title>
 
 <!-- Including the blockly application from the static files directory -->
@@ -20,7 +22,14 @@
 <link rel="stylesheet" href="{% static 'css/application/navigation.css' %}" type="text/css">
 <link rel="stylesheet" href="{% static 'css/application/workspace.css' %}" type="text/css">
 
+
+
+
+
+
 </head>
+
+
 
 <!--  -->
 <ul id="top_nav">
@@ -48,14 +57,14 @@
 
 <div id="main">
   <div id="workspace-area">
-    <div id="blockly-wrapper"><h1>workspace Wrapper</h1></div>   <!--this blocks the blockly workspace -->  
+    <div id="blockly-wrapper"><h1>someone is editing the workspace right now. please press the request access button to continue.</h1> </div>   <!--this blocks the blockly workspace -->  
     <div id="blockly-container" style="flex: 1;"></div>
     <div id="monitor-container" style="flex: 1;"></div>
   </div>
   <div id="chat-container">
     <div id="chat-header">{{appcode}} chat</div>
     <div id="chat-display-container"></div>
-    <div id="chat-input-container"><input id="chat-input" placeholder="Please input your text here"></div>
+    <div id="chat-input-container"><input id="chat-input"> <input type="text" placeholder="Please input your text here"></div>
   </div>
 </div>
 
@@ -84,6 +93,7 @@
   function ResizeChat() {
     var chat = document.getElementById("chat-display-container")
     chat.style.height = (window.innerHeight - 195) + "px";
+    chat.style.right = chat.offsetWidth;
   }
 
   function CheckForMobile() {
@@ -102,7 +112,7 @@
     }
   }
   var editOpen = false;
-  document.getElementById("Edit")
+  document.getElementByid("Edit")
 
   var chatOpen = false;
   document.getElementById("chat-container").style.display = "none";
@@ -183,12 +193,15 @@
       {
 
         if (data.edit == "true") {
+          console.log("Removing the wrapper")
+         document.getElement("blockly-wrapper").style.display = "none";
+
           //Remove the wrapper
-          document.getElementById("blockly-wrapper").style.display = "none";
         }
         else {
+          console.log("Adding the wrapper")
           //Add the wrapper
-          document.getElementById("blockly-wrapper").style.display = "block";
+          document.getElement("blockly-wrapper").style.display = "";
         }
       }
      
