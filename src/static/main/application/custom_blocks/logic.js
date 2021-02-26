@@ -54,18 +54,13 @@ Blockly.Blocks['add'] = {
   }
 };
 
-
-
-
-  
-  
-//   Blockly.JavaScript['set_component'] = function(block) {
-//     var value_component = Blockly.JavaScript.valueToCode(block, 'COMPONENT', Blockly.JavaScript.ORDER_ATOMIC);
-//     var value_value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
-//     // TODO: Assemble JavaScript into code variable.
-//     var code = '...;\n';
-//     return code;
-//   };
+Blockly.JavaScript['set'] = function(block) {
+  var value_component = Blockly.JavaScript.valueToCode(block, 'COMPONENT', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "this will be the code to execute";
+  return code;
+};
   
   
 
@@ -86,12 +81,12 @@ Blockly.Blocks['add'] = {
   
   
 
-  // Blockly.JavaScript['input_component'] = function(block) {
-  //   var dropdown_component_type_select = block.getFieldValue('COMPONENT_TYPE_SELECT');
-  //   var number_component_instance_select = block.getFieldValue('COMPONENT_INSTANCE_SELECT');
-  //   // TODO: Assemble JavaScript into code variable.
-  //   var code = '...';
-  //   // TODO: Change ORDER_NONE to the correct strength.
-  //   return [code, Blockly.JavaScript.ORDER_NONE];
-  // };
+  Blockly.JavaScript['input_component'] = function(block) {
+    var dropdown_component_type_select = block.getFieldValue('COMPONENT_TYPE_SELECT');
+    var number_component_instance_select = block.getFieldValue('COMPONENT_INSTANCE_SELECT');
+    // TODO: Assemble JavaScript into code variable.
+    var code = '...';
+    // TODO: Change ORDER_NONE to the correct strength.
+    return [code, Blockly.JavaScript.ORDER_NONE];
+  };
   
