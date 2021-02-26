@@ -86,7 +86,7 @@
 
 <div id="main">
   <div id="workspace-area">
-    <div id="blockly-wrapper"><h1>Wrapper</h1></div> <!-- this blocks the blockly workspace -->
+    <div id="blockly-wrapper"><h1>workspace Wrapper</h1> </div>   <!--this blocks the blockly workspace -->  
     <div id="blockly-container" style="flex: 1;"></div>
     <div id="monitor-container" style="flex: 1;"></div>
   </div>
@@ -139,6 +139,8 @@
       document.getElementById("mobile-top-nav").style.display = "none";
     }
   }
+  var editOpen = false;
+  document.getElementByid("Edit")
 
   var chatOpen = false;
   document.getElementById("chat-container").style.display = "none";
