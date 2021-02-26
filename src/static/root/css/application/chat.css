@@ -1,8 +1,6 @@
-#chat-container {
-  width: 350px;
-}
 
 #chat-container {
+  width: 350px;
   text-align: center;
   display: flex;
   flex-wrap: wrap;
@@ -14,6 +12,10 @@
   width: 100%;
 } 
 
+#chat-input-container {
+  height: 49px;
+  background-color: #444444;
+}
 #chat-header {
   padding:10px;
   background-color: var(--dark-grey);
@@ -23,11 +25,6 @@
 #chat-display-container {
   background-color: var(--dark-grey);
   overflow-y: auto;
-}
-
-#chat-input-container {
-  height: 45px;
-  background-color: #444444;
 }
 
 #chat-input {
