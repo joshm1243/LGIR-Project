@@ -49,7 +49,7 @@
     {{ appcode }}
   </a></li>
   <li><a id="toggle-monitor">Monitor</a></li>
-  <li><a id="request-edit-permissions">Edit</a>
+  <li><a id="request-edit">Edit</a>
   <li><a id="run-code">Run</a></li>
   <li><a id="toggle-chat">Chat</a></li>
   <li><a>Project Settings</a></li>
@@ -60,7 +60,7 @@
     <div id="blockly-wrapper">
       <h1>Someone is editing the workspace right now.</h1>
       <h2>Please press the request access button to continue.</h2> 
-      <button type= "button" data-toggle="collapse" data-target="#blockly-wrapper">Request Access</button>
+      <!-- <button id="request-edit">request access</button> -->
     </div>   <!--this blocks the blockly workspace -->  
     <div id="blockly-container" style="flex: 1;"></div>
     <div id="monitor-container" style="flex: 1;"></div>
@@ -199,7 +199,7 @@
 
         if (data.edit == "true") {
          document.getElementById("blockly-wrapper").style.display = "none";
-
+        
           //Remove the wrapper
         }
         else {
@@ -301,7 +301,11 @@ chatInput.addEventListener('keypress', function(e){
 
   }
 })
-
+  let editButton = document.getElementById('request-edit')
+  editButton.addEventListener("click",function() {
+  
+ Console.log("this works");
+  });
 </script>
 
 
