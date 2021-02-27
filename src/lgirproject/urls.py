@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.urls import path
 from django.contrib import admin
+from django.urls import path, include
 from django.conf.urls.static import static
 from application.views import project_space_view, monitor_view, settings_view, dashboard_view
 from account.views import login_view, top_nav_view, front_view
@@ -24,7 +25,7 @@ urlpatterns = [
 
     #
     path('admin/', admin.site.urls),
-
+    path('accounts/', include('django.contrib.auth.urls')),
     #
     path('application/<str:appcode>/workspace/', project_space_view, name="project_space"),
     path('application/<str:appcode>/monitor/', monitor_view, name="monitor"),
