@@ -60,7 +60,7 @@
     <div id="blockly-wrapper">
       <h1>Someone is editing the workspace right now.</h1>
       <h2>Please press the request access button to continue.</h2> 
-      <!-- <button id="request-edit">request access</button> -->
+      <!-- <button id="request-access">request access</button>  -->
     </div>   <!--this blocks the blockly workspace -->  
     <div id="blockly-container" style="flex: 1;"></div>
     <div id="monitor-container" style="flex: 1;"></div>
@@ -182,18 +182,27 @@
 
   //Waiting until the web-socket is open, and then listening to any activity on the web-socket
   socket.onopen = function() {
-
+    let editButton = document.getElementById('request-edit')
+    editButton.addEventListener("click",function() {
+      socket.send(JSON.stringify({
+      "type" : "blockly_edit_request",
+    
+      }))
+ 
+    })
     socket.send(JSON.stringify({
       "type" : "blockly_edit_check",
 
     }))
-
+   
+   
     socket.onmessage = function(event) {
 
       let data = JSON.parse(event.data) //Taking the JSON string and parsing into a JSON object
 
-      
+       
       //A blockly edit check reply has been received across the web-socket
+      
       if (data.type == "blockly_edit_check")
       {
 
@@ -205,13 +214,28 @@
         else {
           //Add the wrapper
           document.getElementById("blockly-wrapper").style.display = "block";
-          setTimeout(fade_out, 5000);
-          function fade_out() {
-          $("#blockly-wrapper").fadeOut().empty();
-}
+        
+  
         }
       }
-     
+     else if(data.type == "blockly_edit_request"){
+      document.getElementById("blockly-wrapper").innerHTML="someone has asked for access to your workspace <a>Yes</a> <a>No</a>" 
+      if(data.edit == "true"){
+        document.getElementById("blockly-wrapper").style.display = "none"; 
+      } 
+      else if (data.edit == "false"){
+        document.getElementById("blockly-wrapper").style.display = "block"; 
+      } 
+     }
+     else if(data.type == "blockly_edit_request_reply"){
+      if (data.edit == "Yes"){
+        document.getElementById("blockly-wrapper").style.display = "none";
+
+      }
+      if (data.edit == "No"){
+        document.getElementById("blockly-wrapper").style.display = "block";
+      }
+     }
       //A chat message has been received across the web-socket
       else if (data.type == "chat_message") {
         ChatMessageReceive(data) //Calls the ChatMessageReceive function which deals with the event of a new chat message
@@ -305,11 +329,7 @@ chatInput.addEventListener('keypress', function(e){
 
   }
 })
-  let editButton = document.getElementById('request-edit')
-  editButton.addEventListener("click",function() {
-  
- Console.log("this works");
-  });
+ 
 </script>
 
 
