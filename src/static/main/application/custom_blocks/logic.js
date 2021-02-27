@@ -90,3 +90,11 @@ Blockly.JavaScript['set'] = function(block) {
     return [code, Blockly.JavaScript.ORDER_NONE];
   };
   
+
+  Blockly.JavaScript['Speed'] = function(block) {
+    var speed_dropdown_name = block.getFieldValue('');
+    var speed_component_number = block.getFieldValue('');
+    var value_name = Blockly.JavaScript.valueToCode(block, '', Blockly.JavaScript.ORDER_ATOMIC);
+    var code = '...';
+    return [code, Blockly.JavaScript.ORDER_NONE];
+  };
