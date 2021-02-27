@@ -92,11 +92,11 @@
         <div class="grid-item"></div>
         <div class="grid-item"> 
         <p class = "top-text">Login for LGIR</p>
-        <label for=Username><b>Username</b></label>
-        <br><input type="text"  name = "username"><br>
-        <label for=password><b>Password</b></label>
-        <br><input type="password" name = "password"><br>
-        <button type="submit">Login</button>
+        <!-- This way is better for security as it protects against csrf attacks. It's also built in and does all the error handling for us. -->
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Log In</button>
         </div>
         <div class="grid-item"></div>
   </div>

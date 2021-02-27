@@ -29,6 +29,9 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 AUTH_USER_MODEL = 'account.User'
+LOGIN_REDIRECT_URL = '/dashboard/'
+LOGIN_URL = '/accounts/login'
+
 
 # Application definition
 # pip install django 

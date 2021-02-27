@@ -15,24 +15,23 @@ Including another URLconf
 """
 from django.urls import path
 from django.contrib import admin
+from django.urls import path, include
 from django.conf.urls.static import static
 from application.views import project_space_view, monitor_view, settings_view, dashboard_view
 from account.views import login_view, top_nav_view, front_view
 from django.conf import settings
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
 
     #
     path('admin/', admin.site.urls),
-
+    path('accounts/', include('django.contrib.auth.urls')),
     #
     path('application/<str:appcode>/workspace/', project_space_view, name="project_space"),
     path('application/<str:appcode>/monitor/', monitor_view, name="monitor"),
     path('application/<str:appcode>/settings/', settings_view, name="settings"),
-    path('dashboard/', dashboard_view, name="settings"),
-
-    #
-    path('login/',login_view, name="login"),
+    path('dashboard/', dashboard_view, name="dashboard"),
     path('',front_view, name="front_view"),
 
     #path('application/settings/', settings_view, name="settings"),
