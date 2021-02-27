@@ -205,6 +205,10 @@
         else {
           //Add the wrapper
           document.getElementById("blockly-wrapper").style.display = "block";
+          setTimeout(fade_out, 5000);
+          function fade_out() {
+          $("#blockly-wrapper").fadeOut().empty();
+}
         }
       }
      
