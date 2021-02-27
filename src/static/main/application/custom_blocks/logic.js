@@ -83,19 +83,37 @@ Blockly.JavaScript['set'] = function(block) {
   };
   
 
+  // Definition
+  Blockly.Blocks['Speed'] =  {
+    innit: function(){
+      var speed_dropdown = block.getFieldValue('SPEED_SELECT');
+      this.setPreviousStatement(true, "null");
+      this.setNextStatement(true, "null");
+      this.setColour(60);
+    }
+  };
+// Gen Stub
   Blockly.JavaScript['Speed'] = function(block) {
     var speed_dropdown = block.getFieldValue('SPEED_SELECT');
-    var value_name = Blockly.JavaScript.valueToCode(block, '', Blockly.JavaScript.ORDER_ATOMIC);
-    var code = '...';
+    var value = Blockly.JavaScript.valueToCode(speed_dropdown);
     this.setPreviousStatement(true, "null");
     this.setNextStatement(true, "null");
-    return [code, Blockly.JavaScript.ORDER_NONE];
+    return value;
   };
 
-  Blockly.JavaScript['Wait'] = function(block) {
-      this.setColour(60);
+
+// Definition
+  Blockly.Blocks['Wait'] =  {
+    innit: function(){
       var wait_time = block.getFieldValue('WAIT_TIME');
       this.setPreviousStatement(true, "null");
       this.setNextStatement(true, "null");
-      this.setTooltip('');
+      this.setColour(60);
+    }
+  };
+// Gen stub
+  Blockly.JavaScript['Wait'] = function(block) {
+    var delay_dropdown = block.getFieldValue('WAIT_TIME')
+    var wait_code = 'Wait(' + delay_dropdown + ');\n';
+    return wait_code;
   };

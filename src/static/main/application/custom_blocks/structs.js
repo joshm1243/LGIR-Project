@@ -159,7 +159,7 @@ var customBlocks = {
   },
 
   "speed_dropdown" : {
-    "type": "speed_dropdown",
+    "type": "field_dropdown",
     "message0": "%1",
     "args0": [
         {
@@ -187,10 +187,10 @@ var customBlocks = {
 
   "wait" : {
     "type": "wait",
-    "message0": "%1 %2",
+    "message0": " wait %1",
     "args0": [
         {
-        "type": "wait",
+        "type": "field_dropdown",
         "name": "WAIT_TIME",
         "options": [
           [
@@ -213,7 +213,7 @@ var customBlocks = {
       }
     ],
     "inputsInline": true,
-    "output": "speed",
+    "output": "waiting",
     "colour": 180,
     "tooltip": "",
     "helpUrl": ""
