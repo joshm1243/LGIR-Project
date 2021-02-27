@@ -156,8 +156,68 @@ var customBlocks = {
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
-  }
+  },
+
+  "speed_dropdown" : {
+    "type": "speed_dropdown",
+    "message0": "%1",
+    "args0": [
+        {
+        "type": "speed_dropdown",
+        "name": "SPEED_SELECT",
+        "options": [
+          [
+            "Fast"
+          ],
+          [
+            "Medium"
+          ],
+          [
+            "Slow"
+          ]
+        ]
+      }
+    ],
+    "inputsInline": true,
+    "output": "speed",
+    "colour": 180,
+    "tooltip": "",
+    "helpUrl": ""
+},
+
+  "wait" : {
+    "type": "wait",
+    "message0": "%1 %2",
+    "args0": [
+        {
+        "type": "wait",
+        "name": "WAIT_TIME",
+        "options": [
+          [
+            "Half a second",
+            "500"
+          ],
+          [
+            "A second",
+            "1000"
+          ],
+          [
+            "Two seconds",
+            "2000"
+          ],
+          [
+            "Five seconds",
+            "5000"
+          ]
+        ]
+      }
+    ],
+    "inputsInline": true,
+    "output": "speed",
+    "colour": 180,
+    "tooltip": "",
+    "helpUrl": ""
+},
 
 
-
-}
+},

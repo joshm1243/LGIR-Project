@@ -64,22 +64,14 @@ Blockly.JavaScript['set'] = function(block) {
   
   
 
-  // Blockly.JavaScript['component'] = function(block) {
-  //   var dropdown_component_type_select = block.getFieldValue('COMPONENT_TYPE_SELECT');
-  //   var number_component_instance_select = block.getFieldValue('COMPONENT_INSTANCE_SELECT');
-  //   // TODO: Assemble JavaScript into code variable.
-  //   var code = '...';
-  //   // TODO: Change ORDER_NONE to the correct strength.
-  //   return [code, Blockly.JavaScript.ORDER_NONE];
-  // };
-  
-  
-  
-  
-  
-  
-  
-  
+  Blockly.JavaScript['component'] = function(block) {
+    var dropdown_component_type_select = block.getFieldValue('COMPONENT_TYPE_SELECT');
+    var number_component_instance_select = block.getFieldValue('COMPONENT_INSTANCE_SELECT');
+    // TODO: Assemble JavaScript into code variable.
+    var code = '...';
+    // TODO: Change ORDER_NONE to the correct strength.
+    return [code, Blockly.JavaScript.ORDER_NONE];
+  };
 
   Blockly.JavaScript['input_component'] = function(block) {
     var dropdown_component_type_select = block.getFieldValue('COMPONENT_TYPE_SELECT');
@@ -92,9 +84,18 @@ Blockly.JavaScript['set'] = function(block) {
   
 
   Blockly.JavaScript['Speed'] = function(block) {
-    var speed_dropdown_name = block.getFieldValue('');
-    var speed_component_number = block.getFieldValue('');
+    var speed_dropdown = block.getFieldValue('SPEED_SELECT');
     var value_name = Blockly.JavaScript.valueToCode(block, '', Blockly.JavaScript.ORDER_ATOMIC);
     var code = '...';
+    this.setPreviousStatement(true, "null");
+    this.setNextStatement(true, "null");
     return [code, Blockly.JavaScript.ORDER_NONE];
+  };
+
+  Blockly.JavaScript['Wait'] = function(block) {
+      this.setColour(60);
+      var wait_time = block.getFieldValue('WAIT_TIME');
+      this.setPreviousStatement(true, "null");
+      this.setNextStatement(true, "null");
+      this.setTooltip('');
   };
