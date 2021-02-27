@@ -13,10 +13,23 @@
   background-color: #02020281;
   z-index: 30;
   color: white;
-  display: none;
   text-align: center;
+  display: none;
+}
+
+#blockly-wrapper.show {
+  display: block;
+}
+
+#blockly-wrapper.transparent {
+  background-color: #00000000;
+  color: #00000000;
 }
 
 #workspace-area {
   width: 100%;
+}
+
+#allow-edit-message {
+  color: red;
 }

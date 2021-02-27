@@ -36,10 +36,14 @@ class ApplicationConsumer(WebsocketConsumer):
                 {
                     "type" : "unicast",
                     "sender_channel_name" : self.channel_name,
-                    "data" : json.loads('{"type" : "blockly_edit_check", "edit" : "false"}')
+                    "data" : json.loads('{"type" : "blockly_edit_check", "edit" : "true"}')
                 }
             )
 
+        elif text_data_json["type"] == "blockly_edit_request":
+            pass
+        elif text_data_json["type"] == "blockly_edit_request_reply":
+            pass
         elif text_data_json["type"] == "blockly_serial_send":
 
             
@@ -49,7 +53,7 @@ class ApplicationConsumer(WebsocketConsumer):
                 self.room_group_name, {
                                         "type" : "unicast",
                     "sender_channel_name" : self.channel_name,
-                    "data" : json.loads('{"type" : "blockly_edit_check", "edit" : "false"}')
+                    "data" : json.loads('{"type" : "blockly_edit_request", "edit" : "true"}')
                 }
             )
 
