@@ -8,4 +8,4 @@ class User(AbstractUser):
       (1, 'default'),
       (2, 'admin')
     )  
-    user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES)
+    user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES,default=1)
