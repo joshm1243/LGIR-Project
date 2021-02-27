@@ -1,1 +1,1 @@
-# Leightweight Graphical Interface for Robotics
+# Lightweight Graphical Interface for Robotics
