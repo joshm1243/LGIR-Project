@@ -5,6 +5,7 @@
     
     <title>LGIR: Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Biryani&display=swap" rel="stylesheet">
+    <link rel="icon" href="{% static 'images/favicon.png' %}" sizes="16x16" type="image/png">
     
     <style>
 
@@ -72,16 +73,19 @@
             height: 25px;
         }
 
+        #site-title {
+            cursor: default;
+            user-select: none;
+        }
+
         
     </style>
 
 </head>
 <body>
   <ul id="top_nav">
-    <li><a>LGIR</a></li>
-    <li><a>Dashboard</a></li>
-    <li><a>Profile</a></li>
-    <li style="float:right"><a>Logout</a></li>
+    <li><a id="site-title">LGIR</a></li>
+    <li><a href="">Login</a></li>
   </ul>
 
   <div id = "main">
@@ -91,12 +95,12 @@
         <div class="grid-item"></div>
         <div class="grid-item"></div>
         <div class="grid-item"> 
-        <p class = "top-text">Login for LGIR</p>
-        <label for=Username><b>Username</b></label>
-        <br><input type="text"  name = "username"><br>
-        <label for=password><b>Password</b></label>
-        <br><input type="password" name = "password"><br>
-        <button type="submit">Login</button>
+        <p class = "top-text">Login to LGIR</p>
+        <!-- This way is better for security as it protects against csrf attacks. It's also built in and does all the error handling for us. -->
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Log In</button>
         </div>
         <div class="grid-item"></div>
   </div>

@@ -12,6 +12,8 @@
 <script src="{% static 'application/blockly/google-blockly-edd475f/javascript_compressed.js' %}"></script>
 <script src="{% static 'application/blockly/google-blockly-edd475f/msg/js/en.js' %}"></script>
 
+<link rel="icon" href="{% static 'images/favicon.png' %}" sizes="16x16" type="image/png">
+
 <!-- Loading Static CSS -->
 <link rel="stylesheet" href="{% static 'css/generics/main.css' %}" type="text/css">
 <link rel="stylesheet" href="{% static 'css/application/chat.css' %}" type="text/css">
@@ -20,10 +22,11 @@
 
 </head>
 
-<!--  -->
+<body>
+<!-- Defining the page navigation bars -->
 <ul id="top_nav">
-  <li><a>LGIR</a></li>
-  <li><a>Dashboard</a></li>
+  <li><a id="site-title">LGIR</a></li>
+  <li><a href="./../../../dashboard/">Dashboard</a></li>
   <li><a>Account Settings</a></li>
   <li style="float:right"><a>Logout</a></li>
 </ul>
@@ -34,104 +37,73 @@
 </ul>
 
 <ul id="project_nav">
-  <li><a>
-    {{ appcode }}
-  </a></li>
+  <li><a>{{ appcode }}</a></li>
   <li><a id="toggle-monitor">Monitor</a></li>
-  <li><a id="request-edit-permissions">Edit</a>
+  <li><a id="request-edit">Edit</a>
   <li><a id="run-code">Run</a></li>
   <li><a id="toggle-chat">Chat</a></li>
   <li><a>Project Settings</a></li>
 </ul>
 
+<!-- Defining the main container for the page -->
 <div id="main">
+
+  <!-- Holds all items relating to Blockly -->
   <div id="workspace-area">
+    <div id="blockly-wrapper">
+      <div id="workspace-loading-message">
+        <h1>Loading the workspace</h1>
+      </div>
+
+      <div id="allow-edit-message" style="display: none">
+        <h1>Someone would like to edit the workspace.</h1>
+        <h2>Make them the editor?<h2>
+        <a id='allow-edit'>Yes</a>
+        <a id='block-edit'>No</a>
+        <h3>You'll give automatic permission in 5 seconds</h3>
+      </div>
+
+      <div id="someone-is-editing-message" style="display: none">
+        <h1>Someone is editing the workspace right now.</h1>
+        <h2>Press the edit button to ask for edit permissions.</h2>
+      </div>
+
+      <div id="positive-edit-message" style="display: none">
+        <h1>You now have permission to edit the workspace.</h1>
+      </div>
+
+      <div id="negative-edit-message" style="display: none">
+        <h1>Well this is awkward!</h1>
+        <h2>The editor refused your request to edit.</h2>
+      </div>
+
+      <div id="asking-for-edit-message" style="display: none">
+        <h1>You've asked for permission to edit.</h1>
+        <h2>Hang on while we just ask the current editor.</h2>
+      </div>
+
+      <div id="current-editor-message" style="display: none">
+        <h1>What a silly billy!</h1>
+        <h2>You're already the editor.</h2>
+      </div>
+    </div>
+    
     <div id="blockly-container" style="flex: 1;"></div>
     <div id="monitor-container" style="flex: 1;"></div>
   </div>
+
+  <!-- Holds all items relating to chat messages -->
   <div id="chat-container">
-    <div id="chat-header">{{ appcode }} chat</div>
+    <div id="chat-header">{{appcode}} chat</div>
     <div id="chat-display-container"></div>
-    <div id="chat-input-container"><input id="chat-input"></div>
+    <div id="chat-input-container"><input id="chat-input" placeholder="Please input your text here"></div>
   </div>
 </div>
 
-<div id="blocklyDiv" style="position: absolute;"></div>
+<!-- Creating a DIV required by Blockly to enbale the window to be resized -->
+<div id="blockly-div" style="position: absolute;"></div>
 
-<script>
-
-  /*Resize Functions*/
-  ResizeChat()
-  CheckForMobile()
-  ResizeBlockly()
-
-  window.addEventListener("resize", function(){
-    ResizeChat()
-    CheckForMobile()
-    ResizeBlockly()
-  })  
-
-  function ResizeBlockly() {
-    var blockly = document.getElementById("blockly-container")
-    blockly.style.height = (window.innerHeight - 102) + "px";
-  }
-
-  function ResizeChat() {
-    var chat = document.getElementById("chat-display-container")
-    chat.style.height = (window.innerHeight - 195) + "px";
-  }
-
-  function CheckForMobile() {
-    if (window.innerWidth < 550) {
-      document.getElementById("top_nav").style.display = "none";
-      document.getElementById("project_nav").style.display = "none";
-      document.getElementById("blockly-container").style.display = "none";
-      document.getElementById("mobile-top-nav").style.display = "";
-    }
-    else
-    {
-      document.getElementById("top_nav").style.display = "";
-      document.getElementById("project_nav").style.display = "";
-      document.getElementById("blockly-container").style.display = "";
-      document.getElementById("mobile-top-nav").style.display = "none";
-    }
-  }
-
-  var chatOpen = false;
-  document.getElementById("chat-container").style.display = "none";
-  document.getElementById("toggle-chat").addEventListener("click", function(){
-    if (chatOpen) {
-      document.getElementById("chat-container").style.display = "none";
-      chatOpen = false;
-    }
-    else {
-      document.getElementById("chat-container").style.display = "";
-      chatOpen = true;
-    }
-    onresize();
-  });
-
-
-  var showMonitor = false;
-  document.getElementById("monitor-container").style.display = "none";
-  document.getElementById("toggle-monitor").addEventListener("click", function(){
-    if(showMonitor) {
-      document.getElementById("blockly-container").style.display = "";
-      document.getElementById("blocklyDiv").style.display = "";
-      document.getElementById("monitor-container").style.display = "none";
-      showMonitor = false;
-    }
-    else {
-      document.getElementById("blockly-container").style.display = "none";
-      document.getElementById("blocklyDiv").style.display = "none";
-      document.getElementById("monitor-container").style.display = "";
-      showMonitor = true;
-    }
-    onresize();
-  })
-
-</script>
-
+<!-- Defining the Blockly Toolbox -->
 <xml id="toolbox" style="display: none">
     <block type="controls_if"></block>
     <block type="controls_repeat_ext"></block>
@@ -142,136 +114,31 @@
     <block type="text_print"></block>
 </xml>
 
-<script> //Web-socket routing
+<!-- Creating chat -->
+<script src="{% static 'application/workspace/chat.js' %}"></script>
 
-  //Checking if the user is using a secure web-socket protocol
-  var wsStart = "ws://"
-  if (window.location.protocol == 'https:') {
-    wsStart = "wss://"
-  }
-  
-  //Creating the HTML5 websocket
-  var endpoint = wsStart + window.location.host +  window.location.pathname
-  var socket = new WebSocket(endpoint)
+<!-- Setting websocket routing -->
+<script src="{% static 'application/workspace/socket.js' %}"></script>
 
-  //Waiting until the web-socket is open, and then listening to any activity on the web-socket
-  socket.onopen = function() {
+<!-- Defining resize functions -->
+<script src="{% static 'application/workspace/resize.js' %}"></script>
 
-    socket.send(JSON.stringify({
-      "type" : "blockly_edit_check",
-    }))
-
-    socket.onmessage = function(event) {
-
-      let data = JSON.parse(event.data) //Taking the JSON string and parsing into a JSON object
-
-      
-      //A blockly edit check reply has been received across the web-socket
-      if (data.type == "blockly_edit_check")
-      {
-        console.log("Received a blockly_edit_check reply")
-      }
-
-      //A chat message has been received across the web-socket
-      else if (data.type == "chat_message") {
-        ChatMessageReceive(data) //Calls the ChatMessageReceive function which deals with the event of a new chat message
-      }
-    }
-  }
-
-</script>
-
-<script> //Blockly DOM injection
-
-    var blocklyArea = document.getElementById('blockly-container');
-    var blocklyDiv = document.getElementById('blocklyDiv');
-    var ws = new Blockly.WorkspaceSvg(new Blockly.Options({}))
-    var workspace = Blockly.inject(blocklyDiv,
-        {toolbox: document.getElementById('toolbox')});
-    var onresize = function(e) {
-      // Compute the absolute coordinates and dimensions of blocklyArea.
-      var element = blocklyArea;
-      var x = 0;
-      var y = 0;
-      do {
-        x += element.offsetLeft;
-        y += element.offsetTop;
-        element = element.offsetParent;
-      } while (element);
-      // Position blocklyDiv over blocklyArea.
-      blocklyDiv.style.left = x + 'px';
-      blocklyDiv.style.top = y + 'px';
-      blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
-      blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
-      Blockly.svgResize(workspace);
-    };
-    window.addEventListener('resize', onresize, false);
-    onresize();
-    Blockly.svgResize(workspace);
-
-
-    document.getElementById("run-code").addEventListener("click",function(){
-    console.log(Blockly)
-    Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-    var code = Blockly.JavaScript.workspaceToCode(workspace);
-    alert(code);
-  })
-
-</script>
-
-<script> //Sending and recieving chat messages
-
-//Defining a standard form for chat messages
-class ChatMessage {
-
-  //The currentUser variable stores whether the message was sent by the currently logged in user
-  constructor(message, currentUser=false) {
-    this.el = document.createElement("div")
-    this.el.innerText = message
-    if (currentUser) {
-      this.el.classList.add("right") //The current user has sent the message, display on the right
-    }
-    else {  
-      this.el.classList.add("left") //Another user has sent the message, display on the left
-    }
-  }
-}
-
-//The web-socket has received a new chat_message
-function ChatMessageReceive (chatJSON) {
-  let chatDisplayContainer = document.getElementById("chat-display-container") //The container used to display chat messages
-  let newChatMessage = new ChatMessage(chatJSON.message) //Creating a new ChatMessage object
-  chatDisplayContainer.appendChild(newChatMessage.el) //Append the new chat message to the DOM
-}
-
-//Listening to the chat input box to see if the user has entered a character
-let chatInput = document.getElementById('chat-input')
-chatInput.addEventListener('keypress', function(e){
-
-  //Checking if the user has pressed the enter key
-  if(e.which == 13){
-
-    //Send a new chat message down the web-socket
-    socket.send(JSON.stringify({
-      "type" : "chat_message", //The type of 'chat_message' is used to tell the web-socket handler to broadcast to all devices
-      "message" : chatInput.value //Setting the message as the current value within the input box
-    }))
-
-    //Creating a new ChatMessage and appending it to the DOM
-    let chatDisplayContainer = document.getElementById("chat-display-container")
-    let newChatMessage = new ChatMessage(chatInput.value,true)
-    chatDisplayContainer.appendChild(newChatMessage.el)
-
-    chatInput.value = "" //Setting the chat input box back to an empty string
-
-  }
-
-})
-
-</script>
+<!-- Injecting Blockly-->
+<script src="{% static 'application/workspace/blockly_inject.js' %}"></script>
 
 
 <script>
+
+
+// document.getElementById("run-code").addEventListener("click",function(){
+//     console.log(Blockly)
+//     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+//     var code = Blockly.JavaScript.workspaceToCode(workspace);
+//     alert(code);
+// })
+</script>
+
+<!-- <script>
   // Definition Block
 var pin = 0;
 var pos = 1;
@@ -293,6 +160,7 @@ Blockly.Javascript['Pin_Value'] = function(block){
   var code = '...;\n';
   return code;
 }
-</script>
+</script> -->
 
+</body>
 </html>

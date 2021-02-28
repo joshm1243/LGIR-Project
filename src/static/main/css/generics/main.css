@@ -59,3 +59,6 @@ input:focus{
     outline: none;
 }
   
+#site-title {
+    color: red;
+}
