@@ -46,6 +46,7 @@ class ApplicationConsumer(WebsocketConsumer):
         elif text_data_json["type"] == "blockly_edit_request_reply":
             pass
         elif text_data_json["type"] == "blockly_serial_send":
+            #Remove
 
             
             #self.data = json.loads('{"type" : "blockly_serial_send_reply", "msg" : "connecting"}')
