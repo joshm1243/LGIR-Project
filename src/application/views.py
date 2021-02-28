@@ -4,6 +4,7 @@ from django.shortcuts import render
 import secrets
 from application.ws_handlers import AddSocketConnection
 
+@login_required
 def project_space_view(request, appcode, *args, **kwargs):
     if request.method == "GET":
         args = {}
