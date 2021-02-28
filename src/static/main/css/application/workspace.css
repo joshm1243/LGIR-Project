@@ -1,9 +1,42 @@
 #main {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
-  
+
+#blockly-wrapper {
+  position: absolute;
+  top: 102px;
+  bottom:0px;
+  left: 0px;
+  right: 0px;
+  background-color: #02020281;
+  z-index: 30;
+  color: white;
+  text-align: center;
+  display: none;
+}
+
+#blockly-wrapper.show {
+  display: block;
+}
+
+#blockly-wrapper.transparent {
+  background-color: #00000000;
+  color: #00000000;
+}
+
 #workspace-area {
-    width: 100%;
+  width: 100%;
+}
+
+#allow-edit-message a {
+  padding: 5px 15px;
+  background-color: #2bff001c;
+  cursor: pointer;
+}
+
+#allow-edit-message a:nth-of-type(2) {
+  background-color: #ff000023;
+  margin-left: 15px;
 }
