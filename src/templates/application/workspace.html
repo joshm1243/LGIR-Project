@@ -10,6 +10,7 @@
 <script src="{% static 'application/blockly/google-blockly-edd475f/blockly_compressed.js' %}"></script>
 <script src="{% static 'application/blockly/google-blockly-edd475f/blocks_compressed.js' %}"></script>
 <script src="{% static 'application/blockly/google-blockly-edd475f/javascript_compressed.js' %}"></script>
+<script src="{% static 'application/blockly/google-blockly-edd475f/python_compressed.js' %}"></script>
 <script src="{% static 'application/blockly/google-blockly-edd475f/msg/js/en.js' %}"></script>
 
 <!-- Loading Static CSS -->
@@ -39,7 +40,7 @@
   </a></li>
   <li><a id="toggle-monitor">Monitor</a></li>
   <li><a id="request-edit-permissions">Edit</a>
-  <li><a id="run-code">Run</a></li>
+  <li><a id="download-code">Download Code</a></li>
   <li><a id="toggle-chat">Chat</a></li>
   <li><a>Project Settings</a></li>
 </ul>
@@ -209,12 +210,27 @@
     onresize();
     Blockly.svgResize(workspace);
 
-
-    document.getElementById("run-code").addEventListener("click",function(){
-    console.log(Blockly)
+    //Waiting for the download code button to be clicked
+    document.getElementById("download-code").addEventListener("click",function(){
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-    var code = Blockly.JavaScript.workspaceToCode(workspace);
-    alert(code);
+
+    //Creating a virtual download button to be clicked to house download information
+    var virDownloadButton = document.createElement("a")
+
+    //The document structure contains the type of data to be downloaded, as well as the content
+    var documentStructure = "data:text/plain; charset=utf8,"
+    documentStructure += encodeURIComponent(Blockly.Python.workspaceToCode(workspace))
+
+    //Setting the href tag to download the contents of the document along with the given file name
+    virDownloadButton.setAttribute("href",documentStructure)
+    virDownloadButton.setAttribute("download","{{appcode}} Python Code.py")
+
+    //Append the virtual button to the main tag
+    var main = document.getElementById("main")
+    document.body.appendChild(virDownloadButton)
+    virDownloadButton.click()
+    document.body.removeChild(virDownloadButton)
+
   })
 
 </script>
