@@ -1,2 +1,4 @@
 # created by virtualenv automatically
-src/db.sqlite3/
+./src/account/__pycache__
+./src/application/__pycache__
+./src/lgirproject/__pycache__
