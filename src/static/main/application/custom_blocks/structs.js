@@ -158,7 +158,7 @@ var customBlocks = {
     "helpUrl": ""
   },
 
-  "speed_dropdown" : {
+  "Speed" : {
     "type": "field_dropdown",
     "message0": "%1",
     "args0": [
