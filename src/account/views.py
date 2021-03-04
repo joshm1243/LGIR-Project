@@ -12,3 +12,7 @@ def front_view(request, *args, **kwargs):
 def top_nav_view(request, *args, **kwargs):
     if request.method == "GET":
         return render(request, "account/topnav.html")
+
+def handler404(request, *args, **argv):
+    if request.method == "GET":
+        return render(request, "generic/404.html")
