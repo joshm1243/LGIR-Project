@@ -381,9 +381,12 @@
   <sep></sep>
   <category name="Robotics Input" colour="#5b80a5">
     <block type="add"></block>
+    <block type="input_component"></block>
+    <block type="value_of"></block>
   </category>
   <category name="Robotics Output" colour="#745ba5">
-    <block type="input_component"></block>
+    <block type="output_component"></block>
+    <block type="pin_component"></block>
     <block type="set"></block>
   </category>
   <sep></sep>
@@ -502,7 +505,6 @@
 
       let data = JSON.parse(event.data) //Taking the JSON string and parsing into a JSON object
 
-      
       //A blockly edit check reply has been received across the web-socket
       if (data.type == "blockly_edit_check")
       {

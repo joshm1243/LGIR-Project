@@ -1,7 +1,10 @@
 
 
+//Appending the Set block to the workspace
 Blockly.Blocks["set"] = {
   init: function() {
+
+    //Initiating the Set block and its tooltip
     this.jsonInit(customBlocks.set);
     var thisBlock = this;
     this.setTooltip(function() {
@@ -10,6 +13,24 @@ Blockly.Blocks["set"] = {
     });
   }
 };
+
+
+
+//Appending the Set block to the workspace
+Blockly.Blocks["value_of"] = {
+  init: function() {
+
+    //Initiating the Set block and its tooltip
+    this.jsonInit(customBlocks.value_of);
+    var thisBlock = this;
+    this.setTooltip(function() {
+      return 'Add a number to variable "%1".'.replace('%1',
+          thisBlock.getFieldValue('VAR'));
+    });
+  }
+};
+
+
 var blocklyGetComponentBlock = 
 Blockly.Blocks['get'] = {
   init: function() {
@@ -21,6 +42,7 @@ Blockly.Blocks['get'] = {
     });
   }
 };
+
 Blockly.Blocks['input_component'] = {
   init: function() {
     this.jsonInit(customBlocks.input_component);
@@ -31,6 +53,18 @@ Blockly.Blocks['input_component'] = {
     });
   }
 };
+
+Blockly.Blocks['pin_component'] = {
+  init: function() {
+    this.jsonInit(customBlocks.pin_component);
+    var thisBlock = this;
+    this.setTooltip(function() {
+      return 'Add a number to variable "%1".'.replace('%1',
+          thisBlock.getFieldValue('VAR'));
+    });
+  }
+};
+  
   
 Blockly.Blocks['output_component'] = {
   init: function() {
@@ -57,8 +91,7 @@ Blockly.Blocks['add'] = {
 Blockly.JavaScript['set'] = function(block) {
   var value_component = Blockly.JavaScript.valueToCode(block, 'COMPONENT', Blockly.JavaScript.ORDER_ATOMIC);
   var value_value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
-  var code = "this will be the code to execute";
+  var code = "..."
   return code;
 };
   
