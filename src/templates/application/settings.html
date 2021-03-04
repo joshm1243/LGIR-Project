@@ -1,9 +1,115 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
 <head>
-    <link rel="icon" href="{% static 'images/favicon.png' %}" sizes="16x16" type="image/png">
+
+<title>LGIR: {% block includes %}{{ appcode }}{% endblock includes %} Workspace</title>
+
+<link rel="icon" href="{% static 'images/favicon.png' %}" sizes="16x16" type="image/png">
+
+<!-- Loading Static CSS -->
+<link rel="stylesheet" href="{% static 'css/generics/main.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'css/application/chat.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'css/application/navigation.css' %}" type="text/css">
+
+
+<style>
+
+.content-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.content-container-item {
+  flex: 50%;
+  max-width: 50%;
+  background-color: #666666;
+}
+
+.content-container h1 {
+  color: #FFFFFF;
+  margin-left: 10px;
+  font-size: 1.2em;
+}
+
+@media screen and (max-width: 600px) {
+  .content-container-item {
+    flex: 100%;
+    max-width: 100%;
+  }
+}
+
+.mapping-grid {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  margin-left: 10px;
+}
+
+.mapping-grid-item {
+  background-color: #666666;
+  font-size: 1.15em;
+  color: #FFFFFF;
+}
+
+.mapping-grid-item input {
+  background-color: #BBBBBB;
+  font-size: 1em;
+  border: none; 
+}
+
+</style>
+
 </head>
-<h1>
-    Settings for: 
-    {% block includes %}
-    {{ appcode }}
-    {% endblock includes %}
-</h1>
+
+<body>
+<!-- Defining the page navigation bars -->
+<ul id="top_nav">
+  <li><a id="site-title">LGIR</a></li>
+  <li><a href="./../../../dashboard/">Dashboard</a></li>
+  <li><a>Account Settings</a></li>
+  <li style="float:right"><a>Logout</a></li>
+</ul>
+
+<!-- <ul id="mobile-top-nav">
+  <li><a>&#9776</a></li>
+  <li><a>LGIR</a></li>
+</ul> -->
+
+
+<!-- Defining the main container for the page -->
+<div id="main">
+
+  <div class="content-container">
+    <div class="content-container-item">
+      <h1>Component Mappings</h1>
+      <div class="mapping-grid">
+        <div class="mapping-grid-item ">Virtual Component</div>
+        <div class="mapping-grid-item">Physical Component</div>
+        <div class="mapping-grid-item"><input></div>
+        <div class="mapping-grid-item">
+          <div>
+            <h1>f</h1>
+          </div>
+        </div>
+        <div class="mapping-grid-item"><input></div>
+        <div class="mapping-grid-item">
+          
+        </div>
+        <div class="mapping-grid-item"><input></div>
+        <div class="mapping-grid-item"></div>
+      </div>
+    </div>
+    <div class="content-container-item">
+      <h1>Project Users</h1>
+    </div>
+  </div>
+
+
+</div>
+</body>
+</html>
+
+
+
+  
