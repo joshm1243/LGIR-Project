@@ -20,7 +20,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lgirproject.settings')
 #ProtocolTypeRouter checks the type of protocol being used 
 application = ProtocolTypeRouter({
     'http' : get_asgi_application(), #HTTP protocol
-    'websocket' : AuthMiddlewareStack( #WS protocol
+    'websocket' : AuthMiddlewareStack( #WebSocket Protocol
         URLRouter(
             ws_urlpatterns
         )
@@ -28,4 +28,5 @@ application = ProtocolTypeRouter({
 })
 
 
-#
+
+
