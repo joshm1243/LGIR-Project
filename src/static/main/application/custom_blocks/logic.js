@@ -150,3 +150,54 @@ Blockly.JavaScript['set'] = function(block) {
     var wait_code = 'Wait(' + delay_dropdown + ');\n';
     return wait_code;
   };
+
+
+// Definition
+Blockly.Blocks['ON or OFF'] =  {
+  innit: function(){
+    var state_dropdown = block.getFieldValue('STATE_SELECT');
+    this.setPreviousStatement(true, "null");
+    this.setNextStatement(true, "null");
+    this.setColour(60);
+  }
+};
+// Gen Stub
+Blockly.JavaScript['On or OFF'] = function(block) {
+  var state_dropdown = block.getFieldValue('SPEED_SELECT');
+  var value = Blockly.JavaScript.valueToCode(state_dropdown);
+  var x;
+  if(value = "ON"){
+    x = 100;
+  }
+  else if(value = "OFF"){
+    x = 0;
+  }
+  else{
+    x = 50;
+  }
+
+  return x;
+};
+
+// Definition
+Blockly.Blocks['Brightness'] =  {
+  innit: function(){
+    var light_dropdown = block.getFieldValue('LIGHT_SELECT');
+    this.setPreviousStatement(true, "null");
+    this.setNextStatement(true, "null");
+    this.setColour(60);
+  }
+};
+// Gen Stub
+Blockly.JavaScript['Brightness'] = function(block) {
+  var light_dropdown = block.getFieldValue('LIGHT_SELECT');
+  var value = Blockly.JavaScript.valueToCode(light_dropdown);
+  var x;
+  if(value = "BRIGHT"){
+    x = 80;
+  }
+  else{
+    x = 20;
+  }
+  return x;
+};

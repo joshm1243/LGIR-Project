@@ -201,4 +201,55 @@ var customBlocks = {
     "helpUrl": ""
 },
 
+"ON or OFF" : {
+  "type": "field_dropdown",
+  "message0": "%1",
+  "args0": [
+      {
+      "type": "state_dropdown",
+      "name": "STATE_SELECT",
+      "options": [
+        [
+          "ON"
+        ],
+        [
+          "OFF"
+        ],
+        [
+          "HALF"
+        ]
+      ]
+    }
+  ],
+  "inputsInline": true,
+  "output": "STATE",
+  "colour": 180,
+  "tooltip": "",
+  "helpUrl": ""
+},
+
+"Brightness" : {
+  "type": "field_dropdown",
+  "message0": "%1",
+  "args0": [
+      {
+      "type": "light_dropdown",
+      "name": "LIGHT_SELECT",
+      "options": [
+        [
+          "BRIGHT"
+        ],
+        [
+          "DIM"
+        ]
+      ]
+    }
+  ],
+  "inputsInline": true,
+  "output": "LIGHT",
+  "colour": 180,
+  "tooltip": "",
+  "helpUrl": ""
+},
+
 }
