@@ -148,6 +148,7 @@ socket.onopen = function() {
                 BlockAllWrapperMessages()
                 someoneIsEditingMessage.style.display = "block";
                 SetWrapperTimer()
+                isCurrentEditor = false;
             }
 
             //Allow the user to request permission to edit the workspace
