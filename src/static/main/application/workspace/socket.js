@@ -74,6 +74,7 @@ function SetWrapperTimer(removeWrapper=false) {
     },5000)
 }
 
+
 //Waiting until the web-socket is open, and then listening to any activity on the web-socket
 socket.onopen = function() {
 
@@ -99,11 +100,13 @@ socket.onopen = function() {
     allowEditButton.addEventListener("click",function() {
 
         //Allow the user to edit the requested workspace
-        socket.send(JSON.stringify({
+        socket.send(JSON.stringify({  // gives away workspace
             "type" : "blockly_edit_request_reply",
             "allow" : "true"
+        
         }))
-
+        deleteBlockly()
+        createBlockly({readOnly: true})
         blocklyWrapper.classList.add("show")
         blocklyWrapper.classList.remove("transparent")
         BlockAllWrapperMessages()
@@ -136,6 +139,7 @@ socket.onopen = function() {
 
             //If the user is allowed to edit the workspace
             if (data.edit == "true") {
+                createBlockly({toolbox: document.getElementById('toolbox')})
                 blocklyWrapper.classList.remove("show")
                 blocklyWrapper.classList.add("transparent")
                 BlockAllWrapperMessages()
@@ -144,7 +148,7 @@ socket.onopen = function() {
 
             //If the user is not allowed to edit the workspace
             if (data.edit != "true") {
-
+                createBlockly({readOnly: true})
                 BlockAllWrapperMessages()
                 someoneIsEditingMessage.style.display = "block";
                 SetWrapperTimer()
@@ -182,7 +186,10 @@ socket.onopen = function() {
 
         else if (data.type == "blockly_edit_request_reply") {
 
-            if (data.edit == "true") {
+            if (data.edit == "true") {   //give toolbar
+                deleteBlockly()
+                createBlockly({toolbox: document.getElementById('toolbox')})
+                isCurrentEditor = true
                 blocklyWrapper.classList.add("show")
                 blocklyWrapper.classList.remove("transparent")
                 BlockAllWrapperMessages()
@@ -190,6 +197,8 @@ socket.onopen = function() {
                 SetWrapperTimer()
             }
             else {
+
+                isCurrentEditor = false   
                 blocklyWrapper.classList.add("show")
                 blocklyWrapper.classList.remove("transparent")
                 BlockAllWrapperMessages()
