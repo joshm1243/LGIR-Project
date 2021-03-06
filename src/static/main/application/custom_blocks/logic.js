@@ -181,7 +181,7 @@ Blockly.JavaScript['On or OFF'] = function(block) {
 
 // Definition
 Blockly.Blocks['Brightness'] =  {
-  innit: function(){
+  init: function(){
     var light_dropdown = block.getFieldValue('LIGHT_SELECT');
     this.setPreviousStatement(true, "null");
     this.setNextStatement(true, "null");
@@ -196,8 +196,22 @@ Blockly.JavaScript['Brightness'] = function(block) {
   if(value = "BRIGHT"){
     x = 80;
   }
-  else{
+  else if (value = "DIM"){
     x = 20;
   }
   return x;
 };
+
+
+Blockly.Blocks['0 to 100'] = {
+  init: function() {
+    var validator = function(newValue) {
+      return newValue;
+    };
+
+    this.appendDummyInput()
+    .appendField('Range: ')
+    .appendField(new Blockly.FieldNumber('//range number to be inserted//', validator)),
+    this.setConstraints(0, 100);
+  }
+}
