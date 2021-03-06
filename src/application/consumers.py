@@ -6,8 +6,8 @@ from channels.generic.websocket import WebsocketConsumer
 #Connecting to the containerised redis server
 r = redis.Redis(host="127.0.0.1", port="6379", db=0)
 
-
 #A class that represents a single websocket connection
+
 class ApplicationConsumer(WebsocketConsumer):
     def connect(self): #The client wishes to connect
 

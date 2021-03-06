@@ -1,9 +1,58 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
 <head>
-    <link rel="icon" href="{% static 'images/favicon.png' %}" sizes="16x16" type="image/png">
+
+<title>LGIR: {% block includes %}{{ appcode }}{% endblock includes %} Workspace</title>
+
+<!-- Including the blockly application from the static files directory -->
+<script src="{% static 'application/blockly/google-blockly-edd475f/blockly_compressed.js' %}"></script>
+<script src="{% static 'application/blockly/google-blockly-edd475f/blocks_compressed.js' %}"></script>
+<script src="{% static 'application/blockly/google-blockly-edd475f/javascript_compressed.js' %}"></script>
+<script src="{% static 'application/blockly/google-blockly-edd475f/msg/js/en.js' %}"></script>
+
+<!-- Loading Static CSS -->
+<link rel="stylesheet" href="{% static 'css/generics/main.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'css/application/chat.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'css/application/navigation.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'css/application/workspace.css' %}" type="text/css">
+
 </head>
-<h1>
-    Settings for: 
-    {% block includes %}
+
+<!--  -->
+<ul id="top_nav">
+  <li><a>LGIR</a></li>
+  <li><a>Dashboard</a></li>
+  <li><a>Account Settings</a></li>
+  <li style="float:right"><a>Logout</a></li>
+</ul>
+
+<ul id="mobile-top-nav">
+  <li><a>&#9776</a></li>
+  <li><a>LGIR</a></li>
+</ul>
+
+<ul id="project_nav">
+  <li><a>
     {{ appcode }}
-    {% endblock includes %}
-</h1>
+  </a></li>
+  <li><a id="toggle-monitor">Monitor</a></li>
+  <li><a id="request-edit-permissions">Edit</a>
+  <li><a id="run-code">Run</a></li>
+  <li><a id="toggle-chat">Chat</a></li>
+  <li><a>Project Settings</a></li>
+</ul>
+
+<div id="main">
+  <div id="workspace-area">
+    <div id="blockly-container" style="flex: 1;"></div>
+    <div id="monitor-container" style="flex: 1;"></div>
+  </div>
+  <div id="chat-container">
+    <div id="chat-header">{{ appcode }} chat</div>
+    <div id="chat-display-container"></div>
+    <div id="chat-input-container"><input id="chat-input"></div>
+  </div>
+</div>
+

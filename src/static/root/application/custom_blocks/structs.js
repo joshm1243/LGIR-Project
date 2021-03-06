@@ -19,18 +19,41 @@ var customBlocks = {
     "helpUrl": ""
   },
 
-  
-
 
 
   "input_component" : {
       "type": "input_component",
-      "message0": "bucket %1",
+      "message0": "%1 %2",
       "args0": [
-        {
-          "type": "field_input",
-          "name": "NAME",
+          {
+          "type": "field_dropdown",
+          "name": "COMPONENT_TYPE_SELECT",
+          "options": [
+            [
+              "pin",
+              "COMPONENT_PIN"
+            ],
+            [
+              "sensor",
+              "COMPONENT_LED"
+            ],
+            [
+              "potentiometer",
+              "COMPONENT_LCD"
+            ],
+            [
+              "switch",
+              "COMPONENT_BUZZER"
+            ],
+          ]
         },
+        {
+          "type": "field_number",
+          "name": "COMPONENT_INSTANCE_SELECT",
+          "value": 1,
+          "min": 1,
+          "max": 512
+        }
       ],
       "inputsInline": true,
       "output": "component",
@@ -42,13 +65,48 @@ var customBlocks = {
 
 
 
+
+
   "output_component" : {
       "type": "output_component",
-      "message0": "%1",
+      "message0": "%1 %2",
       "args0": [
         {
-          "type": "field_input",
+          "type": "field_dropdown",
+          "name": "COMPONENT_TYPE_SELECT",
+          "options": [
+            [
+              "pin",
+              "COMPONENT_PIN"
+            ],
+            [
+              "led",
+              "COMPONENT_LED"
+            ],
+            [
+              "lcd",
+              "COMPONENT_LCD"
+            ],
+            [
+              "buzzer",
+              "COMPONENT_BUZZER"
+            ],
+            [
+              "laser",
+              "COMPONENT_LASER"
+            ],
+            [
+              "relay",
+              "COMPONENT_RELAY"
+            ]
+          ]
+        },
+        {
+          "type": "field_number",
           "name": "COMPONENT_INSTANCE_SELECT",
+          "value": 1,
+          "min": 1,
+          "max": 512
         }
       ],
       "inputsInline": true,
@@ -61,51 +119,37 @@ var customBlocks = {
 
 
   "set" : {
-    "type": "set_component",
-    "message0": "set %1 to %2",
-    "args0": [
-      {
-        "type": "input_value",
-        "name": "component_value",
-        "check": "component"
-      },
-      {
-        "type": "input_value",
-        "name": "value",
-      }
-    ],
-    "inputsInline": true,
-    "previousStatement": null,
-    "nextStatement": null,
-    "colour": 230
+      "type": "set_component",
+      "message0": "set %1 to %2",
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "COMPONENT",
+          "check": "component"
+        },
+        {
+          "type": "input_value",
+          "name": "VALUE",
+          "check": "component_value"
+        }
+      ],
+      "inputsInline": true,
+      "previousStatement": null,
+      "nextStatement": null,
+      "colour": 230,
+      "tooltip": "",
+      "helpUrl": ""
   },
 
 
-
-  "value_of" : {
-    "type": "value_of",
-    "message0": "value of %1",
-    "args0": [
-      {
-        "type" : "field_input",
-        "name" : "VALUE",
-      }
-    ],
-    "inputsInline": true,
-    "output": null,
-    "colour": 100,
-    "tooltip": "",
-    "helpUrl": ""
-  },
-
-
-  "bucket" : {
-    "type": "bucket",
-    "message0": "value of %1",
+  
+  "get" : {
+    "type": "get",
+    "message0": "value from %1",
     "args0": [
       {
         "type": "input_value",
-        "name": "VALUE",
+        "name": "NAME"
       }
     ],
     "inputsInline": true,
@@ -114,7 +158,6 @@ var customBlocks = {
     "tooltip": "",
     "helpUrl": ""
   },
-
 
 
   "add" : {
@@ -199,57 +242,6 @@ var customBlocks = {
     "colour": 180,
     "tooltip": "",
     "helpUrl": ""
-},
-
-"ON or OFF" : {
-  "type": "field_dropdown",
-  "message0": "%1",
-  "args0": [
-      {
-      "type": "state_dropdown",
-      "name": "STATE_SELECT",
-      "options": [
-        [
-          "ON"
-        ],
-        [
-          "OFF"
-        ],
-        [
-          "HALF"
-        ]
-      ]
-    }
-  ],
-  "inputsInline": true,
-  "output": "STATE",
-  "colour": 180,
-  "tooltip": "",
-  "helpUrl": ""
-},
-
-"Brightness" : {
-  "type": "field_dropdown",
-  "message0": "%1",
-  "args0": [
-      {
-      "type": "light_dropdown",
-      "name": "LIGHT_SELECT",
-      "options": [
-        [
-          "BRIGHT"
-        ],
-        [
-          "DIM"
-        ]
-      ]
-    }
-  ],
-  "inputsInline": true,
-  "output": "LIGHT",
-  "colour": 180,
-  "tooltip": "",
-  "helpUrl": ""
 },
 
 }
