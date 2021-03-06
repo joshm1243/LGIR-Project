@@ -58,7 +58,7 @@ else {
     document.getElementById("blockly-wrapper").style.right = chatContainer.offsetWidth + "px";
     chatOpen = true;
 }
-onresize();
+// onresize();
 });
 
 
@@ -77,5 +77,5 @@ else {
     document.getElementById("monitor-container").style.display = "";
     showMonitor = true;
 }
-onresize();
+// onresize();
 })

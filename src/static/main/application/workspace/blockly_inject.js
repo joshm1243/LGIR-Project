@@ -39,6 +39,17 @@ function createBlockly(options){
   window.addEventListener('resize', onresize, false);
   onresize();
   Blockly.svgResize(workspace);
+
+
+  document.getElementById("toggle-chat").addEventListener("click", function() {
+    onresize();
+  });
+
+  document.getElementById("toggle-monitor").addEventListener("click", function() {
+    onresize();
+  });
+    
+
 }
 function deleteBlockly(workspace){
   workspace.dispose()

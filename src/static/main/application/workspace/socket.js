@@ -106,7 +106,7 @@ socket.onopen = function() {
         
         }))
         deleteBlockly()
-        createBlockly({readOnly: true})
+        createBlockly({readOnly: true, sounds: false})
         blocklyWrapper.classList.add("show")
         blocklyWrapper.classList.remove("transparent")
         BlockAllWrapperMessages()
@@ -139,7 +139,7 @@ socket.onopen = function() {
 
             //If the user is allowed to edit the workspace
             if (data.edit == "true") {
-                createBlockly({toolbox: document.getElementById('toolbox')})
+                createBlockly({toolbox: document.getElementById('toolbox'), sounds: false})
                 blocklyWrapper.classList.remove("show")
                 blocklyWrapper.classList.add("transparent")
                 BlockAllWrapperMessages()
@@ -148,7 +148,7 @@ socket.onopen = function() {
 
             //If the user is not allowed to edit the workspace
             if (data.edit != "true") {
-                createBlockly({readOnly: true})
+                createBlockly({readOnly: true, sounds: false})
                 BlockAllWrapperMessages()
                 someoneIsEditingMessage.style.display = "block";
                 SetWrapperTimer()
@@ -188,7 +188,7 @@ socket.onopen = function() {
 
             if (data.edit == "true") {   //give toolbar
                 deleteBlockly()
-                createBlockly({toolbox: document.getElementById('toolbox')})
+                createBlockly({toolbox: document.getElementById('toolbox'), sounds: false})
                 isCurrentEditor = true
                 blocklyWrapper.classList.add("show")
                 blocklyWrapper.classList.remove("transparent")
