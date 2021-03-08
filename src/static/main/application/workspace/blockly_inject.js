@@ -49,8 +49,12 @@ function createBlockly(options){
     onresize();
   });
     
-
+window.addEventListener("load",function(){
+  workspace.addChangeListener(mirrorEvent)
+});
 }
 function deleteBlockly(workspace){
   workspace.dispose()
 }
+
+
