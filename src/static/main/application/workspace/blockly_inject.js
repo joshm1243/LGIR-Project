@@ -1,5 +1,5 @@
 function createBlockly(options){
-
+ 
   var blocklyArea = document.getElementById('blockly-container');
   var blocklyDiv = document.getElementById('blockly-div');
   var ws = new Blockly.WorkspaceSvg(new Blockly.Options({}))
@@ -48,13 +48,43 @@ function createBlockly(options){
   document.getElementById("toggle-monitor").addEventListener("click", function() {
     onresize();
   });
+
+  workspace.addChangeListener(function(event){
+    if(socket.OPEN){
+      console.log("pew pew")
+      
+        
+         if (event instanceof Blockly.Events.Ui) {
+           return;  // Don't mirror UI events.
+         }
+         // Convert event to JSON.  This could then be transmitted across the net.
+         var json = event.toJson();
+         console.log(json);
+         socket.send(JSON.stringify({
+          "type" : "blockly_edit_has_been_made",
+          "blocklyContent" : json
+      }))
+
+      }
     
-window.addEventListener("load",function(){
-  workspace.addChangeListener(mirrorEvent)
-});
+  });
+  socket.onmessage = function(event) {
+    let data = JSON.parse(event.data)
+    if (data.type == "blockly_edit_has_been_made") {
+      
+    }
+  }
 }
 function deleteBlockly(workspace){
   workspace.dispose()
 }
 
+// //socket.onopen = function(workspace){
+//   if(socket.OPEN){
+//     //workspace.addChangeListener(function(){
+//       console.log("what am i even doing?")
+//     };
+//   //} 
+
+   
 

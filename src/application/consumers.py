@@ -39,7 +39,8 @@ class ApplicationConsumer(WebsocketConsumer):
                     "data" : json.loads('{"type" : "blockly_edit_check", "edit" : "true"}')
                 }
             )
-
+        elif text_data_json["type"] =="blockly_edit_has_been_made":
+            print("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
         elif text_data_json["type"] == "blockly_edit_request":
             pass
         elif text_data_json["type"] == "blockly_edit_request_reply":

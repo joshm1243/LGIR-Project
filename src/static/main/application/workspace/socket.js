@@ -115,18 +115,7 @@ socket.onopen = function() {
         
             
     })
-    function mirrorEvent(blocklyChangeEvent) {
-        console.log("this has worked")
-         if (blocklyChangeEvent instanceof Blockly.Events.Ui) {
-           return;  // Don't mirror UI events.
-         }
-         // Convert event to JSON.  This could then be transmitted across the net.
-         var json = blocklyChangeEvent.toJson();
-         console.log(json);
-         // Convert JSON back into an event, then execute it.
-         var secondaryblocklyChangeEvent = Blockly.Events.fromJson(json, workspace);
-         secondaryblocklyChangeEvent.run(true);
-      }
+   
     //Listening for the press of the block-edit-request button
     blockEditButton.addEventListener("click",function() {
 
@@ -140,7 +129,9 @@ socket.onopen = function() {
         BlockAllWrapperMessages()
         SetWrapperTimer()
     })
-
+    function mirrorEvent(){
+        console.log("I hate code")
+    }
     //Listening to the socket for activity
     socket.onmessage = function(event) {
 
