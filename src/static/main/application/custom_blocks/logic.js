@@ -85,7 +85,16 @@ Blockly.Blocks['add'] = {
   }
 };
 
+// JavaScript Gen Stub
 Blockly.JavaScript['set'] = function(block) {
+  var value_component = Blockly.JavaScript.valueToCode(block, 'COMPONENT', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
+  var code = "..."
+  return code;
+};
+
+// Python Gen Stub
+Blockly.Python['set'] = function(block) {
   var value_component = Blockly.JavaScript.valueToCode(block, 'COMPONENT', Blockly.JavaScript.ORDER_ATOMIC);
   var value_value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
   var code = "..."
@@ -93,7 +102,7 @@ Blockly.JavaScript['set'] = function(block) {
 };
   
   
-
+// JavaScript Gen Stub
   Blockly.JavaScript['component'] = function(block) {
     var dropdown_component_type_select = block.getFieldValue('COMPONENT_TYPE_SELECT');
     var number_component_instance_select = block.getFieldValue('COMPONENT_INSTANCE_SELECT');
@@ -103,6 +112,17 @@ Blockly.JavaScript['set'] = function(block) {
     return [code, Blockly.JavaScript.ORDER_NONE];
   };
 
+  // Python Gen Stub
+  Blockly.Python['component'] = function(block) {
+    var dropdown_component_type_select = block.getFieldValue('COMPONENT_TYPE_SELECT');
+    var number_component_instance_select = block.getFieldValue('COMPONENT_INSTANCE_SELECT');
+    // TODO: Assemble JavaScript into code variable.
+    var code = '...';
+    // TODO: Change ORDER_NONE to the correct strength.
+    return [code, Blockly.JavaScript.ORDER_NONE];
+  };
+
+  // JavaScript Gen Stub
   Blockly.JavaScript['input_component'] = function(block) {
     var dropdown_component_type_select = block.getFieldValue('COMPONENT_TYPE_SELECT');
     var number_component_instance_select = block.getFieldValue('COMPONENT_INSTANCE_SELECT');
@@ -112,6 +132,15 @@ Blockly.JavaScript['set'] = function(block) {
     return [code, Blockly.JavaScript.ORDER_NONE];
   };
   
+  // Python Gen Stub
+  Blockly.Python['input_component'] = function(block) {
+    var dropdown_component_type_select = block.getFieldValue('COMPONENT_TYPE_SELECT');
+    var number_component_instance_select = block.getFieldValue('COMPONENT_INSTANCE_SELECT');
+    // TODO: Assemble JavaScript into code variable.
+    var code = '...';
+    // TODO: Change ORDER_NONE to the correct strength.
+    return [code, Blockly.JavaScript.ORDER_NONE];
+  };
 
   // Definition
   Blockly.Blocks['Speed'] =  {
@@ -122,7 +151,7 @@ Blockly.JavaScript['set'] = function(block) {
       this.setColour(60);
     }
   };
-// Gen Stub
+// JavaScript Gen Stub
   Blockly.JavaScript['Speed'] = function(block) {
     var speed_dropdown = block.getFieldValue('SPEED_SELECT');
     var value = Blockly.JavaScript.valueToCode(speed_dropdown);
@@ -131,6 +160,14 @@ Blockly.JavaScript['set'] = function(block) {
     return value;
   };
 
+  // Python Gen Stub
+  Blockly.Python['Speed'] = function(block) {
+    var speed_dropdown = block.getFieldValue('SPEED_SELECT');
+    var value = Blockly.JavaScript.valueToCode(speed_dropdown);
+    this.setPreviousStatement(true, "null");
+    this.setNextStatement(true, "null");
+    return value;
+  };
 
 // Definition
   Blockly.Blocks['Wait'] =  {
@@ -141,8 +178,15 @@ Blockly.JavaScript['set'] = function(block) {
       this.setColour(60);
     }
   };
-// Gen stub
+// JavaScript Gen stub
   Blockly.JavaScript['Wait'] = function(block) {
+    var delay_dropdown = block.getFieldValue('WAIT_TIME')
+    var wait_code = 'Wait(' + delay_dropdown + ');\n';
+    return wait_code;
+  };
+  
+// Python Gen Stub
+  Blockly.Python['Wait'] = function(block) {
     var delay_dropdown = block.getFieldValue('WAIT_TIME')
     var wait_code = 'Wait(' + delay_dropdown + ');\n';
     return wait_code;
@@ -158,8 +202,26 @@ Blockly.Blocks['ON or OFF'] =  {
     this.setColour(60);
   }
 };
-// Gen Stub
+// JavaScript Gen Stub
 Blockly.JavaScript['On or OFF'] = function(block) {
+  var state_dropdown = block.getFieldValue('SPEED_SELECT');
+  var value = Blockly.JavaScript.valueToCode(state_dropdown);
+  var x;
+  if(value = "ON"){
+    x = 100;
+  }
+  else if(value = "OFF"){
+    x = 0;
+  }
+  else{
+    x = 50;
+  }
+
+  return x;
+};
+
+// Python Gen Stub
+Blockly.Python['On or OFF'] = function(block) {
   var state_dropdown = block.getFieldValue('SPEED_SELECT');
   var value = Blockly.JavaScript.valueToCode(state_dropdown);
   var x;
@@ -185,8 +247,21 @@ Blockly.Blocks['Brightness'] =  {
     this.setColour(60);
   }
 };
-// Gen Stub
+// JavaScript Gen Stub
 Blockly.JavaScript['Brightness'] = function(block) {
+  var light_dropdown = block.getFieldValue('LIGHT_SELECT');
+  var value = Blockly.JavaScript.valueToCode(light_dropdown);
+  var x;
+  if(value = "BRIGHT"){
+    x = 80;
+  }
+  else if (value = "DIM"){
+    x = 20;
+  }
+  return x;
+};
+// Python Gen Stub
+Blockly.Python['Brightness'] = function(block) {
   var light_dropdown = block.getFieldValue('LIGHT_SELECT');
   var value = Blockly.JavaScript.valueToCode(light_dropdown);
   var x;
@@ -200,6 +275,7 @@ Blockly.JavaScript['Brightness'] = function(block) {
 };
 
 
+
 Blockly.Blocks['0 to 100'] = {
   init: function() {
     var validator = function(newValue) {
@@ -211,4 +287,6 @@ Blockly.Blocks['0 to 100'] = {
     .appendField(new Blockly.FieldNumber('//range number to be inserted//', validator)),
     this.setConstraints(0, 100);
   }
-}
+};
+
+
