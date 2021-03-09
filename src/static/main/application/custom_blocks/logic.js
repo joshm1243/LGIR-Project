@@ -1,5 +1,6 @@
 
 //Appending the Set block to the workspace
+// Block Definition
 Blockly.Blocks["set"] = {
   init: function() {
 
@@ -15,6 +16,7 @@ Blockly.Blocks["set"] = {
 };
 
 //Appending the Set block to the workspace
+// Block Definition
 Blockly.Blocks["value_of"] = {
   init: function() {
 
@@ -28,6 +30,7 @@ Blockly.Blocks["value_of"] = {
   }
 };
 
+// Block Definition
 var blocklyGetComponentBlock = 
 Blockly.Blocks['get'] = {
   init: function() {
@@ -40,6 +43,7 @@ Blockly.Blocks['get'] = {
   }
 };
 
+// Block Definition
 Blockly.Blocks['input_component'] = {
   init: function() {
     this.jsonInit(customBlocks.input_component);
@@ -51,6 +55,7 @@ Blockly.Blocks['input_component'] = {
   }
 };
 
+// Block Definition
 Blockly.Blocks['pin_component'] = {
   init: function() {
     this.jsonInit(customBlocks.pin_component);
@@ -62,7 +67,7 @@ Blockly.Blocks['pin_component'] = {
   }
 };
   
-  
+// Block Definition
 Blockly.Blocks['output_component'] = {
   init: function() {
     this.jsonInit(customBlocks.output_component);
@@ -74,6 +79,7 @@ Blockly.Blocks['output_component'] = {
   }
 };
 
+// Block Definition
 Blockly.Blocks['add'] = {
   init: function() {
     this.jsonInit(customBlocks.add);
@@ -142,7 +148,7 @@ Blockly.Python['set'] = function(block) {
     return [code, Blockly.JavaScript.ORDER_NONE];
   };
 
-  // Definition
+// Block Definition
   Blockly.Blocks['Speed'] =  {
     innit: function(){
       var speed_dropdown = block.getFieldValue('SPEED_SELECT');
@@ -169,7 +175,7 @@ Blockly.Python['set'] = function(block) {
     return value;
   };
 
-// Definition
+// Block Definition
   Blockly.Blocks['Wait'] =  {
     innit: function(){
       var wait_time = block.getFieldValue('WAIT_TIME');
@@ -193,7 +199,7 @@ Blockly.Python['set'] = function(block) {
   };
 
 
-// Definition
+// Block Definition
 Blockly.Blocks['ON or OFF'] =  {
   innit: function(){
     var state_dropdown = block.getFieldValue('STATE_SELECT');
@@ -238,7 +244,7 @@ Blockly.Python['On or OFF'] = function(block) {
   return x;
 };
 
-// Definition
+// Block Definition
 Blockly.Blocks['Brightness'] =  {
   init: function(){
     var light_dropdown = block.getFieldValue('LIGHT_SELECT');
@@ -260,6 +266,7 @@ Blockly.JavaScript['Brightness'] = function(block) {
   }
   return x;
 };
+
 // Python Gen Stub
 Blockly.Python['Brightness'] = function(block) {
   var light_dropdown = block.getFieldValue('LIGHT_SELECT');
