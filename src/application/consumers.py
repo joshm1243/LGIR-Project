@@ -40,7 +40,17 @@ class ApplicationConsumer(WebsocketConsumer):
                 }
             )
         elif text_data_json["type"] =="blockly_edit_has_been_made":
-            print("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+            
+            async_to_sync(self.channel_layer.group_send)(
+                self.room_group_name,
+                {
+                    "type" : "broadcast",
+                    "sender_channel_name" : self.channel_name,
+                    "data" : text_data_json
+                }
+            )
+
+
         elif text_data_json["type"] == "blockly_edit_request":
             pass
         elif text_data_json["type"] == "blockly_edit_request_reply":

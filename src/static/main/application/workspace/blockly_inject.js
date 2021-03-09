@@ -51,27 +51,24 @@ function createBlockly(options){
 
   workspace.addChangeListener(function(event){
     if(socket.OPEN){
-      console.log("pew pew")
-      
-        
-         if (event instanceof Blockly.Events.Ui) {
-           return;  // Don't mirror UI events.
-         }
-         // Convert event to JSON.  This could then be transmitted across the net.
-         var json = event.toJson();
-         console.log(json);
-         socket.send(JSON.stringify({
-          "type" : "blockly_edit_has_been_made",
-          "blocklyContent" : json
-      }))
 
+      //Preventing user interface 
+      if (event instanceof Blockly.Events.UiBase) {
+        return;
       }
-    
+
+      var json = event.toJson();
+      socket.send(JSON.stringify({
+        "type" : "blockly_edit_has_been_made",
+        "blockly_content" : json
+      }))
+    }  
   });
+
   socket.onmessage = function(event) {
     let data = JSON.parse(event.data)
     if (data.type == "blockly_edit_has_been_made") {
-      
+      console.log(data)
     }
   }
 }
