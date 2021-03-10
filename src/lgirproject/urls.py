@@ -14,11 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from django.urls import re_path
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from application.views import project_space_view, monitor_view, settings_view, dashboard_view
-from account.views import login_view, top_nav_view, front_view
+from account.views import login_view, top_nav_view, front_view, handler404
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 
@@ -40,6 +41,10 @@ urlpatterns = [
 
     # patterns('lgirproject.views',
     # (r'^$','DEF_FUNCTION'),
+
+    path('public/generics/inward/top-nav/', top_nav_view, name="top_nav"),
+    re_path(r'.*', handler404, name = "handler404")
+
 ]
 
 if settings.DEBUG:

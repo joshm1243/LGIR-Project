@@ -1,7 +1,10 @@
 
 
+//Appending the Set block to the workspace
 Blockly.Blocks["set"] = {
   init: function() {
+
+    //Initiating the Set block and its tooltip
     this.jsonInit(customBlocks.set);
     var thisBlock = this;
     this.setTooltip(function() {
@@ -10,6 +13,7 @@ Blockly.Blocks["set"] = {
     });
   }
 };
+
 var blocklyGetComponentBlock = 
 Blockly.Blocks['get'] = {
   init: function() {
@@ -31,6 +35,18 @@ Blockly.Blocks['input_component'] = {
     });
   }
 };
+
+Blockly.Blocks['pin_component'] = {
+  init: function() {
+    this.jsonInit(customBlocks.input_component);
+    var thisBlock = this;
+    this.setTooltip(function() {
+      return 'Add a number to variable "%1".'.replace('%1',
+          thisBlock.getFieldValue('VAR'));
+    });
+  }
+};
+  
   
 Blockly.Blocks['output_component'] = {
   init: function() {
@@ -57,27 +73,20 @@ Blockly.Blocks['add'] = {
 Blockly.JavaScript['set'] = function(block) {
   var value_component = Blockly.JavaScript.valueToCode(block, 'COMPONENT', Blockly.JavaScript.ORDER_ATOMIC);
   var value_value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
-  var code = "this will be the code to execute";
+  var code = "..."
   return code;
 };
+  
+  
 
-  // Blockly.JavaScript['component'] = function(block) {
-  //   var dropdown_component_type_select = block.getFieldValue('COMPONENT_TYPE_SELECT');
-  //   var number_component_instance_select = block.getFieldValue('COMPONENT_INSTANCE_SELECT');
-  //   // TODO: Assemble JavaScript into code variable.
-  //   var code = '...';
-  //   // TODO: Change ORDER_NONE to the correct strength.
-  //   return [code, Blockly.JavaScript.ORDER_NONE];
-  // };
-  
-  
-  
-  
-  
-  
-  
-  
+  Blockly.JavaScript['component'] = function(block) {
+    var dropdown_component_type_select = block.getFieldValue('COMPONENT_TYPE_SELECT');
+    var number_component_instance_select = block.getFieldValue('COMPONENT_INSTANCE_SELECT');
+    // TODO: Assemble JavaScript into code variable.
+    var code = '...';
+    // TODO: Change ORDER_NONE to the correct strength.
+    return [code, Blockly.JavaScript.ORDER_NONE];
+  };
 
   Blockly.JavaScript['input_component'] = function(block) {
     var dropdown_component_type_select = block.getFieldValue('COMPONENT_TYPE_SELECT');
@@ -88,3 +97,38 @@ Blockly.JavaScript['set'] = function(block) {
     return [code, Blockly.JavaScript.ORDER_NONE];
   };
   
+
+  // Definition
+  Blockly.Blocks['Speed'] =  {
+    innit: function(){
+      var speed_dropdown = block.getFieldValue('SPEED_SELECT');
+      this.setPreviousStatement(true, "null");
+      this.setNextStatement(true, "null");
+      this.setColour(60);
+    }
+  };
+// Gen Stub
+  Blockly.JavaScript['Speed'] = function(block) {
+    var speed_dropdown = block.getFieldValue('SPEED_SELECT');
+    var value = Blockly.JavaScript.valueToCode(speed_dropdown);
+    this.setPreviousStatement(true, "null");
+    this.setNextStatement(true, "null");
+    return value;
+  };
+
+
+// Definition
+  Blockly.Blocks['Wait'] =  {
+    innit: function(){
+      var wait_time = block.getFieldValue('WAIT_TIME');
+      this.setPreviousStatement(true, "null");
+      this.setNextStatement(true, "null");
+      this.setColour(60);
+    }
+  };
+// Gen stub
+  Blockly.JavaScript['Wait'] = function(block) {
+    var delay_dropdown = block.getFieldValue('WAIT_TIME')
+    var wait_code = 'Wait(' + delay_dropdown + ');\n';
+    return wait_code;
+  };
