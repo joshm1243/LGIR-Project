@@ -58,7 +58,6 @@ else {
     document.getElementById("blockly-wrapper").style.right = chatContainer.offsetWidth + "px";
     chatOpen = true;
 }
-onresize();
 });
 
 
@@ -67,15 +66,14 @@ document.getElementById("monitor-container").style.display = "none";
 document.getElementById("toggle-monitor").addEventListener("click", function(){
 if(showMonitor) {
     document.getElementById("blockly-container").style.display = "";
-    document.getElementById("blocklyDiv").style.display = "";
+    //document.getElementById("blocklyDiv").style.display = "";
     document.getElementById("monitor-container").style.display = "none";
     showMonitor = false;
 }
 else {
     document.getElementById("blockly-container").style.display = "none";
-    document.getElementById("blocklyDiv").style.display = "none";
+    //document.getElementById("blocklyDiv").style.display = "none";
     document.getElementById("monitor-container").style.display = "";
     showMonitor = true;
 }
-onresize();
 })

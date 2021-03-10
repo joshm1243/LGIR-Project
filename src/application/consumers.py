@@ -11,6 +11,7 @@ r = redis.Redis(host="127.0.0.1", port="6379", db=0)
 class ApplicationConsumer(WebsocketConsumer):
     def connect(self): #The client wishes to connect
 
+
         #Getting the app identifier from the URL
         self.app_code = self.scope["url_route"]["kwargs"]["app_code"]
         self.room_group_name = 'app_%s' % self.app_code
@@ -46,6 +47,19 @@ class ApplicationConsumer(WebsocketConsumer):
                     "data" : json.loads('{"type" : "blockly_edit_check", "edit" : "true"}')
                 }
             )
+
+
+        elif text_data_json["type"] =="blockly_edit_has_been_made":
+            
+            async_to_sync(self.channel_layer.group_send)(
+                self.room_group_name,
+                {
+                    "type" : "broadcast",
+                    "sender_channel_name" : self.channel_name,
+                    "data" : text_data_json
+                }
+            )
+
 
         elif text_data_json["type"] == "blockly_edit_request":
             pass
