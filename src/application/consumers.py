@@ -2,98 +2,84 @@ import json
 import redis
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
+from application.ws_handlers import CheckAuthentication
 
-#Connecting to the containerised redis server
+
 r = redis.Redis(host="127.0.0.1", port="6379", db=0)
 
-#A class that represents a single websocket connection
 
 class ApplicationConsumer(WebsocketConsumer):
-    def connect(self): #The client wishes to connect
+    def connect(self):
 
+        try:
 
-        #Getting the app identifier from the URL
-        self.app_code = self.scope["url_route"]["kwargs"]["app_code"]
-        self.room_group_name = 'app_%s' % self.app_code
+            self.app_code = self.scope["url_route"]["kwargs"]["app_code"]
+            self.room_group_name = 'app_%s' % self.app_code
+            async_to_sync(self.channel_layer.group_add)(
+                self.room_group_name,
+                self.channel_name
+            )
+            self.accept()
+        except:
+            print("HH")
 
-        #Adding the client to the project room
-        async_to_sync(self.channel_layer.group_add)(
-            self.room_group_name,
-            self.channel_name
-        )
-
-        #Accepting the websocket
-        self.accept()
-
-    def disconnecct(self, close_code):
+    def disconnect(self, close_code):
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name,
             self.channel_name
         )
 
 
-    #
     def receive(self, text_data=None):
         text_data_json = json.loads(text_data)
         self.data = json.loads(text_data)
+        
+        try:
+            token = text_data_json["auth"]
+        except:
+            return
+        
+        if CheckAuthentication(token):
+            if text_data_json["type"] == "blockly_edit_check":
 
-        if text_data_json["type"] == "blockly_edit_check":
+                self.data = json.loads('{"type" : "blockly_edit_check", "edit" : false}')
 
-            async_to_sync(self.channel_layer.group_send)(
-            self.room_group_name,
-                {
-                    "type" : "unicast",
-                    "sender_channel_name" : self.channel_name,
-                    "data" : json.loads('{"type" : "blockly_edit_check", "edit" : "true"}')
-                }
-            )
+                async_to_sync(self.channel_layer.group_send)(
+                self.room_group_name,
+                    {
+                        "type" : "unicast",
+                        "sender_channel_name" : self.channel_name,
+                        "data" : json.loads('{"type" : "blockly_edit_check", "edit" : "fdsafd"}')
+                    }
+                )
+                
+            else:
 
-
-        elif text_data_json["type"] =="blockly_edit_has_been_made":
+            #     blocklyGroupMaster = r.get(self.room_group_name + "_master").decode("utf-8")
+            #     if blocklyGroupMaster is None or blocklyGroupMaster == "user1":
+            #         r.set(blocklyGroupMaster,"user1")
+        
+        
             
+                async_to_sync(self.channel_layer.group_send)(
+                self.room_group_name,
+                    {
+                        "type" : "broadcast",
+                        "sender_channel_name" : self.channel_name,
+                        "data" : text_data_json
+                    }
+                )
+
+        else: 
+            # If the user isn't authenticated, returns false (Work Item 42)
             async_to_sync(self.channel_layer.group_send)(
                 self.room_group_name,
-                {
-                    "type" : "broadcast",
-                    "sender_channel_name" : self.channel_name,
-                    "data" : text_data_json
-                }
-            )
-
-
-        elif text_data_json["type"] == "blockly_edit_request":
-            pass
-        elif text_data_json["type"] == "blockly_edit_request_reply":
-            pass
-        elif text_data_json["type"] == "blockly_serial_send":
-            
-            #self.data = json.loads('{"type" : "blockly_serial_send_reply", "msg" : "connecting"}')
-
-            async_to_sync(self.channel_layer.group_send)(
-                self.room_group_name, {
-                                        "type" : "unicast",
-                    "sender_channel_name" : self.channel_name,
-                    "data" : json.loads('{"type" : "blockly_edit_request", "edit" : "true"}')
-                }
-            )
-
-
-        else:
-
-        #     blocklyGroupMaster = r.get(self.room_group_name + "_master").decode("utf-8")
-        #     if blocklyGroupMaster is None or blocklyGroupMaster == "user1":
-        #         r.set(blocklyGroupMaster,"user1")
-      
-     
-        
-            async_to_sync(self.channel_layer.group_send)(
-            self.room_group_name,
-                {
-                    "type" : "broadcast",
-                    "sender_channel_name" : self.channel_name,
-                    "data" : text_data_json
-                }
-            )
+                    {
+                        "type" : "unicast",
+                        "sender_channel_name" : self.channel_name,
+                        "data" : json.loads('{"auth" : "false"}')
+                    }
+                )
 
     def broadcast(self, event):
         if self.channel_name != event["sender_channel_name"]:
