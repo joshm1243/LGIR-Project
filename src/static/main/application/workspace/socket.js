@@ -179,7 +179,7 @@ socket.onopen = function() {
             })
         }
 
-        else if (data.type == "blockly_edit_request") {
+        else if (data.type == "blockly_edit_request") {  //adds the wrapper and the wrapper leaves after a certain time.
             blocklyWrapper.classList.add("show")
             blocklyWrapper.classList.remove("transparent")
             BlockAllWrapperMessages()
