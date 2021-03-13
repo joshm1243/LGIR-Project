@@ -2,15 +2,17 @@ import redis
 from django.contrib.auth import authenticate
 
 r = redis.Redis(host="127.0.0.1", port="6379", db=0)
-tokendict = {'Name': 'key'}
+# tokendict = {}
 
 def AddSocketConnection(key, user):
     print(key, "has been assigned to", user)
     usertoken = {user: key}
-    tokendict.update(usertoken) #
-    r.lpush('tokenlist', key)   #use hexists to find key?
+    # tokendict.update(usertoken)
+    r.set(key, user)   #use hexists to find key?
 
-def CheckAuthentication(user, token)
-    authenticate(self, request, username=none, token=none)
-    
+def CheckAuthentication(token):
+    # User is already authenticated at this point
+    # Checks if the token exists in Redis
+    return r.exists(token)
+
     

@@ -13,9 +13,9 @@ def project_space_view(request, appcode, *args, **kwargs):
         args["appcode"] = appcode
 
         #Creating a secure websocket key
-        #webSocketKey = secrets.token_hex(nbytes=16)
-        #AddSocketConnection(webSocketKey,"username")
-        #args["websocket_key"] = webSocketKey
+        webSocketKey = secrets.token_hex(nbytes=16)
+        AddSocketConnection(webSocketKey,request.user.username)
+        args["websocket_key"] = webSocketKey
 
         return render(request, "application/workspace.html", args)
 

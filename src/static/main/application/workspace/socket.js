@@ -83,6 +83,7 @@ socket.onopen = function() {
     //Sending a Blockly Edit Check after 1 second to see if there is anyone currently using the workspace
     setTimeout(function() {
         socket.send(JSON.stringify({
+            "auth" : wsKey,
             "type" : "blockly_edit_check",
         }))
     },1000)
