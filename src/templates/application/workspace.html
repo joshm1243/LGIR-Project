@@ -439,201 +439,9 @@
   <category name="Variables" colour="#a55b80" custom="VARIABLE"></category>
 </xml>
 
-
-<script>
-
-  /*Resize Functions*/
-
-  /* 
-  ResizeChat()
-  CheckForMobile()
-  ResizeBlockly()
-
-  window.addEventListener("resize", function(){
-    ResizeChat()
-    CheckForMobile()
-    ResizeBlockly()
-  })  
-
-  function ResizeBlockly() {
-    var blockly = document.getElementById("blockly-container")
-    blockly.style.height = (window.innerHeight - 102) + "px";
-  }
-
-  function ResizeChat() {
-    var chat = document.getElementById("chat-display-container")
-    chat.style.height = (window.innerHeight - 195) + "px";
-  }
-
-  function CheckForMobile() {
-    if (window.innerWidth < 550) {
-      document.getElementById("top_nav").style.display = "none";
-      document.getElementById("project_nav").style.display = "none";
-      document.getElementById("blockly-container").style.display = "none";
-      document.getElementById("mobile-top-nav").style.display = "";
-    }
-    else
-    {
-      document.getElementById("top_nav").style.display = "";
-      document.getElementById("project_nav").style.display = "";
-      document.getElementById("blockly-container").style.display = "";
-      document.getElementById("mobile-top-nav").style.display = "none";
-    }
-  }
-
-  var chatOpen = false;
-  document.getElementById("chat-container").style.display = "none";
-  document.getElementById("toggle-chat").addEventListener("click", function(){
-    if (chatOpen) {
-      document.getElementById("chat-container").style.display = "none";
-      chatOpen = false;
-    }
-    else {
-      document.getElementById("chat-container").style.display = "";
-      chatOpen = true;
-    }
-    onresize();
-  });
-
-
-  var showMonitor = false;
-  document.getElementById("monitor-container").style.display = "none";
-  document.getElementById("toggle-monitor").addEventListener("click", function(){
-    if(showMonitor) {
-      document.getElementById("blockly-container").style.display = "";
-      document.getElementById("blocklyDiv").style.display = "";
-      document.getElementById("monitor-container").style.display = "none";
-      showMonitor = false;
-    }
-    else {
-      document.getElementById("blockly-container").style.display = "none";
-      document.getElementById("blocklyDiv").style.display = "none";
-      document.getElementById("monitor-container").style.display = "";
-      showMonitor = true;
-    }
-    onresize();
-  })
-*/
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- <script> //Web-socket routing
-/*
-  //Checking if the user is using a secure web-socket protocol
-  var wsStart = "ws://"
-  if (window.location.protocol == 'https:') {
-    wsStart = "wss://"
-  }
-  
-  //Creating the HTML5 websocket
-  var endpoint = wsStart + window.location.host +  window.location.pathname
-  var socket = new WebSocket(endpoint)
-
-  //Waiting until the web-socket is open, and then listening to any activity on the web-socket
-  socket.onopen = function() {
-
-    socket.send(JSON.stringify({
-      "type" : "blockly_edit_check",
-    }))
-
-    socket.onmessage = function(event) {
-
-      let data = JSON.parse(event.data) //Taking the JSON string and parsing into a JSON object
-
-      //A blockly edit check reply has been received across the web-socket
-      if (data.type == "blockly_edit_check")
-      {
-        console.log("Received a blockly_edit_check reply")
-      }
-
-      //A chat message has been received across the web-socket
-      else if (data.type == "chat_message") {
-        ChatMessageReceive(data) //Calls the ChatMessageReceive function which deals with the event of a new chat message
-      }
-    }
-  }
-*/
-</script>
-
-<script> //Blockly DOM injection
-/*
-    var blocklyArea = document.getElementById('blockly-container');
-    var blocklyDiv = document.getElementById('blocklyDiv');
-    var ws = new Blockly.WorkspaceSvg(new Blockly.Options({}))
-    var workspace = Blockly.inject(blocklyDiv,
-        {
-          toolbox: document.getElementById('toolbox'),
-          collapse : true, 
-          comments : true, 
-          disable : true, 
-          maxBlocks : Infinity, 
-          trashcan : true, 
-          horizontalLayout : false, 
-          toolboxPosition : 'start', 
-          css : true, 
-          media : 'https://blockly-demo.appspot.com/static/media/', 
-          rtl : false, 
-          scrollbars : true, 
-          sounds : false, 
-          oneBasedIndex : true, 
-          zoom : {
-            controls : true, 
-            wheel : true, 
-            startScale : 1, 
-            maxScale : 3, 
-            minScale : 0.3, 
-            scaleSpeed : 1.2
-          }
-        }
-    )
-    var onresize = function(e) {
-      // Compute the absolute coordinates and dimensions of blocklyArea.
-      var element = blocklyArea;
-      var x = 0;
-      var y = 0;
-      do {
-        x += element.offsetLeft;
-        y += element.offsetTop;
-        element = element.offsetParent;
-      } while (element);
-      // Position blocklyDiv over blocklyArea.
-      blocklyDiv.style.left = x + 'px';
-      blocklyDiv.style.top = y + 'px';
-      blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
-      blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
-      Blockly.svgResize(workspace);
-    };
-    window.addEventListener('resize', onresize, false);
-    onresize();
-    Blockly.svgResize(workspace);
-
-
-  document.getElementById("run-code").addEventListener("click",function(){
-    console.log(Blockly)
-    Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-    var code = Blockly.JavaScript.workspaceToCode(workspace);
-    alert(code);
-  })
-  */
-</script>
-
 <script>  
   var wsKey = '{{ websocket_key }}'
 </script>
-
-
 
 <!-- Defining resize functions -->
 <script src="{% static 'application/workspace/resize.js' %}"></script>
@@ -643,8 +451,6 @@
 
 <!-- Chat -->
 <script src="{% static 'application/workspace/chat.js' %}"></script>
-
-
 
 <!-- Websockets -->
 <script src="{% static 'application/workspace/socket.js' %}"></script>
@@ -656,16 +462,12 @@
     document.getElementById("download-code").addEventListener("click",function(){
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 
-    //Creating a virtual download button to be clicked to house download information
-    var virDownloadButton = document.createElement("a")
+<script>
+  //   //Waiting for the download code button to be clicked
+  //   document.getElementById("download-code").addEventListener("click",function(){
+  //   Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 
-    //The document structure contains the type of data to be downloaded, as well as the content
-    var documentStructure = "data:text/plain; charset=utf8,"
-    documentStructure += encodeURIComponent(Blockly.Python.workspaceToCode(workspace))
 
-    //Setting the href tag to download the contents of the document along with the given file name
-    virDownloadButton.setAttribute("href",documentStructure)
-    virDownloadButton.setAttribute("download","{{appcode}} Python Code.py")
 
     //Append the virtual button to the main tag
     var main = document.getElementById("main")
@@ -675,6 +477,12 @@
     
   })
   */
+  //   //Append the virtual button to the main tag
+  //   var main = document.getElementById("main")
+  //   document.body.appendChild(virDownloadButton)
+  //   virDownloadButton.click()
+  //   document.body.removeChild(virDownloadButton)
+  // })
   
 </script>
 
