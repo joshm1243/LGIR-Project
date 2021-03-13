@@ -4,15 +4,23 @@ from account.models import User
 # Create your models here.
 
 class Project(models.Model):
-    name = models.CharField(max_length=30)
-    description = models.CharField(max_length=150)
-    code = models.CharField(max_length=10)
-    workspace = models.CharField(max_length=2048)
-    user = models.ForeignKey(User,on_delete=models.CASCADE, related_name='users')
+    def __str__(self):
+        return f'({self.id}) {self.name}'
+
+    name = models.CharField(max_length=30)  # Project name.
+    description = models.CharField(max_length=150, blank=True, default='') # Project description.
+
+    
+    code = models.CharField(max_length=10)  # Used for adding projects by code.
+    workspace = models.CharField(max_length=2048, blank=True, default='')   # Stores the workspace as a JSON in this section.
+    user = models.ForeignKey(User,on_delete=models.CASCADE, related_name='users')   # User that the project is assigned to.
 
 class Chat(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chatmessage')
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='project')
+    def __str__(self):
+        return f'({self.id}) {self.user.username} : {self.message} - {self.timestamp}'
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chatmessage')    # User that posts the message
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='project')  # Project where message was posted
     timestamp = models.DateTimeField(auto_now_add=True)
     message = models.CharField(max_length=150)
 
