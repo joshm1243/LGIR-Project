@@ -40,6 +40,10 @@ class ApplicationConsumer(WebsocketConsumer):
             return
         
         if CheckAuthentication(token):
+            if text_data_json["type"] == "blockly_update":
+                
+
+
             if text_data_json["type"] == "blockly_edit_check":
 
                 self.data = json.loads('{"type" : "blockly_edit_check", "edit" : false}')
