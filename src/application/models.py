@@ -21,7 +21,7 @@ class Bucket(models.Model):
     projectForeignKey = models.CharField(max_length=30)
     name = models.CharField(max_length=30) 
 
-class MontitorData(models.Model):
+class MonitorData(models.Model):
     BucketID = models.ForeignKey(Bucket, on_delete=models.CASCADE, related_name='projectForeignKeys')
     timestamp = models.DateTimeField(auto_now_add=True)
     data = models.CharField(max_length=150)

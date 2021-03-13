@@ -443,6 +443,8 @@
 <script>
 
   /*Resize Functions*/
+
+  /* 
   ResizeChat()
   CheckForMobile()
   ResizeBlockly()
@@ -511,7 +513,7 @@
     }
     onresize();
   })
-
+*/
 </script>
 
 
@@ -527,8 +529,8 @@
 
 
 
-<script> //Web-socket routing
-
+ <script> //Web-socket routing
+/*
   //Checking if the user is using a secure web-socket protocol
   var wsStart = "ws://"
   if (window.location.protocol == 'https:') {
@@ -562,11 +564,11 @@
       }
     }
   }
-
+*/
 </script>
 
 <script> //Blockly DOM injection
-
+/*
     var blocklyArea = document.getElementById('blockly-container');
     var blocklyDiv = document.getElementById('blocklyDiv');
     var ws = new Blockly.WorkspaceSvg(new Blockly.Options({}))
@@ -624,6 +626,14 @@
     var code = Blockly.JavaScript.workspaceToCode(workspace);
     alert(code);
   })
+  */
+</script>
+
+<script>  
+  var wsKey = '{{ websocket_key }}'
+</script>
+
+
 
 <!-- Defining resize functions -->
 <script src="{% static 'application/workspace/resize.js' %}"></script>
@@ -631,9 +641,17 @@
 <!-- Injecting Blockly-->
 <script src="{% static 'application/workspace/blockly_inject.js' %}"></script>
 
+<!-- Chat -->
+<script src="{% static 'application/workspace/chat.js' %}"></script>
+
+
+
+<!-- Websockets -->
+<script src="{% static 'application/workspace/socket.js' %}"></script>
 
 
 <script>
+    /*
     //Waiting for the download code button to be clicked
     document.getElementById("download-code").addEventListener("click",function(){
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
@@ -654,9 +672,9 @@
     document.body.appendChild(virDownloadButton)
     virDownloadButton.click()
     document.body.removeChild(virDownloadButton)
-
+    
   })
-
+  */
   
 </script>
 

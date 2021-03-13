@@ -1,7 +1,7 @@
 function createBlockly(options){   //function to create blockly
  
   var blocklyArea = document.getElementById('blockly-container');   //variable blocklyarea that holds the container
-  var blocklyDiv = document.getElementById('blockly-div');   //blockly div
+  var blocklyDiv = document.getElementById('blocklyDiv');   //blockly div
   var ws = new Blockly.WorkspaceSvg(new Blockly.Options({}))   //variable to hold workspace svg with blockly options
   //var options;
   
