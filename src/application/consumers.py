@@ -40,9 +40,11 @@ class ApplicationConsumer(WebsocketConsumer):
             return
         
         if CheckAuthentication(token):
-            # if text_data_json["type"] == "blockly_update":
+            if text_data_json["type"] == "blockly_update":
             # Area for Storing Workspace and Monitor Data Workitems
-
+                currProject = project.objects.get(name=self.app_code)
+                currProject.workspace = self.data
+                currProject.save()
 
             if text_data_json["type"] == "blockly_edit_check":
 
