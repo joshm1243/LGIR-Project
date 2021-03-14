@@ -101,8 +101,8 @@ Blockly.JavaScript['set'] = function(block) {
 
 // Python Gen Stub
 Blockly.Python['set'] = function(block) {
-  var value_component = Blockly.JavaScript.valueToCode(block, 'COMPONENT', Blockly.JavaScript.ORDER_ATOMIC);
-  var value_value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_component = Blockly.Python.valueToCode(block, 'COMPONENT', Blockly.Python.ORDER_ATOMIC);
+  var value_value = Blockly.Python.valueToCode(block, 'VALUE', Blockly.Python.ORDER_ATOMIC);
   var code = "..."
   return code;
 };
@@ -125,7 +125,7 @@ Blockly.Python['set'] = function(block) {
     // TODO: Assemble JavaScript into code variable.
     var code = '...';
     // TODO: Change ORDER_NONE to the correct strength.
-    return [code, Blockly.JavaScript.ORDER_NONE];
+    return [code, Blockly.Python.ORDER_NONE];
   };
 
   // JavaScript Gen Stub
@@ -145,7 +145,7 @@ Blockly.Python['set'] = function(block) {
     // TODO: Assemble JavaScript into code variable.
     var code = '...';
     // TODO: Change ORDER_NONE to the correct strength.
-    return [code, Blockly.JavaScript.ORDER_NONE];
+    return [code, Blockly.Python.ORDER_NONE];
   };
 
 // Block Definition
@@ -169,7 +169,7 @@ Blockly.Python['set'] = function(block) {
   // Python Gen Stub
   Blockly.Python['Speed'] = function(block) {
     var speed_dropdown = block.getFieldValue('SPEED_SELECT');
-    var value = Blockly.JavaScript.valueToCode(speed_dropdown);
+    var value = Blockly.Python.valueToCode(speed_dropdown);
     this.setPreviousStatement(true, "null");
     this.setNextStatement(true, "null");
     return value;
@@ -229,7 +229,7 @@ Blockly.JavaScript['On or OFF'] = function(block) {
 // Python Gen Stub
 Blockly.Python['On or OFF'] = function(block) {
   var state_dropdown = block.getFieldValue('SPEED_SELECT');
-  var value = Blockly.JavaScript.valueToCode(state_dropdown);
+  var value = Blockly.Python.valueToCode(state_dropdown);
   var x;
   if(value = "ON"){
     x = 100;
@@ -270,7 +270,7 @@ Blockly.JavaScript['Brightness'] = function(block) {
 // Python Gen Stub
 Blockly.Python['Brightness'] = function(block) {
   var light_dropdown = block.getFieldValue('LIGHT_SELECT');
-  var value = Blockly.JavaScript.valueToCode(light_dropdown);
+  var value = Blockly.Python.valueToCode(light_dropdown);
   var x;
   if(value = "BRIGHT"){
     x = 80;
