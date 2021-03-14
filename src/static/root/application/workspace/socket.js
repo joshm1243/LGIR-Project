@@ -77,6 +77,7 @@ socket.onopen = function() {
 
         //Allow the user to edit the requested workspace
         socket.send(JSON.stringify({
+            "auth" : wsKey,
             "type" : "blockly_edit_request_reply",
             "allow" : "true"
         }))

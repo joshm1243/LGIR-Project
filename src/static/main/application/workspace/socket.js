@@ -1,30 +1,12 @@
 //Application Workspace Routing
-
-/*{ <div id="workspace-loading-message">
-        <h1>Loading the workspace</h1>
-      </div>
-
-      <div id="allow-edit-message">
-        <h1>Someone would like to edit the workspace.</h1>
-        <h2>Transfer edit rights?<h2>
-        <a id='allow-edit'>Yes</a>
-        <a id='block-edit'>No</a>
-      </div>
-
-      <div id="someone-is-editing-message">
-        <h1>Someone is editing the workspace right now.</h1>
-        <h2>Press the edit button to ask for edit permissions.</h2>
-      </div>
-
-      <div id="positive-edit-message">
-        <h1>You now have permission to edit the workspace.</h1>
-      </div> */
-
 //Checking if the user is using a secure web-socket protocol
 var wsStart = "ws://"
 if (window.location.protocol == 'https:') {
   wsStart = "wss://"
 }
+
+
+var workspace;
 
 //Creating a websocket
 var endpoint = wsStart + window.location.host +  window.location.pathname
@@ -74,9 +56,13 @@ function SetWrapperTimer(removeWrapper=false) {
     },5000)
 }
 
-
 //Waiting until the web-socket is open, and then listening to any activity on the web-socket
 socket.onopen = function() {
+
+    socket.send(JSON.stringify({
+        "type" : "auth",
+        "auth" : wsKey
+    }))
 
     blocklyWrapper.classList.add("show")
 
@@ -86,13 +72,14 @@ socket.onopen = function() {
             "auth" : wsKey,
             "type" : "blockly_edit_check",
         }))
-    },1000)
+    },250)
 
     //Listening for the press of the edit button
     editButton.addEventListener("click",function() {
 
         //Sending a Blockly_Edit_Request to check if the user can edit the workspace
         socket.send(JSON.stringify({
+            "auth" : wsKey,
             "type" : "blockly_edit_request",
         }))
     })
@@ -104,17 +91,18 @@ socket.onopen = function() {
         socket.send(JSON.stringify({  // gives away workspace
             "type" : "blockly_edit_request_reply",
             "allow" : "true"
-        
         }))
-        deleteBlockly()
-        createBlockly({readOnly: true, sounds: false})
+        
+        deleteBlockly(workspace)
+
+        isCurrentEditor = false
+
+        workspace = createBlockly({readOnly: true, sounds: false})
         blocklyWrapper.classList.add("show")
         blocklyWrapper.classList.remove("transparent")
         BlockAllWrapperMessages()
         someoneIsEditingMessage.style.display = "block"
         SetWrapperTimer()
-        
-            
     })
    
     //Listening for the press of the block-edit-request button
@@ -126,16 +114,15 @@ socket.onopen = function() {
             "allow" : "false"
         }))
 
+        isCurrentEditor = true
+
         blocklyWrapper.classList.remove("show")
         BlockAllWrapperMessages()
         SetWrapperTimer()
     })
-    function mirrorEvent(){
-        console.log("I hate code")
-    }
+
     //Listening to the socket for activity
     socket.onmessage = function(event) {
-
         let data = JSON.parse(event.data) //Takes the JSON string and parses it into a JSON object
 
         //A Blockly edit check reply has been received
@@ -143,7 +130,7 @@ socket.onopen = function() {
 
             //If the user is allowed to edit the workspace
             if (data.edit == "true") {
-                createBlockly({toolbox: document.getElementById('toolbox'), sounds: false})
+                workspace = createBlockly({toolbox: document.getElementById('toolbox'), sounds: false})
                 blocklyWrapper.classList.remove("show")
                 blocklyWrapper.classList.add("transparent")
                 BlockAllWrapperMessages()
@@ -152,7 +139,9 @@ socket.onopen = function() {
 
             //If the user is not allowed to edit the workspace
             if (data.edit != "true") {
-                createBlockly({readOnly: true, sounds: false})
+
+                workspace = createBlockly("create",{readOnly: true, sounds: false})
+
                 BlockAllWrapperMessages()
                 someoneIsEditingMessage.style.display = "block";
                 SetWrapperTimer()
@@ -191,24 +180,33 @@ socket.onopen = function() {
         else if (data.type == "blockly_edit_request_reply") {
 
             if (data.edit == "true") {   //give toolbar
-                deleteBlockly()
-                createBlockly({toolbox: document.getElementById('toolbox'), sounds: false})
+
+                deleteBlockly(workspace)
+
+                workspace = createBlockly({toolbox: document.getElementById('toolbox'), sounds: false})
                 isCurrentEditor = true
                 blocklyWrapper.classList.add("show")
                 blocklyWrapper.classList.remove("transparent")
                 BlockAllWrapperMessages()
-                positiveEditMessage.classList.display = "block";
-                SetWrapperTimer()
+                positiveEditMessage.style.display = "block";
+                SetWrapperTimer(true)
             }
+            
             else {
 
                 isCurrentEditor = false   
                 blocklyWrapper.classList.add("show")
                 blocklyWrapper.classList.remove("transparent")
                 BlockAllWrapperMessages()
-                negativeEditMessage.classList.display = "block";
+                negativeEditMessage.style.display = "block";
                 SetWrapperTimer()
             }
+        }
+
+        //
+        else if (data.type == "blockly_edit_has_been_made") {
+            var blocklyEvent = Blockly.Events.fromJson(data.blockly_content, workspace)
+            blocklyEvent.run(true)
         }
 
         //A chat message has been received
@@ -217,4 +215,12 @@ socket.onopen = function() {
             ChatMessageReceive(data)
         }
     }
+}
+
+function SocketSend(data) {
+
+    if (isCurrentEditor) {
+        socket.send(JSON.stringify(data))
+    }
+
 }
