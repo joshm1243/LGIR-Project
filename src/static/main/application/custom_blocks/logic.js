@@ -278,6 +278,9 @@ Blockly.Python['Brightness'] = function(block) {
   else if (value = "DIM"){
     x = 20;
   }
+  else{
+    return ('Please input a valid option and try again!');
+  }
   return x;
 };
 
