@@ -43,7 +43,7 @@
   <li><a id="request-edit">Edit</a>
   <li><a id="download-code">Download Code</a></li>
   <li><a id="toggle-chat">Chat</a></li>
-  <li><a>Project Settings</a></li>
+  <li><a href="../settings/">Project Settings</a></li>
 </ul>
 
 <!-- Defining the main container for the page -->
@@ -103,7 +103,6 @@
 </div>
 
 <div id="blocklyDiv" style="position: absolute;"></div>
-
 
 <script src="{% static 'application/custom_blocks/structs.js' %}"></script>
 <script src="{% static 'application/custom_blocks/logic.js' %}"></script>
@@ -457,11 +456,10 @@
 <script src="{% static 'application/workspace/socket.js' %}"></script>
 
 <script>
-    /*
-    //Waiting for the download code button to be clicked
-    document.getElementById("download-code").addEventListener("click",function(){
-    Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-
+/*
+//Waiting for the download code button to be clicked
+document.getElementById("download-code").addEventListener("click",function(){
+Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 <script>
   //   //Waiting for the download code button to be clicked
   //   document.getElementById("download-code").addEventListener("click",function(){
