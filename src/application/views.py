@@ -18,6 +18,8 @@ def project_space_view(request, appcode, *args, **kwargs):
         wsauth.Remember(token,request.user.username)
         args["websocket_key"] = token
 
+
+
         return render(request, "application/workspace.html", args)
 
 @login_required
