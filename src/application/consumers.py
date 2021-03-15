@@ -73,8 +73,6 @@ class ApplicationConsumer(WebsocketConsumer):
                         }
                     )
 
-                    print(text_data_json)
-
                     # Area for Storing Workspace 
                     # currProject = project.objects.get(name=self.app_code)
                     # currProject.workspace = self.data
