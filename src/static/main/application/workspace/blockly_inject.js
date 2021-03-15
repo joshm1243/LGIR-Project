@@ -55,9 +55,13 @@ function createBlockly(options) {
 
     var json = event.toJson();
 
+    parser = new domParser()
+    xml
+
     SocketSend({
       "type" : "blockly_edit_has_been_made",
-      "blockly_content" : json
+      "blockly_content" : json,
+      "blockly_workspace" : "This is some workspace XML"
     })
 
   })

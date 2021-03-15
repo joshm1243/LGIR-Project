@@ -56,7 +56,7 @@ class ApplicationConsumer(WebsocketConsumer):
             #text_data_json["blockly_workspace"] will contain JSON used to recreate the whole workspace
             #text_data_json["blockly_content"] will contain JSON used to complete the change
             if eventName == "blockly_edit_has_been_made":
-
+                
                 isBlocklyMaster = True
                 
                 #Checking whether the current user has permission to change the workspace
@@ -73,11 +73,15 @@ class ApplicationConsumer(WebsocketConsumer):
                         }
                     )
 
+                    print(text_data_json)
+
                     # Area for Storing Workspace 
                     # currProject = project.objects.get(name=self.app_code)
                     # currProject.workspace = self.data
                     # currProject.save()
 
+
+            
 
             #BLOCKLY_EDIT_REQUEST
             #An request to become the editor of a workspace has been made
