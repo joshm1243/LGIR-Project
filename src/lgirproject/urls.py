@@ -23,6 +23,8 @@ from account.views import login_view, top_nav_view, front_view, handler404
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 
+handler404 = 'account.views.handler404'
+
 urlpatterns = [
 
     #
@@ -37,15 +39,13 @@ urlpatterns = [
 
     #path('application/settings/', settings_view, name="settings"),
     #path('application/projectspace/', project_space_view, name="project_space"),
-    path('accounts/login',login_view, name='login'),
 
     # patterns('lgirproject.views',
     # (r'^$','DEF_FUNCTION'),
 
     path('public/generics/inward/top-nav/', top_nav_view, name="top_nav"),
-    re_path(r'.*', handler404, name = "handler404")
-
+    #re_path(r'.*', handler404, name = "handler404")
+    
 ]
-
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
