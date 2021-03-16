@@ -1,8 +1,8 @@
 import json
 import redis
 from asgiref.sync import async_to_sync
+from application.models import Project
 from channels.generic.websocket import WebsocketConsumer
-
 import application.wshandlers.auth as wsauth
 import application.wshandlers.workspace as wsworkspace
 
@@ -74,9 +74,9 @@ class ApplicationConsumer(WebsocketConsumer):
                     )
 
                     # Area for Storing Workspace 
-                    # currProject = project.objects.get(name=self.app_code)
-                    # currProject.workspace = self.data
-                    # currProject.save()
+                    currProject = Project.objects.get(name=self.app_code)
+                    currProject.workspace = text_data_json["blockly_workspace"]
+                    currProject.save()
 
 
             
