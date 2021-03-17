@@ -24,6 +24,9 @@ function createBlockly(options) {
   parser = new DOMParser();
   var workspaceXML = parser.parseFromString(blocklyXMLString,"text/html");
   var workspaceXML = Blockly.Xml.textToDom(workspaceXML.documentElement.textContent)
+  // Attempting to clear prior to import due to duplication glitch
+  workspace.clear()
+  //Imports the xml to the workspace
   Blockly.Xml.domToWorkspace(workspaceXML, workspace)
   console.log(workspaceXML)
    

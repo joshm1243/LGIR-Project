@@ -17,7 +17,7 @@ class Project(models.Model):
 
 class Chat(models.Model):
     def __str__(self):
-        return f'({self.id}) {self.user.username} : {self.message} - {self.timestamp}'
+        return f'({self.project.name} | {self.id}) {self.user.username} : {self.message} - {self.timestamp}'
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chatmessage')    # User that posts the message
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='project')  # Project where message was posted
