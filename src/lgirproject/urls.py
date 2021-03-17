@@ -43,7 +43,7 @@ urlpatterns = [
     # (r'^$','DEF_FUNCTION'),
 
     path('public/generics/inward/top-nav/', top_nav_view, name="top_nav"),
-    re_path(r'.*', handler404, name = "handler404")
+    #re_path(r'.*', handler404, name = "handler404")
 
 ]
 

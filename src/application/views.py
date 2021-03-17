@@ -5,7 +5,7 @@ import secrets
 
 import application.wshandlers.auth as wsauth
 
-@login_required
+#@login_required
 def project_space_view(request, appcode, *args, **kwargs):
     if request.method == "GET":
         args = {}
