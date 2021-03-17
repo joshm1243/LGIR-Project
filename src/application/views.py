@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from application.models import Project
 import secrets
 
 import application.wshandlers.auth as wsauth
@@ -18,6 +19,9 @@ def project_space_view(request, appcode, *args, **kwargs):
         wsauth.Remember(token,request.user.username)
         args["websocket_key"] = token
 
+        currProject = Project.objects.get(name=appcode)
+        args["workspace_data"] = currProject.workspace
+        print(currProject.workspace)
 
 
         return render(request, "application/workspace.html", args)

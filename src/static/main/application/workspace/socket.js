@@ -207,6 +207,7 @@ socket.onopen = function() {
         else if (data.type == "blockly_edit_has_been_made") {
             var blocklyEvent = Blockly.Events.fromJson(data.blockly_content, workspace)
             blocklyEvent.run(true)
+            console.log("Test")
         }
 
         //A chat message has been received

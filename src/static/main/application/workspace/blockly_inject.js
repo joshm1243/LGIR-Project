@@ -16,7 +16,16 @@ function createBlockly(options) {
     
   // }
   var workspace = Blockly.inject(blocklyDiv, options);
+  
 
+  // This section grabs the XML workspace data from the backend and parses it back into the blockly workspace.
+  // Restores from saved data.
+  
+  parser = new DOMParser();
+  var workspaceXML = parser.parseFromString(blocklyXMLString,"text/html");
+  var workspaceXML = Blockly.Xml.textToDom(workspaceXML.documentElement.textContent)
+  Blockly.Xml.domToWorkspace(workspaceXML, workspace)
+  console.log(workspaceXML)
    
   var onresize = function(e) {  
     // Compute the absolute coordinates and dimensions of blocklyArea.
@@ -56,7 +65,6 @@ function createBlockly(options) {
     var json = event.toJson();
 
     var XMLSerial = new XMLSerializer()
-
 
 
     SocketSend({

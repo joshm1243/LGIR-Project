@@ -46,6 +46,7 @@
   <li><a href="../settings/">Project Settings</a></li>
 </ul>
 
+
 <!-- Defining the main container for the page -->
 <div id="main">
 
@@ -443,11 +444,18 @@
   var wsKey = '{{ websocket_key }}'
 </script>
 
+<!-- Getting the project data from the views args -->
+<script>
+  var blocklyXMLString = '{{ workspace_data }}';
+</script>
+
+
 <!-- Defining resize functions -->
 <script src="{% static 'application/workspace/resize.js' %}"></script>
 
 <!-- Injecting Blockly-->
 <script src="{% static 'application/workspace/blockly_inject.js' %}"></script>
+
 
 <!-- Chat -->
 <script src="{% static 'application/workspace/chat.js' %}"></script>

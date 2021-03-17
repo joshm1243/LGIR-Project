@@ -15,7 +15,7 @@ class ApplicationConsumer(WebsocketConsumer):
 
         try:
             self.app_code = self.scope["url_route"]["kwargs"]["app_code"]
-
+            
             self.room_group_name = 'app_%s' % self.app_code
             async_to_sync(self.channel_layer.group_add)(
                 self.room_group_name,
@@ -77,6 +77,7 @@ class ApplicationConsumer(WebsocketConsumer):
                     currProject = Project.objects.get(name=self.app_code)
                     currProject.workspace = text_data_json["blockly_workspace"]
                     currProject.save()
+
 
 
             
