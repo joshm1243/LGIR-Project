@@ -1,8 +1,12 @@
+
+
 {% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    
+
+    <!-- <img src="{% static 'images/favicon.png' %}" style="width: 50px; height: 50px;">
+     -->
     <title>LGIR: Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Biryani&display=swap" rel="stylesheet">
     
@@ -12,134 +16,267 @@
 
 </head>
 <style>
-  .main a {
-display: block;
-width: 113px;
-margin: auto; 
-float: left;
 
-}
-.wrapper {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(8,auto);
-  text-align:left;
-}
-.project-tile {
-    background-color: #444444;
-    text-align: center;
-    height: 170px;
-    padding: 10px;
+#main {
+    margin: 10px;
 }
 
-.create-project-tile {
-    background-color: #525252;
-    text-align: center;
-    height: 170px;
-    padding: 10px;
-}
-
-.create-project-tile .name {
+#project-tiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    text-align:center;
     color: #FFFFFF;
-    font-size: 1.4em;
-    padding: 65px 40px;
+    gap: 11px;
+    overflow: none;
+}
+
+@media screen and (max-width: 1800px) {
+
+    #project-tiles {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 1250px) {
+
+    #project-tiles {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+}
+
+@media screen and (max-width: 1000px) {
+
+    #project-tiles {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+@media screen and (max-width: 600px) {
+
+    #project-tiles {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+.project {
+    display: grid;
+    grid-template-areas:
+    "project__name project__name project__name project__name project__name project__name"
+    "project__users project__users project__users project__modified project__modified project__modified"
+    "project__space-left project__workspace project__workspace project__workspace project__workspace project__space-right"
+    "project__space-left project__settings project__settings project__settings project__remove project__space-right";
+    padding-bottom: 30px;
 }
 
 
-.project-tile .name {
-    font-size: 1.4em;
-    color: #FFFFFF;
-    line-height: 110px;
+#create-project-tile {
+    font-size: 1.5em;
+    transition: 0.5s;
+    background-color: #242424;
+    line-height: 190px;
 }
-  
 
-.project-tile .button {
-    background-color: #555555;
-    color: #FFFFFF;
+#create-project-tile:hover {
+    background-color: #181818;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.tile {
+    box-shadow: 10px 10px 8px #000000;
+    transition: 0.5s;
+}
+
+.tile:hover {
+    background-color: #181818;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+
+
+
+.project__name {
+    grid-area: project__name;
+    margin-top: 20px;
+    font-size: 1.6em;
+    margin-bottom: 10px;
+}
+
+.grey {
+    background-color: rgb(49, 49, 49);
+}
+
+
+.project__workspace {
+    grid-area: project__workspace;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 1.1em;
+    
+}
+
+
+.project__space-left {
+    grid-area: project__space-left;
+    width: 0px;
+}
+
+.project__space-right {
+    grid-area: project__space-right;
+    width: 0px;
+}
+
+.project__users {
+    grid-area: project__users;
+}
+
+.project__modified {
+    grid-area: project__modified;
+}
+
+.project__button {
     text-decoration: none;
-    padding: 8px 20px;
+    background-color: #424242;
+    color: #FFFFFF;
+    transition: 0.5s;
+    padding: 5px;
 }
 
-.project-tile .button:hover {
-    background-color: #111111;
+
+.project__workspace:hover {
+    background-color: #616161;
 }
 
-.project-tile .separator {
+.project__remove:hover {
+    background-color: #af0000;
+}
+
+
+.project__settings:hover {
+    background-color: #136DD1;
+}
+
+.project__settings {
+    grid-area: project__settings;
+}
+
+
+.project__remove {
+    grid-area: project__remove;
+    cursor: pointer;
     margin-left: 5px;
 }
 
-#main {
-    margin-left: 10px;
-}
 
 
 </style>
 <body>
 
-  <!-- Defining the top navigation bar -->
-  <ul id="top_nav">
-    <li><a>LGIR</a></li>
-    <li><a>Dashboard</a></li>
-    <li><a>Account Settings</a></li>
-    <li style="float:right"><a>Logout</a></li>
-  </ul>
+    <!-- Defining the top navigation bar -->
+    <ul id="top_nav">
+        <li><a>LGIR</a></li>
+        <li><a>Dashboard</a></li>
+        <li><a>Account Settings</a></li>
+        <li style="float:right"><a>Logout</a></li>
+    </ul>
 
   <!-- Defining the main body of the page  -->
   <div id = "main">
 
     <h1>LGIR Dashboard</h1>
-    <div class="wrapper">
+    <div id="project-tiles">
 
-        <div class="create-project-tile">
-            <div class="name">Create Project</div>
-        </div>
+        <div id="create-project-tile" class="grey tile">Create New Project</div>
 
-        <div class="project-tile">
-            <div class="name">Project Four</div>
-            
-            <a class="button" href="">Workspace</a>
-            <a class="separator" href=""></a>
-            <a class="button" href="">Settings</a>
-        </div>
+    </div>
+</div>
 
-        <div class="project-tile">
-            <div class="name">Project Four</div>
-            
-            <a class="button" href="">Workspace</a>
-            <a class="separator" href=""></a>
-            <a class="button" href="">Settings</a>
-        </div>
+    
+<script>
 
-        <div class="project-tile">
-            <div class="name">Project Four</div>
-            
-            <a class="button" href="">Workspace</a>
-            <a class="separator" href=""></a>
-            <a class="button" href="">Settings</a>
-        </div>
+    var projectTiles = document.getElementById("project-tiles")
 
-        <div class="project-tile">
-            <div class="name">Project Four</div>
-            
-            <a class="button" href="">Workspace</a>
-            <a class="separator" href=""></a>
-            <a class="button" href="">Settings</a>
-        </div>
+    function CreateProjectTile(name,users) {
 
-        <div class="project-tile">
-            <div class="name">Project Four</div>
-            
-            <a class="button" href="">Workspace</a>
-            <a class="separator" href=""></a>
-            <a class="button" href="">Settings</a>
-        </div>
+        var projectTile = document.createElement("div")
+        projectTile.classList.add("project","grey","tile")
+
+
+        var projectName = document.createElement("div")
+        projectName.textContent = name
+        projectName.classList.add("project__name")
+        projectTile.appendChild(projectName)
+
+        var projectUsers = document.createElement("div")
+        projectUsers.textContent = users + " users online"
+        projectUsers.classList.add("project__users")
+        projectTile.appendChild(projectUsers)
 
         
 
+        var projectModified = document.createElement("div")
+        projectModified.textContent = "29.01.20"
+        projectModified.classList.add("project__modified")
+        projectTile.appendChild(projectModified)
+        
+        
+        var projectWorkspace = document.createElement("a")
+        projectWorkspace.textContent = "Workspace"
+        projectWorkspace.classList.add("project__button")
+        projectWorkspace.href = "../application/" + "af8d9s" + "/workspace/"
+        projectWorkspace.classList.add("project__workspace")
+        projectTile.appendChild(projectWorkspace)
 
 
-  </div>
-</div>
+        
+
+        var projectSettings = document.createElement("a")
+        projectSettings.textContent = "Settings"
+        projectSettings.classList.add("project__button")
+        projectSettings.href = "../application/" + "af8d9s" + "/settings/"
+        projectSettings.classList.add("project__settings")
+        projectTile.appendChild(projectSettings)
+
+        var projectRemove = document.createElement("a")
+        projectRemove.textContent = "Remove"
+        projectRemove.classList.add("project__button")
+        projectRemove.classList.add("project__remove")
+        projectTile.appendChild(projectRemove)
+
+        var projectSpaceLeft = document.createElement("div")
+        var projectSpaceRight = document.createElement("div")
+        projectTile.appendChild(projectSpaceLeft)
+        projectTile.appendChild(projectSpaceRight)
+
+
+        
+
+        projectTiles.appendChild(projectTile)
+
+    }
+
+    CreateProjectTile("Moss Project",1)
+    CreateProjectTile("New Project",0)
+    CreateProjectTile("Robotics Project",0)
+    CreateProjectTile("TSE Project",2)
+    CreateProjectTile("Lecture 1 Example",0)
+    CreateProjectTile("Lecture 2 Example",0)
+    CreateProjectTile("Lecture 3 Example",34)
+    CreateProjectTile("Lecture 4 Example",8)
+    CreateProjectTile("Lecture 5 Example",30)
+
+    var createProjectTile = document.getElementById("create-project-tile")
+
+    createProjectTile.addEventListener("click",function(){
+        CreateProjectTile("New Project", 0)
+    })
+
+</script>
+
 
 </body>
 </html>
