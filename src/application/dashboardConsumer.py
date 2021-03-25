@@ -10,8 +10,8 @@ class DashboardConsumer(WebsocketConsumer):
         self.accept()
 
     def receive(self, text_data=None):
-        text_data_json = json.loads(text_data)
-        eventName = text_data_json["type"]
+        eventData = json.loads(text_data)
+        eventName = eventData["type"]
         if eventName == "project_join_request":
             self.send(text_data=json.dumps(
                 {
@@ -25,11 +25,26 @@ class DashboardConsumer(WebsocketConsumer):
             ))
 
         elif eventName == "project_create":
-            print("This")
             self.send(text_data=json.dumps(
                 {
                     "type" : "project_create_reply",
                     "created" : "true"
+                }
+            ))
+
+        elif eventName == "project_remove":
+            print(eventData["code"])
+            self.send(text_data=json.dumps(
+                {
+                    "type" : "project_remove_reply",
+                    "removed" : "true"
+                }
+            ))
+        
+        elif eventName == "hello":
+            self.send(text_data=json.dumps(
+                {
+                    "type" : "hello_reply"
                 }
             ))
 

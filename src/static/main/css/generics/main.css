@@ -2,6 +2,49 @@
 :root {
     --grey: #555555;
     --dark-grey: #444444;
+    --darker-grey: #313131;
+    --blue: #005DC7;
+    --teal: #00B199;
+    --green: #00FF0094;
+    --red: #FF002B;
+    --orange: #FF9100;
+    --pink: #FF00D4;
+}
+
+.grey {
+    background-color: var(--grey)
+}
+
+.dark-grey {
+    background-color: var(--dark-grey)
+}
+
+.darker-grey {
+    background-color: var(--darker-grey)
+}
+
+.blue {
+    background-color: var(--blue)
+}
+
+.teal {
+    background-color: var(--teal)
+}
+
+.green {
+    background-color: var(--green)
+}
+
+.red {
+    background-color: var(--red)
+}
+
+.orange {
+    background-color: var(--orange)
+}
+
+.pink {
+    background-color: var(--pink)
 }
 
 body {

@@ -67,6 +67,7 @@
 }
 
 .project {
+    user-select: none;
     display: grid;
     grid-template-areas:
     "project__colour project__colour project__colour project__colour project__colour project__colour"
@@ -78,6 +79,7 @@
 }
 
 .placeholder-tile {
+    user-select: none;
     display: grid;
     grid-template-areas:
     "tile__colour-top tile__colour-top tile__colour-top"
@@ -89,7 +91,6 @@
 
 .tile__colour-top {
     grid-area: tile__colour-top;
-    background-color: #005dc7;
 }
 
 .tile__center {
@@ -103,17 +104,14 @@
 
 .tile__colour-left {
     grid-area: tile__colour-left;
-    background-color: #005dc7;
 }
 
 .tile__colour-right {
     grid-area: tile__colour-right;
-    background-color: #005dc7;
 }
 
 .tile__colour-bottom {
     grid-area: tile__colour-bottom;
-    background-color: #005dc7;
 }
 
 #create-project-tile {
@@ -146,34 +144,6 @@
     margin-top: 20px;
     font-size: 1.6em;
     margin-bottom: 10px;
-}
-
-.grey {
-    background-color: rgb(49, 49, 49);
-}
-
-.blue {
-    background-color: #005dc7;
-}
-
-.teal {
-    background-color: #00b199;
-}
-
-.green {
-    background-color: #00ff0094;
-}
-
-.red {
-    background-color: #ff002b;
-}
-
-.orange {
-    background-color: #ff9100;
-}
-
-.pink {
-    background-color: #ff00d4;
 }
 
 .project__workspace {
@@ -220,12 +190,12 @@
 }
 
 .project__remove:hover {
-    background-color: #af0000;
+    background-color: var(--red);
 }
 
 
 .project__settings:hover {
-    background-color: #136DD1;
+    background-color: var(--blue);
 }
 
 .project__settings {
@@ -236,10 +206,6 @@
     grid-area: project__remove;
     cursor: pointer;
     margin-left: 5px;
-}
-
-.light-grey {
-    background-color: #313131
 }
 
 #dashboard_nav {
@@ -272,15 +238,67 @@
     display: none;
 }
 
-#unsuccessful-search-message {
+.message {
     text-align: center;
     display: none;
     margin-top: 50px;
 }
 
-#unsuccessful-search-message h1 {
+.message h1 {
     font-size: 2.2em;
 }
+
+.progress {
+    width: 100%;
+    background-color: var(--grey);
+    height: 10px;
+}
+
+.progress > span {
+    display: block;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-green:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 10px;
+    z-index: 3;
+    animation: move 1.2s linear infinite;
+    overflow: hidden;
+    background-size: 2000px 10px;
+    background-image:
+        
+    linear-gradient(to right,
+        var(--teal) 0 400px,
+        transparent 0 500px,
+        var(--teal) 0 900px,
+        transparent 0 1000px,
+        var(--teal) 0 1400px,
+        transparent 0 1500px,
+        var(--teal) 0 1900px,
+        transparent 0 2000px
+    );
+
+
+}
+
+/*
+@keyframes move {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 1500px 50px;
+    }
+}
+*/
 
 </style>
 <body>
@@ -298,27 +316,70 @@
         <li style="float:right"><a>Logout</a></li>
     </ul>
 
+    <div id="progress-bar" class="progress">
+        <span class="progress-green"></span>
+    </div>
+
     <!-- Defining the main body of the page  -->
     <div id = "main">
         <div id="project-tiles"></div>
-        <div id="unsuccessful-search-message">
+        <div id="search-message" class="message">
             <h1>There aren't any matches for that search</h1>
             <h2>Are you sure you typed the project name correctly?</h2>
+        </div>
+        <div id="server-message" class="message">
+            <h1>We've lost connection to the server</h1>
+            <h2>We'll let you know when the connection's back</h2>
         </div>
     </div>
     
 <script>
+
+    var unsuccesfulSearchMessage = document.getElementById("unsuccessful-search-message")
+    
     var projectJoinInput = document.getElementById("project-join-input")
     var projectTileElements = document.getElementsByClassName("project")
-    var unsuccesfulSearchMessage = document.getElementById("unsuccessful-search-message")
+    var searchMessage = document.getElementById("search-message")
     var showLiveButton = document.getElementById("show-live-button")
+    var projectTiles = document.getElementById("project-tiles")
 
 
+    var projectJoinInputReadonly = false
+
+    
+    var projectJSON = [
+
+        {
+            "name" : "Moss Project",
+            "code" : "ajss8aj2",
+            "users" : 10
+        },
+
+        {
+            "name" : "Lecture 1 Example",
+            "code" : "a8sh1fja",
+            "users" : 0
+        },
+
+        {
+            "name" : "Lecture 2 Example",
+            "code" : "a8sj2kl",
+            "users" : 34
+        }
+    ]
+
+    function TilesHide() {
+        projectTiles.style.display = "none"
+    }
+    
+    function TilesShow() {
+        projectTiles.style.diplay = "block"
+    }
     
     function CreatePlaceholderTile() {
 
         let placeholderTile = document.createElement("div")
-        placeholderTile.classList.add("tile","grey","placeholder-tile")
+        placeholderTile.classList.add("tile","darker-grey","placeholder-tile")
 
         let leftColourDiv = document.createElement("div")
         leftColourDiv.classList.add("tile__colour-left",RandomColour())
@@ -354,58 +415,145 @@
         return placeholderTile
 
     }
-
     
-    var projectJSON = [
 
-    {
-        "name" : "Moss Project",
-        "code" : "ajss8aj2",
-        "users" : 10
-    },
-
-    {
-        "name" : "Lecture 1 Example",
-        "code" : "a8sh1fja",
-        "users" : 0
-    },
-
-    {
-        "name" : "Lecture 2 Example",
-        "code" : "a8sj2kl",
-        "users" : 34
+    var wsStart = "ws://"
+    if (window.location.protocol == 'https:') {
+        wsStart = "wss://"
     }
-    ]
+
+    var serverMessage = document.getElementById("server-message")
+
+    //Creating a websocket
+    var endpoint = wsStart + window.location.host +  window.location.pathname
+    var socket = new WebSocket(endpoint)
+
+    var SERVER_CONNECTION = true
+
+    socket.onopen = function() {
+
+        setInterval(function() {
+
+            if (SERVER_CONNECTION) {
+                console.log("CONNECTIOn")
+                SERVER_CONNECTION = false
+                socket.send(JSON.stringify(
+                    {
+                        "type" : "hello"
+                    }
+                ))    
+            }
+            else {
+                console.log("NO CONNECTION")
+                TilesHide()
+                serverMessage.style.display = "block"
+            }
+        },1000)
 
 
-    /*
+
+        projectJoinInput.addEventListener("keydown",function(e){
+            if (e.target.value.length == 8) {
+
+                code = e.target.value
+                projectJoinInput.value = "Loading"
+                projectJoinInput.style.color = "#136DD1"
+                projectJoinInput.classList.remove("block-text")
+                
+                socket.send(JSON.stringify(
+                    {
+                        "type" : "project_join_request",
+                        "code" : code
+                    }
+                ))
+            }
+        })
+
+        createProjectButton.addEventListener("click",function(){
+            socket.send(JSON.stringify(
+                {
+                    "type" : "project_create",
+                }
+            ))
+        })
+
+        socket.onmessage = function(event) {
+        
+            let data = JSON.parse(event.data)
+            let eventName = data.type
+            if (data.type == "project_join_reply") {
+
+                if (data.joined == "true") {
+
+                    ResetSearch()
+
+                    projectJSON.push({
+                        "name" : data.name,
+                        "code" : data.code,
+                        "users" : data.users
+                    })
+                    
+
+                    CreateProjectTile(data.name,data.code,data.users)
+                    projectJoinInput.classList.remove("block-text")
+                    projectJoinInput.style.color = "#00ff0094"
+                    projectJoinInput.value = "Added You To That Project"
+                }
+                else {
+                    projectJoinInput.classList.remove("block-text")
+                    projectJoinInput.style.color = "#ff9100"
+                    projectJoinInput.value = "That Project Doesn't Exist"                    
+                }
+
+                setTimeout(function(){ 
+                    projectJoinInput.blur()
+                    projectJoinInput.readOnly = false
+                    projectJoinInputReadonly = false
+                    projectJoinInput.style.color = "#FFFFFF"
+                    projectJoinInput.value = "Join Project with Code"
+                },3000)
+            }
+
+            else if (data.type == "project_create_reply") {
+                
 
 
-        */
+            }           
+            
+            else if (data.type == "hello_reply") {
+                SERVER_CONNECTION = true
+            }
+        }
+    }
+
+    function ShowSearchMessage() {
+        searchMessage.style.display = "block"
+    }
+
+    function RemoveSearchMessage() {
+        searchMessage.style.display = "none"
+    }
     
-    var projectJoinInputReadonly = false
     
     function ResetSearch() {
+        
         for (var i = 0; i < projectJSON.length; i++) {
             projectTileElements[(projectTileElements.length - 1) - i].classList.remove("hide")
         }
 
-        unsuccesfulSearchMessage.style.display = "none"
+        RemoveSearchMessage()
     }
-
 
     function RandomColour() {
         let colours = ["blue","orange","green","pink","red","teal"]
         return colours[Math.floor(Math.random() * colours.length)]
     }
-    var projectTiles = document.getElementById("project-tiles")
 
     function CreateProjectTile(name,code,users) {
 
         var projectTile = document.createElement("div")
-        projectTile.classList.add("project","grey","tile")
+        projectTile.classList.add("project","darker-grey","tile")
         
-
         var projectColour = document.createElement("div")
         projectColour.classList.add("project__colour")
         projectColour.classList.add(RandomColour())
@@ -444,6 +592,17 @@
         projectRemove.textContent = "Remove"
         projectRemove.classList.add("project__button")
         projectRemove.classList.add("project__remove")
+        projectRemove.addEventListener("click",function(){
+            projectTile.remove()
+            if (socket.OPEN) {
+                socket.send(JSON.stringify(
+                    {
+                        "type" : "project_remove",
+                        "code" : code,
+                    }
+                ))
+            }
+        })
         projectTile.appendChild(projectRemove)
 
         var projectSpaceLeft = document.createElement("div")
@@ -455,92 +614,6 @@
         
     }
     
-
-    var wsStart = "ws://"
-    if (window.location.protocol == 'https:') {
-        wsStart = "wss://"
-    }
-
-    //Creating a websocket
-    var endpoint = wsStart + window.location.host +  window.location.pathname
-    var socket = new WebSocket(endpoint)
-
-    socket.onopen = function() {
-
-        projectJoinInput.addEventListener("keydown",function(e){
-            if (e.target.value.length == 8) {
-
-                code = e.target.value
-                projectJoinInput.value = "Joining"
-                projectJoinInput.style.color = "#136DD1"
-                
-                socket.send(JSON.stringify(
-                    {
-                        "type" : "project_join_request",
-                        "code" : code
-                    }
-                ))
-            }
-        })
-
-        createProjectButton.addEventListener("click",function(){
-            socket.send(JSON.stringify(
-                {
-                    "type" : "project_create",
-                }
-            ))
-        })
-
-        socket.onmessage = function(event) {
-        
-            let data = JSON.parse(event.data)
-            let eventName = data.type
-            if (data.type == "project_join_reply") {
-
-                if (data.joined == "true") {
-
-                    
-                    ResetSearch()
-
-                    projectJSON.push({
-                        "name" : data.name,
-                        "code" : data.code,
-                        "users" : data.users
-                    })
-                    
-
-                    CreateProjectTile(data.name,data.code,data.users)
-                    projectJoinInput.classList.remove("block-text")
-                    projectJoinInput.style.color = "#00ff0094"
-                    projectJoinInput.value = "Added You To The Project"
-                }
-                else {
-                    projectJoinInput.classList.remove("block-text")
-                    projectJoinInput.style.color = "#ff9100"
-                    projectJoinInput.value = "That Project Doesn't Exist"                    
-                }
-
-                setTimeout(function(){ 
-                    projectJoinInput.blur()
-                    projectJoinInput.readOnly = false
-                    projectJoinInputReadonly = false
-                    projectJoinInput.style.color = "#FFFFFF"
-                    projectJoinInput.value = "Join Project with Code"
-                },3000)
-
-  
-
-            }
-
-            else if (data.type == "project_create_reply") {
-                
-
-
-            }            
-        }
-    }
-
-
     projectJoinInput.addEventListener("focus",function(){
         projectJoinInput.value = ""
         projectJoinInput.classList.add("block-text")
@@ -554,11 +627,6 @@
 
     var HTMLparser = new DOMParser().parseFromString("{{ projects }}", "text/html")
 
-
-    
-
-
-
     projectJSON.forEach(function(project){
         CreateProjectTile(project.name, project.code, project.users)
     })
@@ -567,7 +635,7 @@
     projectSearchInput.addEventListener("keyup",function(e){
         
 
-        unsuccesfulSearchMessage.style.display = "none"
+        RemoveSearchMessage()
 
         let searchSuccess = false
 
@@ -587,7 +655,7 @@
         }
 
         if (!searchSuccess) {
-            unsuccesfulSearchMessage.style.display = "block"
+            ShowSearchMessage()
         }
     })
 
@@ -645,8 +713,13 @@
             
             setTimeout(function(){
 
+
+                //Send message
+
                 placeholderTile.remove()
                 currentlyCreatingProject = false
+
+
 
                 CreateProjectTile("New Project","Code","Users")
                 projectJSON.push(
@@ -657,7 +730,6 @@
                     }
                 )
 
-                
             },1000)
         }
     })
