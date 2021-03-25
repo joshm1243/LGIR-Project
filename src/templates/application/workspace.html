@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="{% static 'css/application/chat.css' %}" type="text/css">
 <link rel="stylesheet" href="{% static 'css/application/navigation.css' %}" type="text/css">
 <link rel="stylesheet" href="{% static 'css/application/workspace.css' %}" type="text/css">
-<link rel="stylesheet" href="{% static 'css/application/monitor.css' %}" type="text/css">
+<!--<link rel="stylesheet" href="{% static 'css/application/monitor.css' %}" type="text/css">-->
 
 </head>
 
@@ -95,6 +95,7 @@
     
     <div id="blockly-container" style="flex: 1;"></div>
     <div id="monitor-container" style="flex: 1;">
+    <div id="option-container"  style="flex: 1">
       <div class="flex-container">
         <div><ul>
           <li><a class="bucket-select">1-4</a></li>
@@ -103,23 +104,26 @@
           <li><a class="bucket-select">15-19</a></li>
         </ul></div>
         <div>results</div>
-    </div>
-  </div>
+      
+      </div>
+    </div> 
+    </div> 
+ </div>
 
-  <!-- Holds all items relating to chat messages -->
-  <div id="chat-container">
-    <div id="chat-header">{{appcode}} chat</div>
-    <div id="chat-display-container"></div>
-    <div id="chat-input-container"><input id="chat-input" placeholder="Please input your text here"></div>
-  </div>
+ 
+
+<div id="blocklyDiv" style="position: absolute;">
 </div>
-
-<div id="blocklyDiv" style="position: absolute;"></div>
 
 <script src="{% static 'application/custom_blocks/structs.js' %}"></script>
 <script src="{% static 'application/custom_blocks/logic.js' %}"></script>
 <script src="{% static 'application/custom_workspace/toolbox.js' %}"></script>
-
+ <!-- Holds all items relating to chat messages -->
+ <div id="chat-container">
+  <div id="chat-header">{{appcode}} chat</div>
+  <div id="chat-display-container"></div>
+  <div id="chat-input-container"><input id="chat-input" placeholder="Please input your text here"></div>
+ </div>
 
 <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
   <category name="Logic" colour="#5b80a5">
