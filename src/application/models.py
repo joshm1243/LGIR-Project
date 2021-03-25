@@ -9,7 +9,6 @@ class Project(models.Model):
 
     name = models.CharField(max_length=30)  # Project name.
     description = models.CharField(max_length=150, blank=True, default='') # Project description.
-
     
     code = models.CharField(max_length=10)  # Used for adding projects by code.
     workspace = models.CharField(max_length=2048, blank=True, default='')   # Stores the workspace as a JSON in this section.
@@ -33,3 +32,7 @@ class MonitorData(models.Model):
     BucketID = models.ForeignKey(Bucket, on_delete=models.CASCADE, related_name='projectForeignKeys')
     timestamp = models.DateTimeField(auto_now_add=True)
     data = models.CharField(max_length=150)
+
+class ProjectMappings(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="project_mapping_users")
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='project_mapping_project')

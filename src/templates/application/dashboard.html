@@ -248,57 +248,52 @@
     font-size: 2.2em;
 }
 
-.progress {
-    width: 100%;
-    background-color: var(--grey);
+#progress-bar {
     height: 10px;
 }
 
-.progress > span {
-    display: block;
+#progress-bar div {
     height: 100%;
     position: relative;
     overflow: hidden;
+    display: none;
 }
 
-.progress-green:after {
-    content: "";
+@keyframes move {
+    0% {
+        background-position: 0px;
+    }
+    100% {
+        background-position: 2000px;
+    }
+}
+
+#progress-image:after {
+    height: 10px;
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
-    height: 10px;
-    z-index: 3;
-    animation: move 1.2s linear infinite;
-    overflow: hidden;
-    background-size: 2000px 10px;
+    z-index: 5;
+    animation: move 3s linear;
+    content: "";
+    background-size: 2000px;
     background-image:
-        
     linear-gradient(to right,
         var(--teal) 0 400px,
-        transparent 0 500px,
-        var(--teal) 0 900px,
-        transparent 0 1000px,
+        var(--grey) 0 500px,
+        var(--orange) 0 900px,
+        var(--grey) 0 1000px,
         var(--teal) 0 1400px,
-        transparent 0 1500px,
-        var(--teal) 0 1900px,
-        transparent 0 2000px
+        var(--grey) 0 1500px,
+        var(--pink) 0 1900px,
+        var(--grey) 0 2000px
     );
-
-
 }
 
-/*
-@keyframes move {
-    0% {
-      background-position: 0 0;
-    }
-    100% {
-      background-position: 1500px 50px;
-    }
-}
-*/
+
+
 
 </style>
 <body>
@@ -308,7 +303,6 @@
         <li><a>LGIR</a></li>
         <li><a>Dashboard</a></li>
         <li><a>Account Settings</a></li>
-        <li class="sep"></li>
         <li class="project-specific"><a id="show-live-button">Show Live Projects</a></li>
         <li class="project-specific"><a id="create-project-button">Create Project</a></li>
         <li class="project-specific"><input id="project-join-input" type="text" value="Join Project with Code"></li>
@@ -316,8 +310,8 @@
         <li style="float:right"><a>Logout</a></li>
     </ul>
 
-    <div id="progress-bar" class="progress">
-        <span class="progress-green"></span>
+    <div id="progress-bar">
+        <div id="progress-image"></div>
     </div>
 
     <!-- Defining the main body of the page  -->
@@ -668,7 +662,6 @@
     })
 
 
-
     projectJoinInput.addEventListener("keydown",function(e){
 
         e.preventDefault()
@@ -688,7 +681,6 @@
             projectJoinInput.readOnly = "true"
             projectJoinInputReadonly = true
             projectJoinInput.style.color = "#00EEAA"
-
         }
         else {
 
@@ -703,6 +695,18 @@
     var currentlyCreatingProject = false
 
     var createProjectButton = document.getElementById("create-project-button")
+
+    
+    var progressBarImage = document.getElementById("progress-image")
+
+    function ProgressBarShow() {
+        progressBarImage.style.display = "block"
+    }
+
+    function ProgressBarHide() {
+        progressBarImage.style.display = "none"
+    }
+
     createProjectButton.addEventListener("click",function(){
 
         ResetSearch()
@@ -711,15 +715,19 @@
             currentlyCreatingProject = true
             let placeholderTile = CreatePlaceholderTile()
             
+            
+            
+            ProgressBarShow()
+
             setTimeout(function(){
 
+                
+                ProgressBarHide()
 
                 //Send message
 
                 placeholderTile.remove()
                 currentlyCreatingProject = false
-
-
 
                 CreateProjectTile("New Project","Code","Users")
                 projectJSON.push(

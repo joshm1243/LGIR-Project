@@ -1,8 +1,8 @@
 import json
 from asgiref.sync import async_to_sync
 from application.models import Project
+from application.models import ProjectMappings
 from channels.generic.websocket import WebsocketConsumer
-
 
 #A class that represents a single websocket connection
 class DashboardConsumer(WebsocketConsumer):
@@ -25,6 +25,12 @@ class DashboardConsumer(WebsocketConsumer):
             ))
 
         elif eventName == "project_create":
+
+            code = "ahs8dj1k"
+
+            project = Project(name="Name",description="Desc",code="a7sh1kf1",workspace="",user=self.scope["user"])
+            project.save()
+
             self.send(text_data=json.dumps(
                 {
                     "type" : "project_create_reply",
@@ -34,6 +40,9 @@ class DashboardConsumer(WebsocketConsumer):
 
         elif eventName == "project_remove":
             print(eventData["code"])
+
+            #Projects.objecst.filter(id).delete()
+            
             self.send(text_data=json.dumps(
                 {
                     "type" : "project_remove_reply",
