@@ -5,7 +5,7 @@ from account.models import User
 
 class Project(models.Model):
     def __str__(self):
-        return f'({self.id}) {self.name}'
+        return f'({self.id}) {self.name} '
 
     name = models.CharField(max_length=30)  # Project name.
     description = models.CharField(max_length=150, blank=True, default='') # Project description.

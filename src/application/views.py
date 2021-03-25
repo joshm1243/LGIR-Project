@@ -44,4 +44,11 @@ def settings_view(request, appcode, *args, **kwargs):
 def dashboard_view(request, *args, **kwargs):
     print(request.user.is_authenticated)
     if request.method == "GET":
-        return render(request, "application/dashboard.html")
+        projectJSON = "["
+        for project in Project.objects.filter(user=request.user):
+            projectJSON += "{'id':'" + str(project.id) + "','name':'"  + project.name
+            projectJSON += "','code':'" + project.code + "'},"
+        projectJSON += "]"
+        args = {}
+        args["projects"] = projectJSON
+        return render(request, "application/dashboard.html", args)
