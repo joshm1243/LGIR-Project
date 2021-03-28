@@ -87,7 +87,9 @@
   <li><a id="site-title">LGIR</a></li>
   <li><a href="./../../../dashboard/">Dashboard</a></li>
   <li><a>Account Settings</a></li>
+
   <li style="float:right"><a>Logout</a></li>
+
 </ul>
 
 <!-- <ul id="mobile-top-nav">
@@ -95,6 +97,40 @@
   <li><a>LGIR</a></li>
 </ul> -->
 
+
+<div id="main">
+  <div id="content-container">
+    <div>      
+      
+      <div>
+        <!-- Component Mappings Header -->
+        <div>Virtual Name</div>
+        <div>Physical Mapping</div>
+
+      </div>
+      <div>
+        <!-- Component Mappings Content Grid -->
+
+
+      </div>
+
+    </div>
+    <div>
+
+      <div>
+        <!-- Project Users Header -->
+        <div>Username</div>
+        <div>Role</div>
+
+      </div>
+      <div>
+        <!-- Project Users Content Grid -->
+
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <!-- Defining the main container for the page -->
 <div id="main">
@@ -121,6 +157,53 @@
 
 <script>
 
+  const componentJSON = {
+
+    "button" : {
+      "pins" : 1
+    },
+
+    "buzzer" : {
+      "pins" : 1
+    },
+
+    "joystick" : {
+      "pins" : 1
+    },
+
+    "laser" : {
+      "pins" : 1
+    },
+
+    "led" : {
+      "pins" : 1
+    },
+
+    "motor" : {
+      "pins" : 1
+    },
+
+    "multi-coloured-led" : {
+      "pins" : 3
+    },
+
+    "pin" : {
+      "pins" : 1
+    },
+
+    "potentiometer" : {
+      "pins" : 1
+    },
+
+    "relay" : {
+      "pins" : 1
+    },
+
+    "screen" : {
+      "pins" : 15
+    }
+  }
+
   var wsStart = "ws://"
   if (window.location.protocol == 'https:') {
     wsStart = "wss://"
@@ -139,42 +222,6 @@
     document.getElementById("component__" + tempId + "__physical").remove()
     document.getElementById("component__" + tempId + "__remove").remove()
   };
-
-  const componentJSON = {
-    "Button":{
-      "pins":1
-    },
-    "Buzzer":{
-      "pins":1
-    },
-    "Joystick":{
-      "pins":5
-    },
-    "Laser":{
-      "pins":1
-    },
-    "LED":{
-      "pins":1
-    },
-    "Motor":{
-      "pins":1
-    },
-    "Multi-Coloured LED":{
-      "pins":9
-    },
-    "Pin":{
-      "pins":1
-    },
-    "Potentiometer":{
-      "pins":1
-    },
-    "Relay":{
-      "pins":1
-    },
-    "Screen":{
-      "pins":15
-    },
-  }
 
   var userrow = [
     {
