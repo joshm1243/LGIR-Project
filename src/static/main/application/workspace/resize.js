@@ -12,8 +12,6 @@ window.addEventListener("resize", function(){
 })
 
 
-
-
 function ResizeBlockly() {
     var blockly = document.getElementById("blockly-container")
     blockly.style.height = (window.innerHeight - 102) + "px";

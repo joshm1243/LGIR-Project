@@ -1,10 +1,11 @@
 
-
 //Appending the Set block to the workspace
+// Block Definition
 Blockly.Blocks["set"] = {
   init: function() {
 
     //Initiating the Set block and its tooltip
+
     this.jsonInit(customBlocks.set);
     var thisBlock = this;
     this.setTooltip(function() {
@@ -14,6 +15,22 @@ Blockly.Blocks["set"] = {
   }
 };
 
+//Appending the Set block to the workspace
+// Block Definition
+Blockly.Blocks["value_of"] = {
+  init: function() {
+
+    //Initiating the Set block and its tooltip
+    this.jsonInit(customBlocks.value_of);
+    var thisBlock = this;
+    this.setTooltip(function() {
+      return 'Add a number to variable "%1".'.replace('%1',
+          thisBlock.getFieldValue('VAR'));
+    });
+  }
+};
+
+// Block Definition
 var blocklyGetComponentBlock = 
 Blockly.Blocks['get'] = {
   init: function() {
@@ -25,6 +42,8 @@ Blockly.Blocks['get'] = {
     });
   }
 };
+
+// Block Definition
 Blockly.Blocks['input_component'] = {
   init: function() {
     this.jsonInit(customBlocks.input_component);
@@ -36,9 +55,10 @@ Blockly.Blocks['input_component'] = {
   }
 };
 
+// Block Definition
 Blockly.Blocks['pin_component'] = {
   init: function() {
-    this.jsonInit(customBlocks.input_component);
+    this.jsonInit(customBlocks.pin_component);
     var thisBlock = this;
     this.setTooltip(function() {
       return 'Add a number to variable "%1".'.replace('%1',
@@ -47,7 +67,7 @@ Blockly.Blocks['pin_component'] = {
   }
 };
   
-  
+// Block Definition
 Blockly.Blocks['output_component'] = {
   init: function() {
     this.jsonInit(customBlocks.output_component);
@@ -59,6 +79,7 @@ Blockly.Blocks['output_component'] = {
   }
 };
 
+// Block Definition
 Blockly.Blocks['add'] = {
   init: function() {
     this.jsonInit(customBlocks.add);
@@ -70,15 +91,24 @@ Blockly.Blocks['add'] = {
   }
 };
 
+// JavaScript Gen Stub
 Blockly.JavaScript['set'] = function(block) {
   var value_component = Blockly.JavaScript.valueToCode(block, 'COMPONENT', Blockly.JavaScript.ORDER_ATOMIC);
   var value_value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
   var code = "..."
   return code;
 };
-  
-  
 
+// Python Gen Stub
+Blockly.Python['set'] = function(block) {
+  var value_component = Blockly.Python.valueToCode(block, 'COMPONENT', Blockly.Python.ORDER_ATOMIC);
+  var value_value = Blockly.Python.valueToCode(block, 'VALUE', Blockly.Python.ORDER_ATOMIC);
+  var code = "..."
+  return code;
+};
+  
+  
+// JavaScript Gen Stub
   Blockly.JavaScript['component'] = function(block) {
     var dropdown_component_type_select = block.getFieldValue('COMPONENT_TYPE_SELECT');
     var number_component_instance_select = block.getFieldValue('COMPONENT_INSTANCE_SELECT');
@@ -88,6 +118,17 @@ Blockly.JavaScript['set'] = function(block) {
     return [code, Blockly.JavaScript.ORDER_NONE];
   };
 
+  // Python Gen Stub
+  Blockly.Python['component'] = function(block) {
+    var dropdown_component_type_select = block.getFieldValue('COMPONENT_TYPE_SELECT');
+    var number_component_instance_select = block.getFieldValue('COMPONENT_INSTANCE_SELECT');
+    // TODO: Assemble JavaScript into code variable.
+    var code = '...';
+    // TODO: Change ORDER_NONE to the correct strength.
+    return [code, Blockly.Python.ORDER_NONE];
+  };
+
+  // JavaScript Gen Stub
   Blockly.JavaScript['input_component'] = function(block) {
     var dropdown_component_type_select = block.getFieldValue('COMPONENT_TYPE_SELECT');
     var number_component_instance_select = block.getFieldValue('COMPONENT_INSTANCE_SELECT');
@@ -97,8 +138,17 @@ Blockly.JavaScript['set'] = function(block) {
     return [code, Blockly.JavaScript.ORDER_NONE];
   };
   
+  // Python Gen Stub
+  Blockly.Python['input_component'] = function(block) {
+    var dropdown_component_type_select = block.getFieldValue('COMPONENT_TYPE_SELECT');
+    var number_component_instance_select = block.getFieldValue('COMPONENT_INSTANCE_SELECT');
+    // TODO: Assemble JavaScript into code variable.
+    var code = '...';
+    // TODO: Change ORDER_NONE to the correct strength.
+    return [code, Blockly.Python.ORDER_NONE];
+  };
 
-  // Definition
+// Block Definition
   Blockly.Blocks['Speed'] =  {
     innit: function(){
       var speed_dropdown = block.getFieldValue('SPEED_SELECT');
@@ -107,7 +157,7 @@ Blockly.JavaScript['set'] = function(block) {
       this.setColour(60);
     }
   };
-// Gen Stub
+// JavaScript Gen Stub
   Blockly.JavaScript['Speed'] = function(block) {
     var speed_dropdown = block.getFieldValue('SPEED_SELECT');
     var value = Blockly.JavaScript.valueToCode(speed_dropdown);
@@ -116,8 +166,16 @@ Blockly.JavaScript['set'] = function(block) {
     return value;
   };
 
+  // Python Gen Stub
+  Blockly.Python['Speed'] = function(block) {
+    var speed_dropdown = block.getFieldValue('SPEED_SELECT');
+    var value = Blockly.Python.valueToCode(speed_dropdown);
+    this.setPreviousStatement(true, "null");
+    this.setNextStatement(true, "null");
+    return value;
+  };
 
-// Definition
+// Block Definition
   Blockly.Blocks['Wait'] =  {
     innit: function(){
       var wait_time = block.getFieldValue('WAIT_TIME');
@@ -126,9 +184,119 @@ Blockly.JavaScript['set'] = function(block) {
       this.setColour(60);
     }
   };
-// Gen stub
+// JavaScript Gen stub
   Blockly.JavaScript['Wait'] = function(block) {
     var delay_dropdown = block.getFieldValue('WAIT_TIME')
     var wait_code = 'Wait(' + delay_dropdown + ');\n';
     return wait_code;
   };
+  
+// Python Gen Stub
+  Blockly.Python['Wait'] = function(block) {
+    var delay_dropdown = block.getFieldValue('WAIT_TIME')
+    var wait_code = 'Wait(' + delay_dropdown + ');\n';
+    return wait_code;
+  };
+
+
+// Block Definition
+Blockly.Blocks['ON or OFF'] =  {
+  innit: function(){
+    var state_dropdown = block.getFieldValue('STATE_SELECT');
+    this.setPreviousStatement(true, "null");
+    this.setNextStatement(true, "null");
+    this.setColour(60);
+  }
+};
+// JavaScript Gen Stub
+Blockly.JavaScript['On or OFF'] = function(block) {
+  var state_dropdown = block.getFieldValue('SPEED_SELECT');
+  var value = Blockly.JavaScript.valueToCode(state_dropdown);
+  var x;
+  if(value = "ON"){
+    x = 100;
+  }
+  else if(value = "OFF"){
+    x = 0;
+  }
+  else{
+    x = 50;
+  }
+
+  return x;
+};
+
+// Python Gen Stub
+Blockly.Python['On or OFF'] = function(block) {
+  var state_dropdown = block.getFieldValue('SPEED_SELECT');
+  var value = Blockly.Python.valueToCode(state_dropdown);
+  var x;
+  if(value = "ON"){
+    x = 100;
+  }
+  else if(value = "OFF"){
+    x = 0;
+  }
+  else{
+    x = 50;
+  }
+
+  return x;
+};
+
+// Block Definition
+Blockly.Blocks['Brightness'] =  {
+  init: function(){
+    var light_dropdown = block.getFieldValue('LIGHT_SELECT');
+    this.setPreviousStatement(true, "null");
+    this.setNextStatement(true, "null");
+    this.setColour(60);
+  }
+};
+// JavaScript Gen Stub
+Blockly.JavaScript['Brightness'] = function(block) {
+  var light_dropdown = block.getFieldValue('LIGHT_SELECT');
+  var value = Blockly.JavaScript.valueToCode(light_dropdown);
+  var x;
+  if(value = "BRIGHT"){
+    x = 80;
+  }
+  else if (value = "DIM"){
+    x = 20;
+  }
+  return x;
+};
+
+// Python Gen Stub
+Blockly.Python['Brightness'] = function(block) {
+  var light_dropdown = block.getFieldValue('LIGHT_SELECT');
+  var value = Blockly.Python.valueToCode(light_dropdown);
+  var x;
+  if(value = "BRIGHT"){
+    x = 80;
+  }
+  else if (value = "DIM"){
+    x = 20;
+  }
+  else{
+    return ('Please input a valid option and try again!');
+  }
+  return x;
+};
+
+
+
+Blockly.Blocks['0 to 100'] = {
+  init: function() {
+    var validator = function(newValue) {
+      return newValue;
+    };
+
+    this.appendDummyInput()
+    .appendField('Range: ')
+    .appendField(new Blockly.FieldNumber('//range number to be inserted//', validator)),
+    this.setConstraints(0, 100);
+  }
+};
+
+
