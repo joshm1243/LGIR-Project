@@ -107,16 +107,67 @@
         </div>
         <div id="monitor-results">
           <div id="results-container">
-            <div>1</div>
-            <div>2</div>
-            <div>3</div>  
-            <div>4</div>
-            <div>5</div>
-            <div>6</div> 
-            <div>7</div>
-            <div>8</div>
+            <script>
+            var resultContainer = document.getElementById("results-container");
+            var bucketSpaces = document.getElementsByClassName("bucketSpace");
+            function ToggleBucket(bucketID,hide=true){
+           
+              if (hide) {
+                bucketSpaces[bucketID].style.display = "none";
+              }         
+              else {
+                bucketSpaces[bucketID].style.display = "block";
+              }
+            }
+            
+            function CreateBucket(type ="table",data=false) {
+            let bucket = document.createElement('div')
+            bucket.classList.add("bucketSpace")
+            resultContainer.appendChild(bucket)
+            if(type =="table"){
+              bucket.textContent="this is a table"
+            }   
+            else{
+              bucket.textContent="this is a chart"
+            }
+            } 
+            CreateBucket(); 
+            CreateBucket("chart"); 
+            CreateBucket(); 
+            CreateBucket("chart"); 
+            CreateBucket(); 
+            CreateBucket("chart");
+            CreateBucket(); 
+            CreateBucket("chart"); 
+            CreateBucket(); 
+            CreateBucket("chart"); 
+            CreateBucket(); 
+            CreateBucket("chart"); 
+            CreateBucket(); 
+            CreateBucket("chart");  
+            function DisplayBucketByPage(pageNumber){
+              for(let i=0; i<bucketSpaces.length;i++){
+                if(parseInt(i/8) == pageNumber){
+                  ToggleBucket(i,false);
+                }
+               else{
+                  ToggleBucket(i);
+               }
+              }
+            }
+            var buckets=document.getElementsByClassName("bucket-select")
+            for(let i=0; i< buckets.length; i++ ){
+              buckets[i].addEventListener("click",function(){
+                DisplayBucketByPage(i);
+                
+              })              
+              
+            }
+            
+          </script>
           </div>
         </div>
+
       
     </div>
   </div> 
@@ -539,3 +590,4 @@ Blockly.Javascript['Pin_Value'] = function(block){
 
 </body>
 </html>
+          

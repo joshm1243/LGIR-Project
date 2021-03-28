@@ -1,7 +1,7 @@
   #monitor-inception-container {
     display: flex;
     height:100%;
-    width:100%;
+    /* width:100%;  */
   }
   
   /* #monitor-inception-container div {
@@ -21,19 +21,14 @@
   #monitor-inception-container li a {
     display: block;
     color: #ffffff;
-    padding: 8px 16px;
+    /* padding: 8px 16px;  */
     text-decoration: none;
   }
   
-  #monitor-container{
-   /* position:absolute; */
-   /* top:48; */
-   /* height:100%;  */
-   /* left:0;
-   width:100%; */
- } 
+ 
 #monitor-results{
-  width:75%;
+  width:90%;  
+  height:100%;
   
 }
 #results-container {
@@ -41,15 +36,17 @@
   grid-template-columns: 50% 50%;
   grid-gap: 10px;
   background-color: #ffffff;
-  padding: 10px;
-  width:100%;
+ 
+  /* width:100%; */
+  
 }
 
 #results-container > div {
   background-color: #313131;
   color:snow;
-  box-shadow: 10px 10px 15px #000; 
+  /* box-shadow: 10px 10px 15px #000;  */
   text-align: center;
-  padding: 20px 0;
+   /* padding: 20px ;  */
   font-size: 30px;
+  
 }
