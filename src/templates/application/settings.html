@@ -12,10 +12,14 @@
 <script src="{% static 'application/blockly/google-blockly-edd475f/javascript_compressed.js' %}"></script>
 <script src="{% static 'application/blockly/google-blockly-edd475f/msg/js/en.js' %}"></script>
 
+<link rel="icon" href="{% static 'images/favicon.png' %}" sizes="16x16" type="image/png">
+
+
 <!-- Loading Static CSS -->
 <link rel="stylesheet" href="{% static 'css/generics/main.css' %}" type="text/css">
 <link rel="stylesheet" href="{% static 'css/application/chat.css' %}" type="text/css">
 <link rel="stylesheet" href="{% static 'css/application/navigation.css' %}" type="text/css">
+
 <link rel="stylesheet" href="{% static 'css/application/workspace.css' %}" type="text/css">
 
 </head>
@@ -55,4 +59,348 @@
     <div id="chat-input-container"><input id="chat-input"></div>
   </div>
 </div>
+
+
+<style>
+
+.content-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.content-container-item {
+  flex: 50%;
+  max-width: 50%;
+  background-color: #666666;
+}
+
+.content-container h1 {
+  color: #FFFFFF;
+  margin-left: 10px;
+  font-size: 1.2em;
+}
+
+@media screen and (max-width: 600px) {
+  .content-container-item {
+    flex: 100%;
+    max-width: 100%;
+  }
+}
+
+.mapping-grid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  margin-left: 10px;
+}
+
+.mapping-grid-item {
+  border-style: solid;
+  border-color: black;
+  background-color: #666666;
+  font-size: 1.15em;
+  color: #FFFFFF;
+}
+
+.mapping-grid-item input {
+  background-color: #BBBBBB;
+  font-size: 1em;
+  border: none; 
+  max-width: 25px;
+}
+
+.user-grid{
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.remove-button{
+  cursor: pointer;
+  text-align: center;
+  color: crimson;
+  background-color: #FFFFFF;
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<!-- Defining the page navigation bars -->
+<ul id="top_nav">
+  <li><a id="site-title">LGIR</a></li>
+  <li><a href="./../../../dashboard/">Dashboard</a></li>
+  <li><a>Account Settings</a></li>
+
+  <li style="float:right"><a>Logout</a></li>
+
+</ul>
+
+<!-- <ul id="mobile-top-nav">
+  <li><a>&#9776</a></li>
+  <li><a>LGIR</a></li>
+</ul> -->
+
+
+<div id="main">
+  <div id="content-container">
+    <div>      
+      
+      <div>
+        <!-- Component Mappings Header -->
+        <div>Virtual Name</div>
+        <div>Physical Mapping</div>
+
+      </div>
+      <div>
+        <!-- Component Mappings Content Grid -->
+
+
+      </div>
+
+    </div>
+    <div>
+
+      <div>
+        <!-- Project Users Header -->
+        <div>Username</div>
+        <div>Role</div>
+
+      </div>
+      <div>
+        <!-- Project Users Content Grid -->
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Defining the main container for the page -->
+<div id="main">
+  <div class="content-container">
+    <div class="content-container-item">
+      <h1>Component Mappings</h1>
+      <button id="new-row">Create New Row</button>
+      <div class="mapping-grid" id="component-grid">
+        <div class="mapping-grid-item ">Virtual Component</div>
+        <div class="mapping-grid-item">Physical Component</div>  
+        <div class="mapping-grid-item">Remove</div>
+      </div>
+    </div>
+    <div class="content-container-item">
+      <h1>Project Users</h1>
+      <div class="user-grid" id="user-grid">    
+        <div class ="mapping-grid-item">Username</div>
+        <div class="mapping-grid-item">Role</div>
+        <div class="mapping-grid-item">Remove</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  const componentJSON = {
+
+    "button" : {
+      "pins" : 1
+    },
+
+    "buzzer" : {
+      "pins" : 1
+    },
+
+    "joystick" : {
+      "pins" : 1
+    },
+
+    "laser" : {
+      "pins" : 1
+    },
+
+    "led" : {
+      "pins" : 1
+    },
+
+    "motor" : {
+      "pins" : 1
+    },
+
+    "multi-coloured-led" : {
+      "pins" : 3
+    },
+
+    "pin" : {
+      "pins" : 1
+    },
+
+    "potentiometer" : {
+      "pins" : 1
+    },
+
+    "relay" : {
+      "pins" : 1
+    },
+
+    "screen" : {
+      "pins" : 15
+    }
+  }
+
+  var wsStart = "ws://"
+  if (window.location.protocol == 'https:') {
+    wsStart = "wss://"
+  }
+
+  //Creating a websocket
+  var endpoint = wsStart + window.location.host +  window.location.pathname
+  var socket = new WebSocket(endpoint)
+  
+  var componentGrid = document.getElementById("component-grid")
+  var newRow = document.getElementById("new-row")
+  var counter = 0
+
+  function removeC(tempId){
+    document.getElementById("component__" + tempId + "__virtual").remove()
+    document.getElementById("component__" + tempId + "__physical").remove()
+    document.getElementById("component__" + tempId + "__remove").remove()
+  };
+
+  var userrow = [
+    {
+      "username":"luis",
+      "role":"god" 
+    },
+    {
+      "username":"josh",
+      "role":"informant"
+    }
+  ]
+
+  var userGrid = document.getElementById("user-grid")
+
+  function removeUser(username){
+    document.getElementById("user__username__"+ username).remove()
+    document.getElementById("user__role__" + username).remove()
+    document.getElementById("user__remove__" + username).remove()
+
+    };
+  
+
+  function createUserRow(username,role)
+  {
+    var uName = document.createElement("div")
+    uName.id = "user__username__" + username
+    uName.classList.add("mapping-grid-item")
+    uName.innerText = username
+    var  uRole = document.createElement("div")
+    uRole.id = "user__role__" + username
+    uRole.classList.add("mapping-grid-item")
+    uRole.innerText = role
+    var uRemove = document.createElement("div")
+    uRemove.id = "user__remove__" + username
+    uRemove.classList.add("mapping-grid-item", "remove-button")
+    uRemove.innerText = "X"
+    uRemove.addEventListener("click", function(){
+      removeUser(username)
+    })
+    userGrid.appendChild(uName)
+    userGrid.appendChild(uRole)
+    userGrid.appendChild(uRemove)
+
+  }
+
+ 
+
+  userrow.forEach(element => {
+    createUserRow(element.username, element.role)
+  })
+  
+  createComponentRow()
+
+
+  newRow.addEventListener("click", function(e){
+    e.preventDefault()
+    createComponentRow()
+  })
+
+  
+  socket.onopen = function() {
+    function createComponentRow()
+    {
+      var virtualComponent = document.createElement("div")
+      virtualComponent.id = "component__" + counter + "__virtual"
+      virtualComponent.classList.add("mapping-grid-item")
+     var virtualName = document.createElement("input")
+     virtualName.addEventListener("keypress", function(e){
+      socket.send(JSON.stringify(
+        {
+          "type":"settings_changed_viritual_name"
+        }
+      ))
+     }
+     );
+    virtualComponent.appendChild(virtualName)
+    var physicalComponent = document.createElement("div")
+    physicalComponent.id = "component__" + counter + "__physical" 
+    physicalComponent.classList.add("mapping-grid-item")
+    var physicalName = document.createElement("select")    
+    var components = ["Button","Buzzer","Joystick","Laser","LED","Motor","Multi-Coloured LED","Pin","Potentiometer","Relay","Screen"]
+    components.forEach(element => {
+      var tempOption = document.createElement("option")
+      tempOption.value = element
+      tempOption.innerText = element
+      physicalName.appendChild(tempOption)}
+    );
+    divTwo = document.createElement("div")
+    physicalComponent.appendChild(physicalName)
+    physicalComponent.appendChild(divTwo)
+    physicalName.addEventListener("change", function(e){
+      pinLayoutDiv = physicalName.parentElement.childNodes[1]
+      pinLayoutDiv.innerHTML = ""
+      for(i = 1; i <= componentJSON[e.target.value].pins; i++){
+        
+        var preText = document.createElement("p")
+        var accText = document.createTextNode("Pin " + i + " to: Pin ")
+        var newInput = document.createElement("input")
+        newInput.addEventListener("keypress", function(e){
+          socket.send(JSON.stringify(
+        {
+          "type":"pin_mappings_changed"
+        }
+      ))
+        })
+        preText.appendChild(accText)
+        preText.appendChild(newInput)
+        pinLayoutDiv.appendChild(preText)
+      }
+    }
+    );
+    var removeComponent = document.createElement("div")
+    removeComponent.id = "component__" + counter + "__remove"
+    removeComponent.classList.add("mapping-grid-item", "remove-button")
+    removeComponent.innerText = "X"
+    removeComponent.addEventListener("click", function(e){
+      var tempId = e.target.id
+      removeC(tempId.substring(11, tempId.lastIndexOf("__")))
+    });
+
+    componentGrid.appendChild(virtualComponent)
+    componentGrid.appendChild(physicalComponent)
+    componentGrid.appendChild(removeComponent)
+
+    counter += 1
+  };
+  }
+
+  
+</script>
+</body>
+</html>
+
+
 
