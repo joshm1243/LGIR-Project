@@ -12,7 +12,7 @@
 <script src="{% static 'application/blockly/google-blockly-edd475f/javascript_compressed.js' %}"></script>
 <script src="{% static 'application/blockly/google-blockly-edd475f/python_compressed.js' %}"></script>
 <script src="{% static 'application/blockly/google-blockly-edd475f/msg/js/en.js' %}"></script>
-
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <link rel="icon" href="{% static 'images/favicon.png' %}" sizes="16x16" type="image/png">
 
 <!-- Loading Static CSS -->
@@ -120,31 +120,133 @@
               }
             }
             
-            function CreateBucket(type ="table",data=false) {
+            function CreateBucket(type,data) {
             let bucket = document.createElement('div')
             bucket.classList.add("bucketSpace")
             resultContainer.appendChild(bucket)
             if(type =="table"){
-              bucket.textContent="this is a table"
+              
+              bucket.classList.add("table")
+              let resultTable = document.createElement("div")
+                for(let i =0; i<data["1"].timestamps.length;i++){
+                  let leftColumn = document.createElement("div")
+                  leftColumn.classList.add("left")
+                  leftColumn.textContent = i +1                  
+                  resultTable.appendChild(leftColumn)
+                  let middleColumn = document.createElement("div")
+                  middleColumn.classList.add("middle")
+                  middleColumn.textContent = data["1"].timestamps[i]   
+                  resultTable.appendChild(middleColumn)
+                  let rightColumn = document.createElement("div")
+                  rightColumn.classList.add("right")
+                  rightColumn.textContent = data["1"].values[i]    
+                  resultTable.appendChild(rightColumn)
+                  
+
+                }
+                bucket.appendChild(resultTable)
+              
             }   
             else{
-              bucket.textContent="this is a chart"
+              
+
+                var data = google.visualization.arrayToDataTable([
+                  
+                  ['Task', 'Hours per Day'],
+                  ['Work',     11],
+                  ['Eat',      2],
+                ]);
+
+                var options = {
+                  title: 'your chart',
+                  backgroundColor: "#313131",
+                  titleTextStyle:{ 
+                    color: "#FFFFFF",
+                  },
+                  legend:{
+                    textStyle: {
+                      color:'white'
+                    }
+                  }
+                };
+
+                var chart = new google.visualization.PieChart(bucket);
+                
+                chart.draw(data, options);
+
+                
+              }
             }
+            var resultJSON = {
+              "1" : {
+                "timestamps" : [
+                  "03.04.20 02:00",
+                  "05.06.22 05:00",
+                  "07.11.21 03:00", 
+                  "03.04.20 02:00",
+                  "05.06.22 05:00",
+                  "07.11.21 03:00", 
+                  "03.04.20 02:00",
+                  "05.06.22 05:00",
+                  "07.11.21 03:00", 
+                  "03.04.20 02:00",
+                  "05.06.22 05:00",
+                  "07.11.21 03:00", 
+                  
+                
+                ],
+                "values" : [
+                  33,
+                  5,
+                  21,
+                  33,
+                  5,
+                  21,
+                  33,
+                  5,
+                  21,
+                  33,
+                  5,
+                  21,
+                ],
+              },
+
+              "2" : {
+                "timestamps" : [
+                  "07.06.21 12:00",
+                  "21.11.22 02:00",
+                  "07.12.21 03:00", 
+
+                  
+                ],
+                "values" : [
+                  1,
+                  2,
+                  3,
+                  
+                ],
+              },
+
+             
             } 
-            CreateBucket(); 
-            CreateBucket("chart"); 
-            CreateBucket(); 
-            CreateBucket("chart"); 
-            CreateBucket(); 
-            CreateBucket("chart");
-            CreateBucket(); 
-            CreateBucket("chart"); 
-            CreateBucket(); 
-            CreateBucket("chart"); 
-            CreateBucket(); 
-            CreateBucket("chart"); 
-            CreateBucket(); 
-            CreateBucket("chart");  
+            
+            
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(function(){
+              CreateBucket("table", resultJSON); 
+              CreateBucket("chart",resultJSON); 
+              CreateBucket("table", resultJSON); 
+              CreateBucket("chart",resultJSON); 
+              CreateBucket("table", resultJSON); 
+              CreateBucket("chart",resultJSON); 
+              CreateBucket("table", resultJSON); 
+              CreateBucket("chart",resultJSON); 
+              CreateBucket("table", resultJSON); 
+              CreateBucket("chart",resultJSON); 
+              CreateBucket("table", resultJSON); 
+              CreateBucket("chart",resultJSON); 
+            });
+           
             function DisplayBucketByPage(pageNumber){
               for(let i=0; i<bucketSpaces.length;i++){
                 if(parseInt(i/8) == pageNumber){
@@ -165,6 +267,7 @@
             }
             
           </script>
+
           </div>
         </div>
 
@@ -187,8 +290,6 @@
 <script src="{% static 'application/custom_blocks/structs.js' %}"></script>
 <script src="{% static 'application/custom_blocks/logic.js' %}"></script>
 <script src="{% static 'application/custom_workspace/toolbox.js' %}"></script>
-
-
 <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
   <category name="Logic" colour="#5b80a5">
     <block type="controls_if"></block>

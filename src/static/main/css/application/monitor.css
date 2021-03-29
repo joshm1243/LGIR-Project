@@ -50,3 +50,16 @@
   font-size: 30px;
   
 }
+.bucketSpace.table > div{
+  display:grid;
+  grid-template-columns: auto auto auto;
+  overflow: auto;
+  height: 250px;
+
+
+}
+.bucketSpace.table > div > div{
+  border: solid 3px honeydew;
+  
+
+}
