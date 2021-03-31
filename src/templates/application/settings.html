@@ -92,9 +92,34 @@
   flex-direction: row;
 }
 
+#content-container h1 {
+  margin: 0px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
 #content-container > div {
   flex: 50%;
   padding: 10px;
+}
+
+#project-code-heading {
+  letter-spacing: 10px;
+  text-align: center;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  margin: 0px;
+  margin-top: 30px;
+  color: #FFFFFF;
+}
+
+#project-code {
+  letter-spacing: 10px;
+  text-align: center;
+  font-size: 4em;
+  text-transform: uppercase;
+  margin: 0px;
+  color: #FFFFFF;
 }
 
 @media screen and (max-width: 600px) {
@@ -125,13 +150,103 @@
   min-height: 150px;
 }
 
+#settings-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 50px;
+  box-shadow:  0px 0px 15px 2px#000000;
+}
+
+#settings-container input {
+  background-color: #222222;
+  border: none;
+  color: #FFFFFF;
+  width: 250px;
+  text-align: center;
+  font-size: 1.2em;
+  font-family: 'Biryani', sans-serif;
+}
+
+#settings-container #general-settings {
+  flex: 50%;
+  display: grid;
+  grid-template-areas: 
+  "project__name project__name__input"
+  "project__description project__description__input"
+  "project__remove project__remove__button";
+  background-color: #313131;
+  color: #FFFFFF;
+
+  grid-template-rows: 70px auto auto;
+}
+
+#general-settings .project-name {
+  font-size: 1em;
+  grid-area: project__name;
+  margin-right: 10px;
+  padding-top: 28px;
+  text-align: right;
+}
+
+
+#general-settings .project-name-input {
+  padding-top: 20px;
+  grid-area: project__name__input
+}
+
+#general-settings .project-description {
+  font-size: 1em;
+  grid-area: project__description;
+  margin-right: 10px;
+  padding-top: 7px;
+  text-align: right;
+}
+
+#general-settings .project-description-input {
+  grid-area: project__description__input
+}
+
+#general-settings .project-remove {
+  font-size: 1em;
+  grid-area: project__remove;
+  transition: 0.5s;
+  margin-right: 10px;
+  padding-top: 8px;
+  text-align: right;
+}
+
+#general-settings .project-remove-button {
+  background-color: #222222;
+  height: 25px;
+  width: 80px;
+  text-align: center;
+  padding: 8px;
+  cursor: pointer;
+  transition: 0.5s;
+  grid-area: project__remove__button
+}
+
+
+#general-settings .project-remove-button:hover {
+  background-color: var(--red);
+}
+
+#general-settings .project-space {
+  grid-area: project__space
+}
+
+#settings-container #code-settings {
+  flex: 50%;
+  background-color: #313131;
+}
+
 #user-list {
   display: flex;
   flex-direction: column;
 }
 
 #user-list > div {
-  padding: 5px;
+  padding: 8px;
   display: flex;
   flex-direction: row;
   background-color: #313131;
@@ -164,7 +279,6 @@
   font-size: 1em;
 }
 
-
 #mapping-list .virtual-component input::placeholder {
   color: #DEDEDE;
   text-align: center;
@@ -179,7 +293,6 @@
   cursor: pointer;
   font-size: 1em;
 }
-
 
 #mapping-list .physical-component {
   grid-area: mapping__physical;
@@ -220,13 +333,23 @@
   margin-right: 10px;
 }
 
-#mapping-list .remove .issue {
-  margin-top: 10px;
+#mapping-list #components-empty-heading {
+  margin: 0px;
+  margin-top: 50px;
   text-align: center;
-  padding: 8px 10px;
+  font-weight: 600;
   user-select: none;
-  transition: 1s;
-  background-color: #212121;
+  display: none;
+
+}
+
+#mapping-list #components-empty-subheading {
+  margin: 0px;
+  margin-top: 30px;
+  text-align: center;
+  font-size: 1.4em;
+  font-weight: 400;
+  user-select: none;
   display: none;
 }
 
@@ -253,6 +376,7 @@
 
 #user-list .username {
   flex: auto;
+  margin-left: 10px;
 }
 
 #user-list .role {
@@ -272,7 +396,6 @@
 #user-list .remove {
   flex: auto;
 }
-
 
 
 
@@ -320,6 +443,10 @@
   );
 }
 
+#settings-title {
+  text-align: center;
+  font-size: 1.4em;
+}
 
 </style>
 
@@ -338,8 +465,7 @@
   <li><a>LGIR</a></li>
   <li><a href="../../../dashboard">Dashboard</a></li>
   <li><a>Account Settings</a></li>
-  <li class="project-specific"><a id="show-live-button">Create Component</a></li>
-  <li class="project-specific"><a id="create-project-button">View Project Code</a></li>
+  <li class="project-specific"><a id="create-component-button">Create Component</a></li>
   <li style="float:right"><a>Logout</a></li>
 </ul>
 
@@ -350,12 +476,49 @@
 
 
 <div id="main">
-  <div id="content-container">
-    <div id="mapping-list"> 
+
+  <div id="settings-title">
+    <h1>Project Settings</h1>
+  </div>
+
+  <div id="settings-container">
+
+    <div id="general-settings">
+
+      <div class="project-name">Project Name</div>
+      <div class="project-name-input"><input></div>
+      <div class="project-description">Description</div>
+      <div class="project-description-input"><input></div>
+      <div class="project-remove">Delete Project</div>
+      <div class="project-remove-button"><div id="delete-project-button">Delete</div></div>
+      <div class="space"></div>
+
 
 
     </div>
+
+    <div id="code-settings">
+      
+      <h2 id="project-code-heading">Project Code</h2>
+      <h3 id="project-code">an19dhu7</h3>
+      
+
+    </div>
+
+  </div>
+
+ 
+
+  <div id="content-container">
+    <div id="mapping-list"> 
+      <h1>Workspace Components</h1>
+
+          <h2 id="components-empty-heading">{{ appcode }} doesn't currently have any components</h2>
+          <h3 id="components-empty-subheading">Use the Create Component button to begin</h3>
+
+    </div>
     <div id="user-list">
+      <h1>Project Users</h1>
 
 
 
@@ -438,7 +601,6 @@
     },
   }
  
-
   var userList = document.getElementById("user-list")
   var mappingList = document.getElementById("mapping-list")
 
@@ -490,35 +652,20 @@
   CreateUserRow(userJSON)
   CreateUserRow(userJSON)
   CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
 
 
-
-  function IssueStart(row) {
-
-
-    var issueLights = document.getElementsByClassName("issue")
-
-    for (let i = 0; i < issueLights.length; i++) {
-      let issueBright = true;
-      setInterval(function(){
-  
-        if (!issueBright) {
-          issueLights[i].style.backgroundColor = "var(--red)"
-          issueBright = true;
-        }
-        else {
-          issueLights[i].style.backgroundColor = "#212121"
-          issueBright = false;
-        }
-  
-      },1000)
-    }
-
-
- 
-
-
-  }
 
 
   function GeneratePinMappingJSON(name,type,pins) {
@@ -684,16 +831,8 @@
     })
     componentRowRemove.appendChild(componentRowRemoveButton)
 
-    //ISSUES
-    componentRowIssues = document.createElement("div")
-    componentRowIssues.classList.add("issue")
-    componentRowIssues.textContent = "Issue"
 
   
-
-    componentRowRemove.appendChild(componentRowIssues)
-    //END ISSUES
-
 
     componentRow.appendChild(componentRowRemove)
 
@@ -723,9 +862,6 @@
 
 
 
-
-  
-  IssueStart(1)
 
 
   /*
