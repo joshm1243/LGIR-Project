@@ -44,6 +44,7 @@
   <li><a id="request-edit">Edit</a>
   <li><a id="download-code">Download Code</a></li>
   <li><a id="upload-results">Upload Results</a></li>
+  <li><a id="done-uploading">Done Uploading</a></li>
   <li><a id="toggle-chat">Chat</a></li>
   <li><a href="../settings/">Project Settings</a></li>
 
@@ -99,6 +100,9 @@
       <div id="monitor-inception-container">
         <div id="monitor-navigation">
           <ul>
+            <select id="results-dropdown" >
+              
+            </select>
           <li><a class="bucket-select">1-4</a></li>
           <li><a class="bucket-select">5-9</a></li>
           <li><a class="bucket-select">10-14</a></li>
@@ -106,7 +110,9 @@
         </ul>
         </div>
         <div id="monitor-results">
-          <div id="results-container">
+          <textarea id="upload-results-area"></textarea>
+          <div id="results-container" style="display: none;">
+            
             <script>
             var resultContainer = document.getElementById("results-container");
             var bucketSpaces = document.getElementsByClassName("bucketSpace");
@@ -265,7 +271,7 @@
               })              
               
             }
-            
+       
           </script>
 
           </div>
@@ -635,6 +641,9 @@
 
 <!-- Websockets -->
 <script src="{% static 'application/workspace/socket.js' %}"></script>
+
+<!--Monitor-->
+<script src ="{% static 'application/workspace/monitor.js' %}"></script>
 
 <script>
 /*
