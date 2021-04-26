@@ -12,6 +12,10 @@
 <script src="{% static 'application/blockly/google-blockly-edd475f/javascript_compressed.js' %}"></script>
 <script src="{% static 'application/blockly/google-blockly-edd475f/msg/js/en.js' %}"></script>
 
+
+<script src="{% static 'application/generics/random.js' %}"></script>
+
+
 <link rel="icon" href="{% static 'images/favicon.png' %}" sizes="16x16" type="image/png">
 
 
@@ -20,49 +24,9 @@
 <link rel="stylesheet" href="{% static 'css/application/chat.css' %}" type="text/css">
 <link rel="stylesheet" href="{% static 'css/application/navigation.css' %}" type="text/css">
 
-<link rel="stylesheet" href="{% static 'css/application/workspace.css' %}" type="text/css">
-
-</head>
-
-<!--  -->
-<ul id="top_nav">
-  <li><a>LGIR</a></li>
-  <li><a>Dashboard</a></li>
-  <li><a>Account Settings</a></li>
-  <li style="float:right"><a>Logout</a></li>
-</ul>
-
-<ul id="mobile-top-nav">
-  <li><a>&#9776</a></li>
-  <li><a>LGIR</a></li>
-</ul>
-
-<ul id="project_nav">
-  <li><a>
-    {{ appcode }}
-  </a></li>
-  <li><a id="toggle-monitor">Monitor</a></li>
-  <li><a id="request-edit-permissions">Edit</a>
-  <li><a id="run-code">Run</a></li>
-  <li><a id="toggle-chat">Chat</a></li>
-  <li><a>Project Settings</a></li>
-</ul>
-
-<div id="main">
-  <div id="workspace-area">
-    <div id="blockly-container" style="flex: 1;"></div>
-    <div id="monitor-container" style="flex: 1;"></div>
-  </div>
-  <div id="chat-container">
-    <div id="chat-header">{{ appcode }} chat</div>
-    <div id="chat-display-container"></div>
-    <div id="chat-input-container"><input id="chat-input"></div>
-  </div>
-</div>
-
 
 <style>
-
+/*
 .content-container {
   display: flex;
   flex-wrap: wrap;
@@ -121,6 +85,369 @@
   background-color: #FFFFFF;
 }
 
+*/
+
+#content-container {
+  display: flex;
+  flex-direction: row;
+}
+
+#content-container h1 {
+  margin: 0px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+#content-container > div {
+  flex: 50%;
+  padding: 10px;
+}
+
+#project-code-heading {
+  letter-spacing: 10px;
+  text-align: center;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  margin: 0px;
+  margin-top: 30px;
+  color: #FFFFFF;
+}
+
+#project-code {
+  letter-spacing: 10px;
+  text-align: center;
+  font-size: 4em;
+  text-transform: uppercase;
+  margin: 0px;
+  color: #FFFFFF;
+}
+
+@media screen and (max-width: 600px) {
+  #content-container {
+    flex-direction: column;
+  }
+}
+
+#mapping-list {
+  display: flex;
+  flex-direction: column;
+}
+
+#mapping-list > div {
+
+  display: grid;
+  
+  grid-template-areas:
+  "mapping__colour mapping__colour mapping__colour"
+  "mapping__virtual mapping__physical mapping__remove";
+
+  background-color: #313131;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+  box-shadow: 7px 7px 11px #000000;
+  font-size: 1.1em;
+  grid-template-columns: auto auto auto;
+  min-height: 150px;
+}
+
+#settings-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 50px;
+  box-shadow:  0px 0px 15px 2px#000000;
+}
+
+#settings-container input {
+  background-color: #222222;
+  border: none;
+  color: #FFFFFF;
+  width: 250px;
+  text-align: center;
+  font-size: 1.2em;
+  font-family: 'Biryani', sans-serif;
+}
+
+#settings-container #general-settings {
+  flex: 50%;
+  display: grid;
+  grid-template-areas: 
+  "project__name project__name__input"
+  "project__description project__description__input"
+  "project__remove project__remove__button";
+  background-color: #313131;
+  color: #FFFFFF;
+
+  grid-template-rows: 70px auto auto;
+}
+
+#general-settings .project-name {
+  font-size: 1em;
+  grid-area: project__name;
+  margin-right: 10px;
+  padding-top: 28px;
+  text-align: right;
+}
+
+
+#general-settings .project-name-input {
+  padding-top: 20px;
+  grid-area: project__name__input
+}
+
+#general-settings .project-description {
+  font-size: 1em;
+  grid-area: project__description;
+  margin-right: 10px;
+  padding-top: 7px;
+  text-align: right;
+}
+
+#general-settings .project-description-input {
+  grid-area: project__description__input
+}
+
+#general-settings .project-remove {
+  font-size: 1em;
+  grid-area: project__remove;
+  transition: 0.5s;
+  margin-right: 10px;
+  padding-top: 8px;
+  text-align: right;
+}
+
+#general-settings .project-remove-button {
+  background-color: #222222;
+  height: 25px;
+  width: 80px;
+  text-align: center;
+  padding: 8px;
+  cursor: pointer;
+  transition: 0.5s;
+  grid-area: project__remove__button
+}
+
+
+#general-settings .project-remove-button:hover {
+  background-color: var(--red);
+}
+
+#general-settings .project-space {
+  grid-area: project__space
+}
+
+#settings-container #code-settings {
+  flex: 50%;
+  background-color: #313131;
+}
+
+#user-list {
+  display: flex;
+  flex-direction: column;
+}
+
+#user-list > div {
+  padding: 8px;
+  display: flex;
+  flex-direction: row;
+  background-color: #313131;
+  color: #FFFFFF;
+  margin-bottom: 15px;
+  box-shadow: 7px 7px 10px #000000;
+  font-size: 1.1em;
+}
+
+#mapping-list .colour {
+  height: 5px;
+  grid-area: mapping__colour;
+}
+
+#mapping-list .virtual-component {
+  grid-area: mapping__virtual;
+}
+
+#mapping-list .virtual-component {
+  display: grid;
+  grid-template-rows: 25px 50px 10px 50px auto;
+  margin-left: 10px;
+}
+
+#mapping-list .virtual-component input {
+  border: none;
+  background-color: #272727;
+  color: #FFFFFF;
+  font-family: 'Biryani', sans-serif;
+  font-size: 1em;
+}
+
+#mapping-list .virtual-component input::placeholder {
+  color: #DEDEDE;
+  text-align: center;
+}
+
+#mapping-list .virtual-component select {
+  font-family: 'Biryani', sans-serif;
+  color: #FFFFFF;
+  background-color: #242424;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+#mapping-list .physical-component {
+  grid-area: mapping__physical;
+}
+
+#mapping-list .physical-component .text {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+
+
+#mapping-list .physical-component > div {
+  display: grid;
+  grid-template-columns: auto 90px;
+  text-align: center;
+  margin-top: 25px;
+
+}
+
+#mapping-list .physical-component .text {
+  text-align: right;
+}
+
+#mapping-list .physical-component > div input {
+  font-family: 'Biryani', sans-serif;
+  text-align: center;
+  width: 40px;
+  font-size: 1em;
+  background-color: #272727;
+  color: #FFFFFF;
+  border: none;
+  letter-spacing: 3px;
+  
+}
+
+#mapping-list .remove {
+  margin-right: 10px;
+}
+
+#mapping-list #components-empty-heading {
+  margin: 0px;
+  margin-top: 50px;
+  text-align: center;
+  font-weight: 600;
+  user-select: none;
+  display: none;
+
+}
+
+#mapping-list #components-empty-subheading {
+  margin: 0px;
+  margin-top: 30px;
+  text-align: center;
+  font-size: 1.4em;
+  font-weight: 400;
+  user-select: none;
+  display: none;
+}
+
+#mapping-list .remove-button {
+  margin-top: 25px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #212121;
+  padding: 8px 10px;
+  transition: 0.5s;
+}
+
+#mapping-list .remove-button:hover {
+  background-color: var(--red);
+  transition: 0.5s;
+}
+
+
+
+#user-list .colour {
+  width: 5px;
+  margin-right: 10px;
+}
+
+#user-list .username {
+  flex: auto;
+  margin-left: 10px;
+}
+
+#user-list .role {
+  flex: auto;
+}
+
+#user-list .role select {
+  font-family: 'Biryani', sans-serif;
+  color: #FFFFFF;
+  background-color: #313131;
+  border: none;
+  outline: none;
+  font-size: 1em;
+}
+
+
+#user-list .remove {
+  flex: auto;
+}
+
+
+
+#progress-bar {
+  height: 10px;
+}
+
+#progress-bar div {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  display: none;
+}
+
+@keyframes move {
+  0% {
+      background-position: 0px;
+  }
+  100% {
+      background-position: 2000px;
+  }
+}
+
+#progress-image:after {
+  height: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 5;
+  animation: move 3s linear infinite;
+  content: "";
+  background-size: 2000px;
+  background-image:
+  linear-gradient(to right,
+      var(--teal) 0 400px,
+      var(--grey) 0 500px,
+      var(--pink) 0 900px,
+      var(--grey) 0 1000px,
+      var(--teal) 0 1400px,
+      var(--grey) 0 1500px,
+      var(--pink) 0 1900px,
+      var(--grey) 0 2000px
+  );
+}
+
+#settings-title {
+  text-align: center;
+  font-size: 1.4em;
+}
+
 </style>
 
 </head>
@@ -129,58 +456,80 @@
 
 
 
-<!-- Defining the page navigation bars -->
-<ul id="top_nav">
-  <li><a id="site-title">LGIR</a></li>
-  <li><a href="./../../../dashboard/">Dashboard</a></li>
-  <li><a>Account Settings</a></li>
-
-  <li style="float:right"><a>Logout</a></li>
-
-</ul>
-
 <!-- <ul id="mobile-top-nav">
   <li><a>&#9776</a></li>
   <li><a>LGIR</a></li>
 </ul> -->
 
+<ul id="top_nav">
+  <li><a>LGIR</a></li>
+  <li><a href="../../../dashboard">Dashboard</a></li>
+  <li><a>Account Settings</a></li>
+  <li class="project-specific"><a id="create-component-button">Create Component</a></li>
+  <li style="float:right"><a>Logout</a></li>
+</ul>
+
+
+<div id="progress-bar">
+  <div id="progress-image"></div>
+</div>
+
 
 <div id="main">
-  <div id="content-container">
-    <div>      
-      
-      <div>
-        <!-- Component Mappings Header -->
-        <div>Virtual Name</div>
-        <div>Physical Mapping</div>
 
-      </div>
-      <div>
-        <!-- Component Mappings Content Grid -->
+  <div id="settings-title">
+    <h1>Project Settings</h1>
+  </div>
+
+  <div id="settings-container">
+
+    <div id="general-settings">
+
+      <div class="project-name">Project Name</div>
+      <div class="project-name-input"><input></div>
+      <div class="project-description">Description</div>
+      <div class="project-description-input"><input></div>
+      <div class="project-remove">Delete Project</div>
+      <div class="project-remove-button"><div id="delete-project-button">Delete</div></div>
+      <div class="space"></div>
 
 
-      </div>
 
     </div>
-    <div>
 
-      <div>
-        <!-- Project Users Header -->
-        <div>Username</div>
-        <div>Role</div>
+    <div id="code-settings">
+      
+      <h2 id="project-code-heading">Project Code</h2>
+      <h3 id="project-code">an19dhu7</h3>
+      
 
-      </div>
-      <div>
-        <!-- Project Users Content Grid -->
+    </div>
 
-      </div>
+  </div>
+
+ 
+
+  <div id="content-container">
+    <div id="mapping-list"> 
+      <h1>Workspace Components</h1>
+
+          <h2 id="components-empty-heading">{{ appcode }} doesn't currently have any components</h2>
+          <h3 id="components-empty-subheading">Use the Create Component button to begin</h3>
+
+    </div>
+    <div id="user-list">
+      <h1>Project Users</h1>
+
+
+
+
 
     </div>
   </div>
 </div>
 
 <!-- Defining the main container for the page -->
-<div id="main">
+<!-- <div id="main">
   <div class="content-container">
     <div class="content-container-item">
       <h1>Component Mappings</h1>
@@ -200,56 +549,324 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <script>
 
   const componentJSON = {
 
-    "button" : {
+    "Light Emitting Diode (LED)" : {
+      "name" : "Led",
       "pins" : 1
     },
 
-    "buzzer" : {
+    "Pin" : {
+      "name" : "Pin",
       "pins" : 1
     },
 
-    "joystick" : {
-      "pins" : 1
-    },
-
-    "laser" : {
-      "pins" : 1
-    },
-
-    "led" : {
-      "pins" : 1
-    },
-
-    "motor" : {
-      "pins" : 1
-    },
-
-    "multi-coloured-led" : {
-      "pins" : 3
-    },
-
-    "pin" : {
-      "pins" : 1
-    },
-
-    "potentiometer" : {
-      "pins" : 1
-    },
-
-    "relay" : {
-      "pins" : 1
-    },
-
-    "screen" : {
+    "LCD Screen" : {
+      "name" : "screen",
       "pins" : 15
-    }
+    },
+
+    "Buzzer" : {
+      "name" : "Buzzer",
+      "pins" : 1
+    },
+
+    "Joystick" : {
+      "name" : "Joystick",
+      "pins" : 1
+    },
+
+    "Laser" : {
+      "name" : "Laser",
+      "pins" : 1
+    },
+
+    "Motor" : {
+      "name" : "Motor",
+      "pins" : 1
+    },
+
+    "Potentiometer" : {
+      "name" : "Potentiometer",
+      "pins" : 1
+    },
+
+    "Relay" : {
+      "name" : "Relay",
+      "pins" : 1
+    },
   }
+ 
+  var userList = document.getElementById("user-list")
+  var mappingList = document.getElementById("mapping-list")
+
+  function CreateUserRow(user) {
+
+    let userRow = document.createElement("div")
+
+    let userRowColour = document.createElement("div")
+    userRowColour.classList.add(GetRandomColour(),"colour")
+    userRow.appendChild(userRowColour)
+
+    let userRowUsername = document.createElement("div")
+    userRowUsername.classList.add("username")
+    userRowUsername.textContent = user.username
+    userRow.appendChild(userRowUsername)
+
+    let userRowRole = document.createElement("div")
+    let userRowRoleSelect = document.createElement("select")
+    let userRowRoleOptionOwner = document.createElement("option")
+    userRowRoleOptionOwner.textContent = "Owner"
+    userRowRoleSelect.appendChild(userRowRoleOptionOwner)
+    let userRowRoleOptionCollab = document.createElement("option")
+    userRowRoleOptionCollab.textContent = "Collaborator"
+    userRowRoleOptionCollab.selected = "true"
+    userRowRoleSelect.appendChild(userRowRoleOptionCollab)
+    userRowRole.appendChild(userRowRoleSelect)
+    userRowRole.classList.add("role")
+    userRow.appendChild(userRowRole)
+
+    let userRowRemove = document.createElement("div")
+    userRowRemove.classList.add("remove")
+    userRowRemove.textContent = "remove"
+    userRow.appendChild(userRowRemove)
+    
+
+    userList.appendChild(userRow)
+
+  }
+
+
+  var userJSON = {
+    "username" : "Josh",
+    "role" : "Collaborator" 
+  }
+
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+  CreateUserRow(userJSON)
+
+
+
+
+  function GeneratePinMappingJSON(name,type,pins) {
+    let pinMappingJSON = {
+      "components" : {
+        [name] : {
+          "type" : type,
+          "pins" : pins
+        }
+      }
+    }
+
+    return pinMappingJSON
+  }
+
+  function InjectPinMapTemplate(div,pins) {
+
+
+    for (let i = 0; i < pins; i++) {
+
+      let mapTemplateText = document.createElement("div")
+      mapTemplateText.classList.add("text")
+
+      if (pins == 1) {
+        mapTemplateText.textContent = "Is connected to pin"
+      }
+      else {
+        mapTemplateText.textContent = "Pin " + (i + 1) + " is connected to pin "
+      }
+
+      div.appendChild(mapTemplateText)
+  
+      //LEFT INPUT
+      let mapTemplateInput = document.createElement("div")
+      mapTemplateInput.classList.add("input")
+      mapTemplateInputBox = document.createElement("input")
+      mapTemplateInput.appendChild(mapTemplateInputBox)
+      div.appendChild(mapTemplateInput)
+    }
+
+
+
+
+  }
+
+
+  function CreateComponentRow(component) {
+
+    let componentRow = document.createElement("div")
+
+
+    let componentRowColour = document.createElement("div")
+
+    componentRowColour.classList.add(GetRandomColour(["teal","pink"]),"colour")
+
+
+    componentRow.appendChild(componentRowColour)
+
+
+    let componentRowVirtual = document.createElement("div")
+
+    componentRowVirtual.classList.add("virtual-component")
+
+    componentRowVirtual.appendChild(document.createElement("div"))
+
+
+    
+    let componentRowPhysicalSelect = document.createElement("select")
+
+
+    for (let option in componentJSON) {
+    
+
+      let componentOption = document.createElement("option")
+      componentOption.textContent = option
+
+      if (option == "Light Emitting Diode (LED)") {
+        componentOption.selected = "true"
+      }
+
+      componentRowPhysicalSelect.appendChild(componentOption)
+    }
+
+
+
+    componentRowPhysicalSelect.addEventListener("change",function(e){
+      
+
+      if (e.target.value in componentJSON) {
+        
+        componentRowPhysicalGrid.innerHTML = ""
+        InjectPinMapTemplate(componentRowPhysicalGrid,componentJSON[e.target.value].pins)
+      }
+
+
+    })
+
+    //OPTIONS END
+
+    componentRowVirtual.appendChild(componentRowPhysicalSelect)
+
+
+
+    componentRowVirtual.appendChild(document.createElement("div"))
+
+
+
+    let componentRowVirtualInput = document.createElement("input")
+
+    componentRowVirtualInput.placeholder = "Component Name"
+
+    componentRowVirtualInput.addEventListener("blur",function(e){
+      
+      let pinMap = {}
+
+      for (let i = 1; i < componentJSON[componentRowPhysicalSelect.value].pins * 2; i+=2) {
+        pinMap[(i+1)/2] = componentRowPhysical.childNodes[0].childNodes[i].childNodes[0].value
+      }
+
+      let pinMappingJSON = GeneratePinMappingJSON(e.target.value,componentRowPhysicalSelect.value,pinMap)
+
+      console.log(pinMappingJSON)
+
+    })
+
+    componentRowVirtual.appendChild(componentRowVirtualInput)
+    
+    componentRowVirtual.appendChild(document.createElement("div"))
+
+    componentRow.appendChild(componentRowVirtual)
+
+
+
+
+    let componentRowPhysical = document.createElement("div")
+    
+    componentRowPhysical.classList.add("physical-component")
+
+    let componentRowPhysicalGrid = document.createElement("div")
+
+    InjectPinMapTemplate(componentRowPhysicalGrid,1)
+
+    componentRowPhysical.appendChild(componentRowPhysicalGrid)
+
+    componentRow.appendChild(componentRowPhysical)
+
+
+
+
+
+    let componentRowRemove = document.createElement("div")
+
+
+    componentRowRemove.classList.add("remove")
+
+
+
+    componentRowRemoveButton = document.createElement("div")
+    componentRowRemoveButton.classList.add("remove-button")
+    componentRowRemoveButton.textContent = "Delete"
+    componentRowRemoveButton.addEventListener("click",function(){
+      componentRow.remove()
+    })
+    componentRowRemove.appendChild(componentRowRemoveButton)
+
+
+  
+
+    componentRow.appendChild(componentRowRemove)
+
+
+
+
+
+
+
+
+    mappingList.appendChild(componentRow)
+
+  }
+
+
+  CreateComponentRow({})
+  CreateComponentRow({})
+  CreateComponentRow({})
+  CreateComponentRow({})
+  CreateComponentRow({})
+  CreateComponentRow({})
+  CreateComponentRow({})
+  CreateComponentRow({})
+  CreateComponentRow({})
+  CreateComponentRow({})
+  CreateComponentRow({})
+
+
+
+
+
+  /*
+
+
 
   var wsStart = "ws://"
   if (window.location.protocol == 'https:') {
@@ -395,7 +1012,7 @@
 
     counter += 1
   };
-  }
+  }*/
 
   
 </script>
