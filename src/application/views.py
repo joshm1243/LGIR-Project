@@ -6,7 +6,7 @@ import secrets
 
 import application.wshandlers.auth as wsauth
 
-@login_required
+#@login_required
 def project_space_view(request, appcode, *args, **kwargs):
     if request.method == "GET":
         args = {}
@@ -19,10 +19,9 @@ def project_space_view(request, appcode, *args, **kwargs):
         wsauth.Remember(token,request.user.username)
         args["websocket_key"] = token
 
-        currProject = Project.objects.get(name=appcode)
-        args["workspace_data"] = currProject.workspace
-        print(currProject.workspace)
-
+        # currProject = Project.objects.get(name=appcode)
+        # args["workspace_data"] = currProject.workspace
+        # print(currProject.workspace)
 
         return render(request, "application/workspace.html", args)
 

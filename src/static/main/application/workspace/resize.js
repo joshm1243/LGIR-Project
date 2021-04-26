@@ -2,6 +2,7 @@
 ResizeChat()
 CheckForMobile()
 ResizeBlockly()
+ResizeMonitor()
 
 
 //Calling resize functions to fire when the page size is changed
@@ -9,6 +10,7 @@ window.addEventListener("resize", function(){
     ResizeChat()
     CheckForMobile()
     ResizeBlockly()
+    ResizeMonitor()
 })
 
 
@@ -22,6 +24,12 @@ function ResizeChat() {
     document.getElementById("blockly-wrapper").style.right = chat.offsetWidth + "px"
     chat.style.height = (window.innerHeight - 195) + "px";
     chat.style.right = chat.offsetWidth;
+}
+function ResizeMonitor() {
+    var monitor = document.getElementById("monitor-inception-container")
+    monitor.style.height = (window.innerHeight-105) + "px";
+    console.log("resized monitor");
+    console.log(window.innerHeight);
 }
 
 function CheckForMobile() {

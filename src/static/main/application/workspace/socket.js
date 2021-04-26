@@ -53,7 +53,7 @@ function SetWrapperTimer(removeWrapper=false) {
         if(removeWrapper){
             blocklyWrapper.classList.remove("show")
         }
-    },5000)
+    },0)
 }
 
 //Waiting until the web-socket is open, and then listening to any activity on the web-socket
