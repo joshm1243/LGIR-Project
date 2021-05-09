@@ -555,6 +555,11 @@
 
         var projectName = document.createElement("div")
         projectName.textContent = name
+        .replace("&amp;","&")
+        .replace("&gt;",">")
+        .replace("&lt;","<")
+        .replace("&#39;","'")
+        .replace('&#34;','"')
         projectName.classList.add("project__name")
         projectTile.appendChild(projectName)
 
