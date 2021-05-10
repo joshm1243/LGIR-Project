@@ -367,8 +367,6 @@
   transition: 0.5s;
 }
 
-
-
 #user-list .colour {
   width: 5px;
   margin-right: 10px;
@@ -392,12 +390,9 @@
   font-size: 1em;
 }
 
-
 #user-list .remove {
   flex: auto;
 }
-
-
 
 #progress-bar {
   height: 10px;
@@ -454,13 +449,6 @@
 
 <body>
 
-
-
-<!-- <ul id="mobile-top-nav">
-  <li><a>&#9776</a></li>
-  <li><a>LGIR</a></li>
-</ul> -->
-
 <ul id="top_nav">
   <li><a>LGIR</a></li>
   <li><a href="../../../dashboard">Dashboard</a></li>
@@ -474,13 +462,13 @@
   <div id="progress-image"></div>
 </div>
 
-
 <div id="main">
 
   <div id="settings-title">
     <h1>Project Settings</h1>
   </div>
 
+  <!-- Creating the container for the general setting of the project such as name and description -->
   <div id="settings-container">
 
     <div id="general-settings">
@@ -497,6 +485,7 @@
 
     </div>
 
+    <!-- defining the unique code for the project so that only invited users can join-->
     <div id="code-settings">
       
       <h2 id="project-code-heading">Project Code</h2>
@@ -508,7 +497,7 @@
   </div>
 
  
-
+  <!--Defining the space for the components -->
   <div id="content-container">
     <div id="mapping-list"> 
       <h1>Workspace Components</h1>
@@ -527,31 +516,8 @@
     </div>
   </div>
 </div>
-
-<!-- Defining the main container for the page -->
-<!-- <div id="main">
-  <div class="content-container">
-    <div class="content-container-item">
-      <h1>Component Mappings</h1>
-      <button id="new-row">Create New Row</button>
-      <div class="mapping-grid" id="component-grid">
-        <div class="mapping-grid-item ">Virtual Component</div>
-        <div class="mapping-grid-item">Physical Component</div>  
-        <div class="mapping-grid-item">Remove</div>
-      </div>
-    </div>
-    <div class="content-container-item">
-      <h1>Project Users</h1>
-      <div class="user-grid" id="user-grid">    
-        <div class ="mapping-grid-item">Username</div>
-        <div class="mapping-grid-item">Role</div>
-        <div class="mapping-grid-item">Remove</div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
 <script>
+
 
   const componentJSON = {
 
@@ -604,6 +570,7 @@
   var userList = document.getElementById("user-list")
   var mappingList = document.getElementById("mapping-list")
 
+  // Function that creates the row if a new user is added to the project
   function CreateUserRow(user) {
 
     let userRow = document.createElement("div")
@@ -667,7 +634,7 @@
 
 
 
-
+  // function that changes the component name and type when a different component is selected
   function GeneratePinMappingJSON(name,type,pins) {
     let pinMappingJSON = {
       "components" : {
@@ -681,9 +648,10 @@
     return pinMappingJSON
   }
 
+  //function that changes the amount of pins to be mapped when a new component is selected
   function InjectPinMapTemplate(div,pins) {
 
-
+    // has to be looped because multiple components have mre than 1 pins
     for (let i = 0; i < pins; i++) {
 
       let mapTemplateText = document.createElement("div")
@@ -711,7 +679,7 @@
 
   }
 
-
+  //function that creates a new row for components when the create components button is clicked
   function CreateComponentRow(component) {
 
     let componentRow = document.createElement("div")
@@ -735,7 +703,6 @@
     
     let componentRowPhysicalSelect = document.createElement("select")
 
-
     for (let option in componentJSON) {
     
 
@@ -750,7 +717,7 @@
     }
 
 
-
+    //javascript that is used to call the injectpinmaptemplate function when the component is changed
     componentRowPhysicalSelect.addEventListener("change",function(e){
       
 
@@ -822,7 +789,7 @@
     componentRowRemove.classList.add("remove")
 
 
-
+    // javascript used for removing a row
     componentRowRemoveButton = document.createElement("div")
     componentRowRemoveButton.classList.add("remove-button")
     componentRowRemoveButton.textContent = "Delete"
@@ -859,161 +826,6 @@
   CreateComponentRow({})
   CreateComponentRow({})
   CreateComponentRow({})
-
-
-
-
-
-  /*
-
-
-
-  var wsStart = "ws://"
-  if (window.location.protocol == 'https:') {
-    wsStart = "wss://"
-  }
-
-  //Creating a websocket
-  var endpoint = wsStart + window.location.host +  window.location.pathname
-  var socket = new WebSocket(endpoint)
-  
-  var componentGrid = document.getElementById("component-grid")
-  var newRow = document.getElementById("new-row")
-  var counter = 0
-
-  function removeC(tempId){
-    document.getElementById("component__" + tempId + "__virtual").remove()
-    document.getElementById("component__" + tempId + "__physical").remove()
-    document.getElementById("component__" + tempId + "__remove").remove()
-  };
-
-  var userrow = [
-    {
-      "username":"luis",
-      "role":"god" 
-    },
-    {
-      "username":"josh",
-      "role":"informant"
-    }
-  ]
-
-  var userGrid = document.getElementById("user-grid")
-
-  function removeUser(username){
-    document.getElementById("user__username__"+ username).remove()
-    document.getElementById("user__role__" + username).remove()
-    document.getElementById("user__remove__" + username).remove()
-
-    };
-  
-
-  function createUserRow(username,role)
-  {
-    var uName = document.createElement("div")
-    uName.id = "user__username__" + username
-    uName.classList.add("mapping-grid-item")
-    uName.innerText = username
-    var  uRole = document.createElement("div")
-    uRole.id = "user__role__" + username
-    uRole.classList.add("mapping-grid-item")
-    uRole.innerText = role
-    var uRemove = document.createElement("div")
-    uRemove.id = "user__remove__" + username
-    uRemove.classList.add("mapping-grid-item", "remove-button")
-    uRemove.innerText = "X"
-    uRemove.addEventListener("click", function(){
-      removeUser(username)
-    })
-    userGrid.appendChild(uName)
-    userGrid.appendChild(uRole)
-    userGrid.appendChild(uRemove)
-
-  }
-
- 
-
-  userrow.forEach(element => {
-    createUserRow(element.username, element.role)
-  })
-  
-  createComponentRow()
-
-
-  newRow.addEventListener("click", function(e){
-    e.preventDefault()
-    createComponentRow()
-  })
-
-  
-  socket.onopen = function() {
-    function createComponentRow()
-    {
-      var virtualComponent = document.createElement("div")
-      virtualComponent.id = "component__" + counter + "__virtual"
-      virtualComponent.classList.add("mapping-grid-item")
-     var virtualName = document.createElement("input")
-     virtualName.addEventListener("keypress", function(e){
-      socket.send(JSON.stringify(
-        {
-          "type":"settings_changed_viritual_name"
-        }
-      ))
-     }
-     );
-    virtualComponent.appendChild(virtualName)
-    var physicalComponent = document.createElement("div")
-    physicalComponent.id = "component__" + counter + "__physical" 
-    physicalComponent.classList.add("mapping-grid-item")
-    var physicalName = document.createElement("select")    
-    var components = ["Button","Buzzer","Joystick","Laser","LED","Motor","Multi-Coloured LED","Pin","Potentiometer","Relay","Screen"]
-    components.forEach(element => {
-      var tempOption = document.createElement("option")
-      tempOption.value = element
-      tempOption.innerText = element
-      physicalName.appendChild(tempOption)}
-    );
-    divTwo = document.createElement("div")
-    physicalComponent.appendChild(physicalName)
-    physicalComponent.appendChild(divTwo)
-    physicalName.addEventListener("change", function(e){
-      pinLayoutDiv = physicalName.parentElement.childNodes[1]
-      pinLayoutDiv.innerHTML = ""
-      for(i = 1; i <= componentJSON[e.target.value].pins; i++){
-        
-        var preText = document.createElement("p")
-        var accText = document.createTextNode("Pin " + i + " to: Pin ")
-        var newInput = document.createElement("input")
-        newInput.addEventListener("keypress", function(e){
-          socket.send(JSON.stringify(
-        {
-          "type":"pin_mappings_changed"
-        }
-      ))
-        })
-        preText.appendChild(accText)
-        preText.appendChild(newInput)
-        pinLayoutDiv.appendChild(preText)
-      }
-    }
-    );
-    var removeComponent = document.createElement("div")
-    removeComponent.id = "component__" + counter + "__remove"
-    removeComponent.classList.add("mapping-grid-item", "remove-button")
-    removeComponent.innerText = "X"
-    removeComponent.addEventListener("click", function(e){
-      var tempId = e.target.id
-      removeC(tempId.substring(11, tempId.lastIndexOf("__")))
-    });
-
-    componentGrid.appendChild(virtualComponent)
-    componentGrid.appendChild(physicalComponent)
-    componentGrid.appendChild(removeComponent)
-
-    counter += 1
-  };
-  }*/
-
   
 </script>
 </body>

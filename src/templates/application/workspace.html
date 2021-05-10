@@ -285,7 +285,7 @@
  </div>
 
  
-
+<!--creating the toolbox for blockly blocks -->
 <div id="blocklyDiv" style="position: absolute;">
 </div>
  <!-- Holds all items relating to chat messages -->
@@ -652,59 +652,6 @@
 
 <!--Monitor-->
 <script src ="{% static 'application/workspace/monitor.js' %}"></script>
-
-<script>
-/*
-//Waiting for the download code button to be clicked
-document.getElementById("download-code").addEventListener("click",function(){
-Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-<script>
-  //   //Waiting for the download code button to be clicked
-  //   document.getElementById("download-code").addEventListener("click",function(){
-  //   Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-
-
-
-    //Append the virtual button to the main tag
-    var main = document.getElementById("main")
-    document.body.appendChild(virDownloadButton)
-    virDownloadButton.click()
-    document.body.removeChild(virDownloadButton)
-    
-  })
-  */
-  //   //Append the virtual button to the main tag
-  //   var main = document.getElementById("main")
-  //   document.body.appendChild(virDownloadButton)
-  //   virDownloadButton.click()
-  //   document.body.removeChild(virDownloadButton)
-  // })
-  
-</script>
-
-<!-- <script>
-  // Definition Block
-var pin = 0;
-var pos = 1;
-Blockly.Blocks['Pin_Value'] = {
-  innit: function() {
-    this.appendValueInput('VALUE')
-        .setCheck('Number')
-        .appendField('value is ');
-    this.setOutput(true, 'PIN: ', pin, 'AT', pos);
-    this.setColour(160);
-    this.setPreviousStatement(true); 
-    this.setNextStatement(true); 
-  }
-};
-// Block input types - value, statement or dummy.
-
-  // Generator Stub
-Blockly.Javascript['Pin_Value'] = function(block){
-  var code = '...;\n';
-  return code;
-}
-</script> -->
 
 </body>
 </html>
