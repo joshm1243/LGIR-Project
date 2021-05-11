@@ -3,10 +3,11 @@ import redis
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
+# Connecting to redis containerised instance.
 
 r = redis.Redis(host="127.0.0.1", port="6379", db=0)
 
-
+# Application websocket. Used for ensuring all data is uniform across all collaborative instances of LGIR.
 class ApplicationConsumer(WebsocketConsumer):
     def connect(self):
 

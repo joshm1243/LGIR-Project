@@ -4,7 +4,8 @@ from application.models import Project
 from application.models import ProjectMappings
 from channels.generic.websocket import WebsocketConsumer
 
-#A class that represents a single websocket connection
+# A class that represents a single websocket connection
+# Websockets for the dashboard page. Used for joining and creating projects.
 class DashboardConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
