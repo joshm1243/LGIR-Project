@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 
 # Create your views here.
+# Allows for each page on the site to be accessed via Django code.
 def login_view(request, *args, **kwargs):
     if request.method == "GET":
         return render(request, "accounts/login")
