@@ -1,15 +1,13 @@
 # LGIR - Lightweight Graphical Interface for Robotics
+---
 <p align="center">
 <img src="src\static\main\images\favicon.png" alt="LGIR Logo" width="125" height="125" align="right" padding:10px/>
 
 ##  <b>Find our solution at: https://lncn.ac/LGIR </b>
 
 `LGIR` is a lightweight, easy to use visual programming language for robotics. Group 7 designed this project as our submission for our Team Software Engineering assignment. 
-
 It's designed for beginners to easily understand and start working with the field. 
 </p>
-
-<br>
 
 ---
 **Usage**
@@ -39,6 +37,7 @@ This project was designed over the course of a year with an assignment submissio
 
 ### **The webpage is down! What do I do?**
 As stated above, this project is designed with an assessment in mind. As such, the servers will only run until late August 2021 at best. This is due to financial constraints as the project is hosted on the cloud entirely out of our own pockets. It's been a real passion project and we wanted to make sure we could offer the best solution possible for the highest grade. In the event that it is down before this time, please contact either [@Korbarus (Ethan)](https://www.github.com/Korbarus) for technical support. They are responsible for the cloud configuration and as such will be able to solve the issues.
+
 <br>
 
 ### **I'm so confused! How does the system work? Where can I find help?**
