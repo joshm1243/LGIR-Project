@@ -36,7 +36,7 @@ This project was designed over the course of a year with an assignment submissio
 <br>
 
 ### **The webpage is down! What do I do?**
-As stated above, this project is designed with an assessment in mind. As such, the servers will only run until late August 2021 at best. This is due to financial constraints as the project is hosted on the cloud entirely out of our own pockets. It's been a real passion project and we wanted to make sure we could offer the best solution possible for the highest grade. In the event that it is down before this time, please contact either [@Korbarus (Ethan)](https://www.github.com/Korbarus) for technical support. They are responsible for the cloud configuration and as such will be able to solve the issues.
+As stated above, this project is designed with an assessment in mind. As such, the servers will only run until late August 2021 at best. This is due to financial constraints as the project is hosted on the cloud entirely out of our own pockets. It's been a real passion project and we wanted to make sure we could offer the best solution possible for the highest grade. In the event that it is down before this time, please contact [@Korbarus (Ethan)](https://www.github.com/Korbarus) for technical support. They are responsible for the cloud configuration and as such will be able to solve the issues.
 
 <br>
 
